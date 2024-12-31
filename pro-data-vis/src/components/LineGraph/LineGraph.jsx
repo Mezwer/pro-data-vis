@@ -2,22 +2,16 @@ import React from "react";
 import { Area, AreaChart, Tooltip, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Label } from "recharts";
 import CustomTooltip from "../Tooltip/CustomTooltip.jsx";
 
-const specialStatNames = {
-  "cs": "CS",
-};
 
 const LineGraph = ({ color, data, ydata }) => {
-  let formatted;
-  if (ydata in specialStatNames)
-    formatted = specialStatNames[ydata];
-  else
-    formatted = ydata[0].toUpperCase() + ydata.slice(1);
+  // Create a unique ID for each gradient using the color value
+  const gradientId = `gradient-${color}`;
 
   return (
     <ResponsiveContainer height="50%" width="80%">
       <AreaChart data={data}>
         <defs>
-          <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor={color} stopOpacity={1} />
             <stop offset="95%" stopColor={color} stopOpacity={0} />
           </linearGradient>
@@ -30,16 +24,16 @@ const LineGraph = ({ color, data, ydata }) => {
           fillOpacity={1}
           strokeOpacity={0.5}
           stroke={color}
-          fill="url(#color)"
+          fill={`url(#${gradientId})`}
         />
         
-        <XAxis dataKey={"year"}>
-          <Label value={"Year"} offset={0} position="insideBottom"/>
+        <XAxis dataKey={"Year"}>
+          <Label value={"Year"} offset={-5} position="insideBottom"/>
         </XAxis>
         <YAxis>
-          <Label value={formatted} offset={0} position="insideLeft" angle={-90}/>
+          <Label value={ydata} offset={0} position="insideLeft" angle={-90}/>
         </YAxis>
-        <Tooltip content={<CustomTooltip data={formatted}/>}/>
+        <Tooltip content={<CustomTooltip data={ydata}/>}/>
       </AreaChart>
     </ResponsiveContainer>
   );

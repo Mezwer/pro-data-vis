@@ -1,68 +1,90 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
 import LineGraph from "@/components/LineGraph/LineGraph";
+import StatToolbar from "@/components/StatToolbar/StatToolbar";
+import NamePlate from "@/components/NamePlate/NamePlate";
+import { useState } from "react";
+import { fields, colors } from "@/constants/fields";
 
 const dummyData = [
   {
-    kills: 19,
-    deaths: 5,
-    assists: 4,
-    cs: 101,
-    year: 2019
+    Kills: 19,
+    Deaths: 5,
+    Assists: 4,
+    CS: 101,
+    Year: 2019
   },
   {
-    kills: 14,
-    deaths: 5,
-    assists: 4,
-    cs: 101,
-    year: 2020
+    Kills: 14,
+    Deaths: 5,
+    Assists: 4,
+    CS: 101,
+    Year: 2020
   },
   {
-    kills: 10,
-    deaths: 5,
-    assists: 4,
-    cs: 101,
-    year: 2021
+    Kills: 10,
+    Deaths: 5,
+    Assists: 4,
+    CS: 101,
+    Year: 2021
   },
   {
-    kills: 5,
-    deaths: 10,
-    assists: 3,
-    cs: 105,
-    year: 2022
+    Kills: 5,
+    Deaths: 10,
+    Assists: 3,
+    CS: 105,
+    Year: 2022
   },
   {
-    kills: 15, 
-    deaths: 12,
-    assists: 10,
-    cs: 89,
-    year: 2023
+    Kills: 15, 
+    Deaths: 12,
+    Assists: 10,
+    CS: 89,
+    Year: 2023
   },
   {
-    kills: 21,
-    deaths: 7,
-    assists: 8,
-    cs: 150,
-    year: 2024
+    Kills: 21,
+    Deaths: 7,
+    Assists: 8,
+    CS: 150,
+    Year: 2024
   }
 ];
 
-const Player = () => {
+const Player = ({ params }) => {
+  const param = React.use(params);
+  const [show, setShow] = useState(fields.map(((field, index) => [field, index, true])));
+  const [layout, setLayout] = useState(0); // 0 = vertical, 1 = compact
+
+  const changeShow = (index) => {
+    const newShow = [...show];
+    newShow[index][2] = !newShow[index][2];
+
+    setShow(newShow);
+  };
+
+  const arrange = layout == 1 ? "grid grid-cols-3" : "";
   return (
-    <div className="h-screen flex items-center justify-center flex-col">
-      <LineGraph 
-        color="#FFFFFF"
-        data={dummyData}
-        ydata="kills"
+    <>
+      <NamePlate name={param.playername}/>
+      <StatToolbar 
+        state={{show: show, setShow: changeShow}} 
+        layoutState={{layout: layout, setLayout: setLayout}}
       />
-            
-      <LineGraph 
-        color="#FFFFFF"
-        data={dummyData}
-        ydata="cs"
-      />
-    </div>
+      <div className={arrange}>
+        {show.map((item) => 
+          item[2] ? (      
+          <div className="h-[50vh] flex items-center justify-center flex-col" key={item[0]}>
+            <LineGraph 
+              color={colors[item[0]]}
+              data={dummyData}
+              ydata={item[0]}
+            />
+          </div>
+          ) : null
+        )}
+      </div>
+    </>
   );
 };
 
