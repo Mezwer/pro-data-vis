@@ -3,58 +3,41 @@ import React from "react";
 import LineGraph from "@/components/LineGraph/LineGraph";
 import StatToolbar from "@/components/StatToolbar/StatToolbar";
 import NamePlate from "@/components/NamePlate/NamePlate";
-import { useState } from "react";
-import { fields, colors } from "@/constants/fields";
-
-const dummyData = [
-  {
-    Kills: 19,
-    Deaths: 5,
-    Assists: 4,
-    CS: 101,
-    Year: 2019
-  },
-  {
-    Kills: 14,
-    Deaths: 5,
-    Assists: 4,
-    CS: 101,
-    Year: 2020
-  },
-  {
-    Kills: 10,
-    Deaths: 5,
-    Assists: 4,
-    CS: 101,
-    Year: 2021
-  },
-  {
-    Kills: 5,
-    Deaths: 10,
-    Assists: 3,
-    CS: 105,
-    Year: 2022
-  },
-  {
-    Kills: 15, 
-    Deaths: 12,
-    Assists: 10,
-    CS: 89,
-    Year: 2023
-  },
-  {
-    Kills: 21,
-    Deaths: 7,
-    Assists: 8,
-    CS: 150,
-    Year: 2024
-  }
-];
+import { useState, useEffect } from "react";
+import { fields, colors, mapping } from "@/constants/fields";
 
 const Player = ({ params }) => {
-  const param = React.use(params);
-  const [show, setShow] = useState(fields.map(((field, index) => [field, index, true])));
-  const [layout, setLayout] = useState(0); // 0 = vertical, 1 = compact
+  const param = React.use(params); // playername
+
+  // show which items
+  const [show, setShow] = useState(fields.map(((field, index) => 
+    [
+      mapping[field], 
+      index, 
+      ["kills", "deaths", "assists", "total cs"].includes(field)
+    ]
+  )));
+
+  // layout of graphs: 0 = vertical, 1 = compact
+  const [layout, setLayout] = useState(0);
+
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`/api/data?playername=${param.playername}`);
+        const d = await res.json();
+        setData(d);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [param.playername]);
 
   const changeShow = (index) => {
     const newShow = [...show];
@@ -62,6 +45,10 @@ const Player = ({ params }) => {
 
     setShow(newShow);
   };
+
+  if (loading) {
+    return <div></div>;
+  }
 
   const arrange = layout == 1 ? "grid grid-cols-3" : "";
   return (
@@ -71,13 +58,14 @@ const Player = ({ params }) => {
         state={{show: show, setShow: changeShow}} 
         layoutState={{layout: layout, setLayout: setLayout}}
       />
-      <div className={arrange}>
+      <div className={`${arrange} place-items-center`}>
         {show.map((item) => 
           item[2] ? (      
-          <div className="h-[50vh] flex items-center justify-center flex-col" key={item[0]}>
+          <div className="h-[45vh] w-11/12 flex flex-col gap-12 items-center justify-center border-solid border-zinc-800 bg-zinc-800/40 border-2 rounded-2xl mb-10" key={item[0]}>
+            <span> {item[0]} </span>
             <LineGraph 
               color={colors[item[0]]}
-              data={dummyData}
+              data={data}
               ydata={item[0]}
             />
           </div>
