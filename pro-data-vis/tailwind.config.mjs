@@ -11,7 +11,15 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      keyframes: {
+        slideUp: {
+          '0%': { transform: "translateY(0%)"},
+          '100%': { transform: "translateY(-100%)" },
+        }
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require("tailwind-scrollbar")({ nocompatible: true, preferredStrategy: "pseudoelements" }),
+  ],
 };

@@ -1,7 +1,9 @@
 import React from "react";
-
+import { Tooltip } from 'react-tooltip';
+import { descriptions } from "@/constants/fields";
 
 const Checkbox = ({ label, state, setter, index }) => {
+  const id = `checkbox${index}`;
 
   return (
     <div className="inline-flex items-center float-left">
@@ -13,9 +15,10 @@ const Checkbox = ({ label, state, setter, index }) => {
           </svg>
         </span>
       </label>
-      <label className="cursor-pointer ml-2 text-slate-300 text-sm truncate">
+      <label id={id} data-tooltip-delay-show={500} className="cursor-pointer ml-2 text-slate-300 text-sm truncate">
         {label}
       </label>
+      <Tooltip anchorSelect={`#${id}`} place="bottom" content={descriptions[label]} opacity={1} className="!bg-slate-900 !text-xs !rounded-md z-10"/>
     </div> 
   );
 };

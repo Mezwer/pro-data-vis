@@ -30,7 +30,7 @@ const LineGraph = ({ color, data, ydata }) => {
         <YAxis>
           {/* <Label value={yDataName} offset={12} position="insideLeft" angle={-90}/> */}
         </YAxis>
-        <Tooltip content={<CustomTooltip data={ydata}/>}/>
+        <Tooltip content={<CustomTooltip data={ydata} mod={0}/>}/>
       </AreaChart>
     </ResponsiveContainer>
   );

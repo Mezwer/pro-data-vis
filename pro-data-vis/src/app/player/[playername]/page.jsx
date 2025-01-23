@@ -3,8 +3,10 @@ import React from "react";
 import LineGraph from "@/components/LineGraph/LineGraph";
 import StatToolbar from "@/components/StatToolbar/StatToolbar";
 import NamePlate from "@/components/NamePlate/NamePlate";
+import Spinner from "@/components/Spinner/Spinner";
+import FilterToolbar from "@/components/FilterToolbar/FilterToolbar";
 import { useState, useEffect } from "react";
-import { fields, colors, mapping } from "@/constants/fields";
+import { fields, colors, mapping } from "@/constants/fields.js";
 
 const Player = ({ params }) => {
   const param = React.use(params); // playername
@@ -23,12 +25,18 @@ const Player = ({ params }) => {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [champions, setChampions] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetch(`/api/data?playername=${param.playername}`);
         const d = await res.json();
         setData(d);
+
+        const champres = await fetch("https://ddragon.leagueoflegends.com/cdn/15.2.1/data/en_US/champion.json");
+        const c = (await champres.json()).data;
+        setChampions(Object.keys(c).map((item) => c[item].name));
       } catch (error) {
         console.log(error);
       } finally {
@@ -47,7 +55,7 @@ const Player = ({ params }) => {
   };
 
   if (loading) {
-    return <div></div>;
+    return (<Spinner />);
   }
 
   const arrange = layout == 1 ? "grid grid-cols-3" : "";
@@ -58,6 +66,7 @@ const Player = ({ params }) => {
         state={{show: show, setShow: changeShow}} 
         layoutState={{layout: layout, setLayout: setLayout}}
       />
+      <FilterToolbar champions={champions}/>
       <div className={`${arrange} place-items-center`}>
         {show.map((item) => 
           item[2] ? (      
