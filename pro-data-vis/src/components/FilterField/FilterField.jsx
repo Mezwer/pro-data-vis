@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { filters } from "@/constants/filters";
 import { X } from 'lucide-react';
 
@@ -6,13 +6,32 @@ const FilterField = ({ champions }) => {
   const [chips, setChips] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [showDrop, setShowDrop] = useState(true);
-  const [options, setOptions] = useState(champions);
+  const [options, setOptions] = useState([]);
   const [hovering, setHovering] = useState(false);
+  const [focus, setFocus] = useState(-1);
+
+  const focusRef = useRef(null);
+
+  useEffect(() => {
+    if (focus >= 0 && focusRef.current) {
+      focusRef.current.scrollIntoView({
+        block: "nearest"
+      });
+    }
+  }, [focus]);
 
   const handleKeyDown = (e) => {
     const trimmed = inputValue.trim();
-    if (e.key === 'Enter' && trimmed && options.includes(trimmed)) {
+    if (e.key === 'Enter' && ((trimmed && options.includes(trimmed)) || focus != -1)) {
       e.preventDefault();
+
+      if (focus != -1) {
+        setChips([...chips, options[focus]]);
+        setInputValue('');
+        setFocus(-1);
+        return;
+      }
+
       if (!chips.includes(trimmed)) {
         setChips([...chips, trimmed]);
         setInputValue('');
@@ -20,6 +39,13 @@ const FilterField = ({ champions }) => {
     } else if (e.key === 'Backspace' && !inputValue && chips.length > 0) {
       const newChips = chips.slice(0, -1);
       setChips(newChips);
+      setFocus(-1);
+    } else if (e.key === 'ArrowDown' && options.length > 0) {
+      if (focus != options.length - 1)
+        setFocus(focus + 1);
+    } else if (e.key === 'ArrowUp' && options.length > 0) {
+      if (focus != 0)
+        setFocus(focus - 1);
     }
   };
 
@@ -34,6 +60,8 @@ const FilterField = ({ champions }) => {
     
     const filteredOptions = champions.filter(champ => champ.toLowerCase().includes(value.toLowerCase()));
     setOptions(filteredOptions);
+
+    setFocus(-1);
   }
 
   return (
@@ -63,7 +91,10 @@ const FilterField = ({ champions }) => {
           onKeyDown={handleKeyDown}
           className="flex-1 min-w-[120px] outline-none bg-transparent"
           placeholder={chips.length === 0 ? "Champion Name..." : ""}
-          onBlur={() => setShowDrop(false)}
+          onBlur={() => {
+            setShowDrop(false);
+            setFocus(-1);
+          }}
           onFocus={() => setShowDrop(true)}
         />
       </div>
@@ -76,13 +107,14 @@ const FilterField = ({ champions }) => {
         >
           {options.map((option, index) => (
             <div 
-              className="p-2 hover:bg-[#1c1f2e] border-transparent border rounded-md hover:border-slate-400"
+              className={`p-2 border rounded-md hover:border-slate-400 hover:bg-[#1c1f2e] ${index === focus ? "border-slate-400 bg-[#1c1f2e]" : "border-transparent"}`}
               onClick={() => {
                 setChips([...chips, option]);
                 setInputValue('');
                 setHovering(false);
               }}
               key={index}
+              ref={focus == index ? focusRef : null}
             >
               {option}
             </div>
