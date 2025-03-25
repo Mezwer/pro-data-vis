@@ -2,6 +2,9 @@ import pandas as pd
 import os
 
 # df = pd.read_csv("lck_data_2023.csv")
+GREEN = '\033[92m'
+RESET = '\033[0m'
+RED = '\033[91m'
 data_path = "./data"
 
 """
@@ -84,86 +87,57 @@ def get_rows(df, playername):
   frame = pd.DataFrame(new)
   frame.to_csv("./res.csv", index=False)
 
-# player_data_career_graph(get_all_data_years("LCK"), "Faker", "kills")
-# df = pd.read_csv("scripts/data/2024_data/lck_data_2024.csv")
-# print(get_player_total_data(df, "Faker", "kills"))
+"""
+check for any discrepancies in pick/ban
 
-# columns = [
-#   "league",
-#   "year",
-#   "split",
-#   "playoffs",
-#   "date",
-#   "game",
-#   "patch",
-#   "side",
-#   "position",
-#   "playername",
-#   "teamname",
-#   "champion",
-#   "ban1",
-#   "ban2",
-#   "ban3",
-#   "ban4",
-#   "ban5",
-#   "gamelength",
-#   "result",
-#   "kills",
-#   "deaths",
-#   "assists",
-#   "doublekills",
-#   "triplekills",
-#   "quadrakills",
-#   "pentakills",
-#   "firstbloodkill",
-#   "firstbloodvictim",
-#   "ckpm",
-#   "damagetochampions",
-#   "dpm",
-#   "damageshare",
-#   "damagetakenperminute",
-#   "damagemitigatedperminute",
-#   "wardsplaced",
-#   "wpm",
-#   "wardskilled",
-#   "wcpm",
-#   "controlwardsbought",
-#   "visionscore",
-#   "vspm",
-#   "totalgold",
-#   "earnedgold",
-#   "earned gpm",
-#   "earnedgoldshare",
-#   "goldspent",
-#   "total cs",
-#   "minionkills",
-#   "monsterkills",
-#   "cspm",
-#   "golddiffat10",
-#   "xpdiffat10",
-#   "csdiffat10",
-#   "killsat10",
-#   "assistsat10",
-#   "deathsat10",
-#   "golddiffat15",
-#   "xpdiffat15",
-#   "csdiffat15",
-#   "killsat15",
-#   "assistsat15",
-#   "deathsat15",
-#   "golddiffat20",
-#   "xpdiffat20",
-#   "csdiffat20",
-#   "killsat20",
-#   "assistsat20",
-#   "deathsat20",
-#   "golddiffat25",
-#   "xpdiffat25",
-#   "csdiffat25",
-#   "killsat25",
-#   "assistsat25",
-#   "deathsat25",
-# ]
+just because something is found does not necessarily mean there is something wrong
+should check though
+"""
+def check_champion_discrepancies(df: pd.DataFrame):
+  pick_cols = ["blue_pick1", "blue_pick2", "blue_pick3", "blue_pick4", "blue_pick5", "red_pick1", "red_pick2", "red_pick3", "red_pick4", "red_pick5"]
+  ban_cols = ["blue_ban1", "blue_ban2", "blue_ban3", "blue_ban4", "blue_ban5", "red_ban1", "red_ban2", "red_ban3", "red_ban4", "red_ban5"]
 
-# for col in columns:
-#   print(f"{col}: \"{col.capitalize()}\",")
+  for i, row in df.iterrows():
+    pickban = row.loc[pick_cols + ban_cols].values
+    if len(set(pickban)) != 20:
+      print(RED + f"Pick/Bans do not total to 20. Found at Row {i}." + RESET)
+    
+    picks = row.loc[pick_cols].values
+    bans = row.loc[ban_cols].values
+    player_pick = row.loc["champion"]
+    
+    if player_pick not in picks:
+      print(RED + f"Player pick not in picks. Found at Row {i}." + RESET)
+    
+    if player_pick in bans:
+      print(RED + f"Player pick in bans. Found at Row {i}." + RESET)
+  
+  print(GREEN + f"✓ Finished checks." + RESET)
+
+
+"""
+LPL discrepancies can more or less be ignored, because np.float64('nan') are all unique for some reason,
+so the len(set()) check will fail. All the LPL discrepancies can be attributed to the data not being
+there (pretty sure).
+"""
+def check_data_discrepancies(df: pd.DataFrame):
+  for i, batch in df.groupby(df.index // 10):
+    region = list(set(batch["league"].tolist()))[0]
+    new = batch.drop(df.columns[0:92], axis=1)
+    cols = new.columns.tolist()
+
+    for col in cols:
+      blue = batch[col].iloc[0:5].values
+      red = batch[col].iloc[5:11].values
+
+      indices = batch.index.tolist()
+      where = f"{indices[0]} - {indices[-1]}"
+      if len(set(blue)) != 1:
+        print(RED + f"Data for blue team does not match. Found at {where} with the {region}" + RESET)
+      if len(set(red)) != 1:
+        print(RED + f"Data for red team does not match. Found at {where} with the {region}" + RESET)
+
+  print(GREEN + f"✓ Finished checks." + RESET)
+
+df = pd.read_csv("./new_data.csv")
+check_data_discrepancies(df)
