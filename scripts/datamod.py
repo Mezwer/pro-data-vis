@@ -103,7 +103,7 @@ def merge_rows(df: pd.DataFrame):
 
   drop_cols += pick_cols
   drop_cols += ban_cols
-  
+
   for _, batch in df.groupby(df.index // 12):
     # Drop specified columns from the batch
     dropped = batch.drop(drop_cols, axis=1)
@@ -130,10 +130,21 @@ def merge_rows(df: pd.DataFrame):
   print(GREEN + "✓ Finished merging rows." + RESET)
   return pd.concat(batches, ignore_index=True)
 
-df = pd.read_csv(data_path)
-df = add_picks(df)
-df = add_bans(df)
-df = fill_team_info(df)
-df = merge_rows(df)
+# add internationals/major region tourneys (Worlds, MSI, Demacia Cup, Kespa)
+# Worlds = WLDs, kespa = KeSPA
+def add_tourneys(data: pd.DataFrame, df: pd.DataFrame):
+  add = ["WLDs", "MSI", "KeSPA", "DCup"]
+  new_tourn = data[data["league"].isin(add)]
+  
+  filtered = new_tourn[df.columns]
+  return pd.concat([df, filtered], ignore_index=True)
 
-df.to_csv("./new_data.csv")
+
+data = pd.read_csv("./datasets/2024_data.csv")
+df = pd.read_csv("./data/data_2024.csv")
+new_df = add_tourneys(data, df)
+
+new_df = add_bans(add_picks(new_df))
+new_df = fill_team_info(new_df)
+new_df = merge_rows(new_df)
+new_df.to_csv("./new_data2.csv")

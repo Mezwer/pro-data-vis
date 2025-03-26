@@ -118,11 +118,12 @@ def check_champion_discrepancies(df: pd.DataFrame):
 """
 LPL discrepancies can more or less be ignored, because np.float64('nan') are all unique for some reason,
 so the len(set()) check will fail. All the LPL discrepancies can be attributed to the data not being
-there (pretty sure).
+there (pretty sure). Also, there are sometimes just gaps in the data.
 """
 def check_data_discrepancies(df: pd.DataFrame):
+  IGNORE_PARTIAL = True
   for i, batch in df.groupby(df.index // 10):
-    region = list(set(batch["league"].tolist()))[0]
+    datacomp = list(set(batch["datacompleteness"].tolist()))[0]
     new = batch.drop(df.columns[0:92], axis=1)
     cols = new.columns.tolist()
 
@@ -132,12 +133,14 @@ def check_data_discrepancies(df: pd.DataFrame):
 
       indices = batch.index.tolist()
       where = f"{indices[0]} - {indices[-1]}"
-      if len(set(blue)) != 1:
-        print(RED + f"Data for blue team does not match. Found at {where} with the {region}" + RESET)
-      if len(set(red)) != 1:
-        print(RED + f"Data for red team does not match. Found at {where} with the {region}" + RESET)
+      if not IGNORE_PARTIAL or datacomp != "partial":
+        if len(set(blue)) != 1:
+          print(RED + f"Data for blue team does not match for {col}. Found at {where}, where the data completion is: {datacomp}" + RESET)
+        if len(set(red)) != 1:
+          print(RED + f"Data for red team does not match for {col}. Found at {where}, where the data completion is: {datacomp}" + RESET)
 
   print(GREEN + f"✓ Finished checks." + RESET)
 
-df = pd.read_csv("./new_data.csv")
+df = pd.read_csv("./new_data2.csv")
+# check_champion_discrepancies(df)
 check_data_discrepancies(df)
