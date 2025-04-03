@@ -4,25 +4,25 @@ import { fields, years, mapping, averages } from "@/constants/fields.js";
 
 const sql = neon(process.env.DATABASE_URL);
 
-export async function collectGraphData(player) {
+export async function collectGraphData(player, filters) {
   const start = performance.now();
-  let data = [];
   let select = "";
+  
+  // Build the SELECT part of the query
   for (const field of fields) {
     select += `ROUND(${averages.has(field) ? "AVG" : "SUM"}("${field}"), 2)::DOUBLE PRECISION as "${mapping[field]}", `;
   }
-
-  let query = select.slice(0, select.length - 2);
-  for (const year of years) {
+  select = select.slice(0, select.length - 2);
+  
+  // Use a UNION ALL query to fetch data for all years in a single database call
+  const queries = years.map(year => {
     const tablename = `data_${year}`;
-    const q = `SELECT ${query} FROM ${tablename} WHERE playername IS NOT NULL AND playername = '${player}'`;
-    const result = await sql(q);
-
-    data.push(result[0]);
-    data[data.length - 1].Year = `'${year % 100}`;
-  };
-
-  // console.log(data);
+    return `(SELECT ${select}, '${year % 100}' as "Year" FROM ${tablename} WHERE playername IS NOT NULL AND playername = $1)`;
+  });
+  
+  const unionQuery = queries.join(" UNION ALL ") + " ORDER BY \"Year\" ASC";;
+  const result = await sql(unionQuery, [player]);
+  
   const end = performance.now();
-  return data;
+  return result;
 }

@@ -7,7 +7,7 @@ const CustomTooltip = ({ active, payload, data, mod }) => {
 
   let val = payload[0].payload.Year;
   if (mod == 0) {
-    val = `20${val.slice(1, val.length)}`;
+    val = `20${val}`;
   }
 
   return (
