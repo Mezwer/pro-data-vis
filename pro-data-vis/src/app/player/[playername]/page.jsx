@@ -1,10 +1,6 @@
 "use client";
 import React from "react";
-import LineGraph from "@/components/LineGraph/LineGraph";
-import StatToolbar from "@/components/StatToolbar/StatToolbar";
-import NamePlate from "@/components/NamePlate/NamePlate";
-import Spinner from "@/components/Spinner/Spinner";
-import FilterToolbar from "@/components/FilterToolbar/FilterToolbar";
+import { LineGraph, StatToolbar, NamePlate, Spinner, FilterToolbar } from "@/components";
 import { useState, useEffect } from "react";
 import { fields, colors, mapping } from "@/constants/fields.js";
 import { filterSelection } from "@/constants/filters";
