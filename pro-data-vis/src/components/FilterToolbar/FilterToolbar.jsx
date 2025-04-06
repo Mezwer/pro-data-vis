@@ -4,7 +4,7 @@ import FilterField from "../FilterField/FilterField";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-const FilterToolbar = ({ state, layoutState, champions }) => {
+const FilterToolbar = ({ choices, filters, setFilter}) => {
   const [collapse, setCollapse] = useState(false);
 
   return (
@@ -20,7 +20,7 @@ const FilterToolbar = ({ state, layoutState, champions }) => {
       </div>
       
       <div className="w-11/12 mt-5 ml-20">
-        <FilterField champions={champions}/>
+        <FilterField choices={choices} filter={filters} setFilter={setFilter}/>
       </div>
     </div>
   );

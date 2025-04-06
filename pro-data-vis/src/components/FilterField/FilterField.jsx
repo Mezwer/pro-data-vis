@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { filters } from "@/constants/filters";
 import { X } from 'lucide-react';
 
-const FilterField = ({ champions }) => {
+const FilterField = ({ choices, filter, setFilter }) => {
   const [chips, setChips] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [showDrop, setShowDrop] = useState(true);
@@ -20,25 +19,29 @@ const FilterField = ({ champions }) => {
     }
   }, [focus]);
 
+  const setValues = (newVal) => {
+    setChips(newVal);
+    setFilter(prev => ({...prev, [filter]: newVal}));
+  }
+
   const handleKeyDown = (e) => {
     const trimmed = inputValue.trim();
     if (e.key === 'Enter' && ((trimmed && options.includes(trimmed)) || focus != -1)) {
       e.preventDefault();
 
       if (focus != -1) {
-        setChips([...chips, options[focus]]);
+        setValues([...chips, options[focus]])
         setInputValue('');
         setFocus(-1);
         return;
       }
 
       if (!chips.includes(trimmed)) {
-        setChips([...chips, trimmed]);
+        setValues([...chips, trimmed]);
         setInputValue('');
       }
     } else if (e.key === 'Backspace' && !inputValue && chips.length > 0) {
-      const newChips = chips.slice(0, -1);
-      setChips(newChips);
+      setValues(chips.slice(0, -1));
       setFocus(-1);
     } else if (e.key === 'ArrowDown' && options.length > 0) {
       if (focus != options.length - 1)
@@ -51,14 +54,14 @@ const FilterField = ({ champions }) => {
 
   const removeChip = (chipToRemove) => {
     const newChips = chips.filter(chip => chip !== chipToRemove);
-    setChips(newChips);
+    setValues(newChips);
   };
 
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
     
-    const filteredOptions = champions.filter(champ => champ.toLowerCase().includes(value.toLowerCase()));
+    const filteredOptions = choices.filter(choice => choice.toLowerCase().includes(value.toLowerCase()));
     setOptions(filteredOptions);
 
     setFocus(-1);
@@ -109,7 +112,7 @@ const FilterField = ({ champions }) => {
             <div 
               className={`p-2 border rounded-md hover:border-slate-400 hover:bg-[#1c1f2e] ${index === focus ? "border-slate-400 bg-[#1c1f2e]" : "border-transparent"}`}
               onClick={() => {
-                setChips([...chips, option]);
+                setValues([...chips, option]);
                 setInputValue('');
                 setHovering(false);
               }}

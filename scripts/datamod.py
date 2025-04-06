@@ -90,7 +90,6 @@ def merge_rows(df: pd.DataFrame):
     "side",
     "position",
     "playername",
-    "teamname",
     "champion",
     "gamelength",
     "damageshare",
@@ -140,11 +139,12 @@ def add_tourneys(data: pd.DataFrame, df: pd.DataFrame):
   return pd.concat([df, filtered], ignore_index=True)
 
 
-data = pd.read_csv("./datasets/2024_data.csv")
-df = pd.read_csv("./data/data_2024.csv")
+yr = 2022
+data = pd.read_csv(f"./datasets/{yr}_data.csv")
+df = pd.read_csv(f"./data/data_{yr}.csv")
 new_df = add_tourneys(data, df)
 
 new_df = add_bans(add_picks(new_df))
 new_df = fill_team_info(new_df)
 new_df = merge_rows(new_df)
-new_df.to_csv("./new_data2.csv")
+new_df.to_csv(f"./new_data2_{yr}.csv")

@@ -141,6 +141,19 @@ def check_data_discrepancies(df: pd.DataFrame):
 
   print(GREEN + f"✓ Finished checks." + RESET)
 
-df = pd.read_csv("./new_data2.csv")
+def check_team_discrepancies(df: pd.DataFrame):
+  for i, batch in df.groupby(df.index // 10):
+    teams = batch["teamname"].tolist()
+    mirror = batch["opp_teamname"].tolist()
+    mirror.reverse()
+
+    if teams != mirror:
+      print(RED + f"Teams do not match at row: {i}." + RESET)
+
+  print(GREEN + f"✓ Finished team checks." + RESET)
+
+
+df = pd.read_csv("./new_data2_2022.csv")
 # check_champion_discrepancies(df)
-check_data_discrepancies(df)
+# check_data_discrepancies(df)
+check_team_discrepancies(df)

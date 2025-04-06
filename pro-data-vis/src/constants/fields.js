@@ -25,10 +25,10 @@ export const fields = [
   "vspm",
   "totalgold",
   "earnedgold",
-  "earned gpm",
+  "earned_gpm",
   "earnedgoldshare",
   "goldspent",
-  "total cs",
+  "total_cs",
   "minionkills",
   "monsterkills",
   "cspm",
@@ -102,10 +102,10 @@ export const mapping = {
   vspm: "VSPM",
   totalgold: "Total Gold",
   earnedgold: "Earned Gold",
-  "earned gpm": "Earned GPM",
+  earned_gpm: "Earned GPM",
   earnedgoldshare: "Earned Gold Share",
   goldspent: "Gold Spent",
-  "total cs": "Total CS",
+  total_cs: "Total CS",
   minionkills: "Minion Kills",
   monsterkills: "Monster Kills",
   cspm: "CSPM",
@@ -164,7 +164,7 @@ const createColors = () => {
 
 export const colors = createColors();
 
-export const years = [ 2019, 2020, 2021, 2022, 2023, 2024 ];
+export const years = [ 2022, 2023, 2024 ]; // will add more years after testing done
 
 export const averages = new Set([
   "ckpm",
@@ -176,7 +176,7 @@ export const averages = new Set([
   "wcpm",
   "visionscore",
   "vspm",
-  "earned gpm",
+  "earned_gpm",
   "earnedgoldshare",
   "cspm",
   "golddiffat10",
