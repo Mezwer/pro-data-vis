@@ -13,16 +13,10 @@ export const filterSelection = [
   "champion",
   "gamelength",
   "result",
-  "blue_pick1",
-  "blue_pick2",
-  "blue_pick3",
-  "blue_pick4",
-  "blue_pick5",
-  "red_pick1",
-  "red_pick2",
-  "red_pick3",
-  "red_pick4",
-  "red_pick5",
+  "opp_teamname",
+]
+
+export const filterBans = [
   "blue_ban1",
   "blue_ban2",
   "blue_ban3",
@@ -33,7 +27,22 @@ export const filterSelection = [
   "red_ban3",
   "red_ban4",
   "red_ban5",
-  "opp_teamname",
+]
+
+export const filterPicks = [
+  "blue_pick1",
+  "blue_pick2",
+  "blue_pick3",
+  "blue_pick4",
+  "blue_pick5",
+  "red_pick1",
+  "red_pick2",
+  "red_pick3",
+  "red_pick4",
+  "red_pick5",
+]
+
+export const filterNumeric = [
   "opp_kills",
   "opp_deaths",
   "opp_assists",

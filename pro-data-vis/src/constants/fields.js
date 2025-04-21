@@ -160,7 +160,7 @@ const createColors = () => {
   }
 
   return colors;
-}
+};
 
 export const colors = createColors();
 
@@ -261,4 +261,15 @@ export const descriptions = {
   "Kills @ 25": "",
   "Assists @ 25": "",
   "Deaths @ 25": "",
-}
+};
+
+export const leagues = [
+  "LCK",
+  "LPL",
+  "LEC",
+  "LCS",
+  "KeSPA",
+  "DCup",
+  "MSI",
+  "WLDs"
+];
