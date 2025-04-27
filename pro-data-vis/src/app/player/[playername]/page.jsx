@@ -1,7 +1,6 @@
 // import React from "react";
 import { Player } from "@/components";
-import { collectGraphData } from "@/app/actions";
-import { neon } from "@neondatabase/serverless";
+import { collectGraphData, collectPageData } from "@/app/actions";
 
 export default async function ServerPage({ params }) {
   const start = performance.now();
@@ -9,18 +8,27 @@ export default async function ServerPage({ params }) {
   // data fetching
   const { playername } = await params;
   const championRes = await fetch("https://ddragon.leagueoflegends.com/cdn/15.2.1/data/en_US/champion.json"); // champion names 
-  const champions = (await championRes.json()).data;
+  const champData = (await championRes.json()).data;
+  const champions = Object.keys(champData).map((item) => champData[item].name);
 
   const graphRes = await collectGraphData(playername);
+  const pageData = await collectPageData();
 
   const end = performance.now();
   console.log(end - start);
 
+  const staticData = {
+    champions: champions,
+    ...pageData,
+  }
+
   return (
     <Player 
       playername={playername} 
-      graphData={graphRes} 
-      champions={Object.keys(champions).map((item) => champions[item].name)}/>
+      graphData={graphRes}
+      champions={champions}
+      staticData={staticData}
+    />
   );
 };
 

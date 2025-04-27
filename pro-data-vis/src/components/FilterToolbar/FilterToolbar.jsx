@@ -19,7 +19,8 @@ const FilterToolbar = ({ choices, filters, setFilter}) => {
         </span>
       </div>
       
-      <div className="w-11/12 mt-5 ml-20">
+      <div className="w-11/12 mt-5 mx-auto flex gap-10">
+        <FilterField choices={choices} filter={filters} setFilter={setFilter}/>
         <FilterField choices={choices} filter={filters} setFilter={setFilter}/>
       </div>
     </div>

@@ -3,9 +3,20 @@ import React from "react";
 import { LineGraph, StatToolbar, NamePlate, Spinner, FilterToolbar } from "@/components";
 import { useState, useEffect } from "react";
 import { fields, colors, mapping } from "@/constants/fields.js";
-import { filterSelection } from "@/constants/filters";
+import { filterSelection, filterSelectionTemp } from "@/constants/filters";
 
-const Player = ({ playername, graphData, champions }) => {
+/**
+ * Renders the page of a player, with all graphs and data
+ * 
+ * @param {Object} props 
+ * @param {string} props.playername - name of player
+ * @param {Object[]} props.graphData - data for the player
+ * @param {string[]} props.champions - list of champions in league
+ * @returns {React.JSX.Element}
+ */
+const Player = ({ playername, graphData, staticData }) => {
+  const { champions, teamnames } = staticData;
+
   // show which items
   const [show, setShow] = useState(fields.map(((field, index) => 
     [
@@ -61,7 +72,6 @@ const Player = ({ playername, graphData, champions }) => {
     }
 
     const end = performance.now();
-    console.log(end - start);
     return newData;
   }
 
@@ -70,7 +80,8 @@ const Player = ({ playername, graphData, champions }) => {
       if (filter.length === 0) continue;
 
       const name = key;
-      if (!filter.includes(row[name])) return false;
+      // if (!filter.includes(row[name])) return false;
+      if (!filterSelectionTemp[name](1, row, filter, name)) return false;
     }
 
     return true;
@@ -109,7 +120,7 @@ const Player = ({ playername, graphData, champions }) => {
       <div className={`${arrange} place-items-center`}>
         {show.map((item) => 
           item[2] ? (
-          <div className="h-[45vh] w-11/12 flex flex-col gap-12 items-center justify-center border-solid border-zinc-800 bg-zinc-800/40 border-2 rounded-2xl mb-10" key={item[0]}>
+          <div className="h-96 w-11/12 mx-auto flex flex-col gap-12 items-center justify-center border-solid border-zinc-800 bg-zinc-800/40 border-2 rounded-2xl mb-10" key={item[0]}>
             <span> {item[0]} </span>
             <LineGraph 
               color={colors[item[0]]}

@@ -2,7 +2,16 @@ import React from "react";
 import { Area, AreaChart, Tooltip, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Label } from "recharts";
 import CustomTooltip from "../Tooltip/CustomTooltip.jsx";
 
-
+/**
+ * Component for a graph depicting player data
+ * Used for a single stat (i.e kills/year or deaths/year)
+ * 
+ * @param {Object} props
+ * @param {string} props.color - color of graph
+ * @param {Object[]} props.data - data for graph
+ * @param {string} props.ydata - key for what the y-axis data is
+ * @returns {React.JSX.Element}
+ */
 const LineGraph = ({ color, data, ydata }) => {
   // Create a unique ID for each gradient using the color value
   const gradientId = `gradient-${color}`;

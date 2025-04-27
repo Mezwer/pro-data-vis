@@ -68,10 +68,8 @@ const FilterField = ({ choices, filter, setFilter }) => {
   }
 
   return (
-    <div className="w-1/3 relative">
-      <div 
-        className="p-2 rounded-md flex flex-wrap gap-2 outline-none bg-[#1E202880] focus-within:ring-[1px] focus-within:ring-white"
-      >
+    <div className="relative flex-1">
+      <div className="p-2 rounded-md flex flex-wrap gap-2 outline-none bg-[#1E202880] focus-within:ring-[1px] focus-within:ring-white">
         {chips.map((chip) => (
           <div
             key={chip}

@@ -16,6 +16,30 @@ export const filterSelection = [
   "opp_teamname",
 ]
 
+/*
+  returns if a NAME given a ROW and FILTER is valid 
+  NAME - name of the filter, i.e "champions" or "playoffs"
+  FILTER - list of parameters to filter by (want to include/exclude)
+  ROW - data to validate
+  TYPE - 0 means exclude, 1 means include
+*/
+function include_exclude(type, row, filter, name) {
+  const result = filter.includes(row[name]);
+  return type === 0 ? !result : result;
+}
+
+/*
+  returns if a 
+*/
+function range_include(row, filter, name) {
+
+}
+
+export const filterSelectionTemp = {
+  champion: include_exclude,
+  opp_teamname: include_exclude,
+}
+
 export const filterBans = [
   "blue_ban1",
   "blue_ban2",

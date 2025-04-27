@@ -4,7 +4,6 @@ import { fields, years, mapping, averages } from "@/constants/fields.js";
 import { filterSelection, filterBans, filterPicks, filterNumeric } from "@/constants/filters";
 
 const sql = neon(process.env.DATABASE_URL);
-// console.log("connecting to db...");
 
 export async function collectGraphData(player) {
   const selectFields = [
@@ -40,5 +39,22 @@ export async function collectGraphData(player) {
 }
 
 export async function collectPageData() {
+  const selectFields = [
+    "teamname"
+  ].join(",");
+
+  const queries = years.map(year => {
+    const tablename = `data_${year}_new`;
+    return `(SELECT ${selectFields} FROM ${tablename})`;
+  });
   
+  const unionQuery = queries.join(" UNION ");
+  const result = await sql(unionQuery);
+
+  const names = result.map(teamname => teamname.teamname)
+  // console.log(names);
+
+  return {
+    teamnames: names,
+  }
 }
