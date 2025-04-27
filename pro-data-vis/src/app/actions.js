@@ -40,7 +40,8 @@ export async function collectGraphData(player) {
 
 export async function collectPageData() {
   const selectFields = [
-    "teamname"
+    "teamname",
+    "league",
   ].join(",");
 
   const queries = years.map(year => {
@@ -51,10 +52,12 @@ export async function collectPageData() {
   const unionQuery = queries.join(" UNION ");
   const result = await sql(unionQuery);
 
-  const names = result.map(teamname => teamname.teamname)
+  const names = [... new Set(result.map(teamname => teamname.teamname))].sort();
+  const league = [...new Set(result.map(league => league.league))].sort();
   // console.log(names);
 
   return {
-    teamnames: names,
+    opp_teamname: names,
+    league: league,
   }
 }

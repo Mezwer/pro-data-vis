@@ -133,6 +133,8 @@ export const mapping = {
   killsat25: "Kills @ 25",
   assistsat25: "Assists @ 25",
   deathsat25: "Deaths @ 25",
+  champions: "Champion",
+  opp_teamname: "Opposing Team",
 };
 
 export const staticColors = [ 
@@ -262,14 +264,3 @@ export const descriptions = {
   "Assists @ 25": "",
   "Deaths @ 25": "",
 };
-
-export const leagues = [
-  "LCK",
-  "LPL",
-  "LEC",
-  "LCS",
-  "KeSPA",
-  "DCup",
-  "MSI",
-  "WLDs"
-];

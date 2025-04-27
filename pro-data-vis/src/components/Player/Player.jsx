@@ -15,22 +15,18 @@ import { filterSelection, filterSelectionTemp } from "@/constants/filters";
  * @returns {React.JSX.Element}
  */
 const Player = ({ playername, graphData, staticData }) => {
-  const { champions, teamnames } = staticData;
-
   // show which items
   const [show, setShow] = useState(fields.map(((field, index) => 
     [
       mapping[field], 
       index, 
-      ["kills", "deaths", "assists", "total cs"].includes(field)
+      ["kills", "deaths", "assists", "total cs"].includes(field),
     ]
   )));
 
   const [filters, setFilters] = useState(
     Object.fromEntries(
-      filterSelection.map(
-        filter => [filter, []]
-      )
+      filterSelection.map(filter => [filter, []])
     )
   );
 
@@ -80,8 +76,7 @@ const Player = ({ playername, graphData, staticData }) => {
       if (filter.length === 0) continue;
 
       const name = key;
-      // if (!filter.includes(row[name])) return false;
-      if (!filterSelectionTemp[name](1, row, filter, name)) return false;
+      if (!filterSelectionTemp[name](row, filter, name, 1)) return false;
     }
 
     return true;
@@ -115,7 +110,7 @@ const Player = ({ playername, graphData, staticData }) => {
         state={{show: show, setShow: changeShow}} 
         layoutState={{layout: layout, setLayout: setLayout}}
       />
-      <FilterToolbar choices={champions} filters="champion" setFilter={setFilters}/>
+      <FilterToolbar choices={staticData} setFilter={setFilters}/>
 
       <div className={`${arrange} place-items-center`}>
         {show.map((item) => 

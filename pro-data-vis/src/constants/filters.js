@@ -1,4 +1,5 @@
 // fields that are for filtering
+
 // everything not in select basically
 export const filterSelection = [
   "league",
@@ -16,28 +17,55 @@ export const filterSelection = [
   "opp_teamname",
 ]
 
-/*
-  returns if a NAME given a ROW and FILTER is valid 
-  NAME - name of the filter, i.e "champions" or "playoffs"
-  FILTER - list of parameters to filter by (want to include/exclude)
-  ROW - data to validate
-  TYPE - 0 means exclude, 1 means include
-*/
-function include_exclude(type, row, filter, name) {
+/**
+ * To be used in a mapping from filter -> function for use in Player.jsx.
+ * 
+ * Used when you need to filter by if something is included/excluded from a filter
+ * 
+ * @param {Object} row - row of a list to validate
+ * @param {Array} filter - array of parameters to filter by
+ * @param {string} name - name of what to filter ```row``` by
+ * @param {number} type - 0 for exclude, 1 for include
+ * @returns {boolean} returns whether or not the row is "valid" or not based on the filters
+ */
+function include_exclude(row, filter, name, type) {
   const result = filter.includes(row[name]);
   return type === 0 ? !result : result;
 }
 
-/*
-  returns if a 
-*/
-function range_include(row, filter, name) {
-
+/**
+ * to be used in a mapping from filter -> function for use in Player.jsx,
+ * 
+ * @param {*} row 
+ * @param {*} filter 
+ * @param {*} name 
+ * @param {*} type 
+ * @returns {boolean} returns whether or not the row is "valid" or not based on the filters
+ */
+function range_include(row, filter, name, type) {
+  const start = filter[0] || 0, end = filter[1] || 0;
+  return start <= row[name] && row[name] <= end;
 }
 
+/**
+ * to be used in a mapping from filter -> function for use in Player.jsx,
+ * 
+ * @param {*} row 
+ * @param {*} filter 
+ * @param {*} name 
+ * @param {*} type 
+ * @returns {boolean} returns whether or not the row is "valid" or not based on the filters
+ */
+function yes_no(row, filter, name, type) {
+  return !(filter[0] || 0) || row[name];
+}
+
+// all functions should be of the same signature
 export const filterSelectionTemp = {
   champion: include_exclude,
   opp_teamname: include_exclude,
+  game_length: range_include,
+  league: include_exclude,
 }
 
 export const filterBans = [

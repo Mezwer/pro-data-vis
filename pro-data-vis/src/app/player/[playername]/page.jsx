@@ -18,7 +18,7 @@ export default async function ServerPage({ params }) {
   console.log(end - start);
 
   const staticData = {
-    champions: champions,
+    champion: champions,
     ...pageData,
   }
 

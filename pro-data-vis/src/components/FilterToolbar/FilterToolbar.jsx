@@ -4,7 +4,7 @@ import FilterField from "../FilterField/FilterField";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-const FilterToolbar = ({ choices, filters, setFilter}) => {
+const FilterToolbar = ({ choices, setFilter}) => {
   const [collapse, setCollapse] = useState(false);
 
   return (
@@ -20,8 +20,11 @@ const FilterToolbar = ({ choices, filters, setFilter}) => {
       </div>
       
       <div className="w-11/12 mt-5 mx-auto flex gap-10">
-        <FilterField choices={choices} filter={filters} setFilter={setFilter}/>
-        <FilterField choices={choices} filter={filters} setFilter={setFilter}/>
+        {
+          Object.keys(choices).map(filter => (
+            <FilterField choices={choices[filter]} filter={filter} setFilter={setFilter} key={filter}/>
+          ))
+        }
       </div>
     </div>
   );

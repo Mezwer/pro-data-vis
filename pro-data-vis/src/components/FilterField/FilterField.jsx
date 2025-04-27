@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { mapping } from "@/constants/fields";
 import { X } from 'lucide-react';
 
 const FilterField = ({ choices, filter, setFilter }) => {
@@ -91,7 +92,7 @@ const FilterField = ({ choices, filter, setFilter }) => {
           onChange={(e) => handleInputChange(e)}
           onKeyDown={handleKeyDown}
           className="flex-1 min-w-[120px] outline-none bg-transparent"
-          placeholder={chips.length === 0 ? "Champion Name..." : ""}
+          placeholder={chips.length === 0 ? `Enter a ${mapping[filter]}...` : ""}
           onBlur={() => {
             setShowDrop(false);
             setFocus(-1);
