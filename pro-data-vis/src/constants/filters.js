@@ -66,7 +66,12 @@ export const filterSelectionTemp = {
   opp_teamname: include_exclude,
   game_length: range_include,
   league: include_exclude,
+  playoffs: yes_no,
 }
+
+export const filterToggle = [
+  "playoffs",
+];
 
 export const filterBans = [
   "blue_ban1",

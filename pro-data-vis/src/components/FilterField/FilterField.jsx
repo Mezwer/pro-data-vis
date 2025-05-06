@@ -30,17 +30,17 @@ const FilterField = ({ choices, filter, setFilter }) => {
     if (e.key === 'Enter' && ((trimmed && options.includes(trimmed)) || focus != -1)) {
       e.preventDefault();
 
-      if (focus != -1) {
+      if (focus != -1 && !chips.includes(options[focus])) {
         setValues([...chips, options[focus]])
         setInputValue('');
         setFocus(-1);
         return;
       }
 
-      if (!chips.includes(trimmed)) {
-        setValues([...chips, trimmed]);
-        setInputValue('');
-      }
+      // if (!chips.includes(trimmed)) {
+      //   setValues([...chips, trimmed]);
+      //   setInputValue('');
+      // }
     } else if (e.key === 'Backspace' && !inputValue && chips.length > 0) {
       setValues(chips.slice(0, -1));
       setFocus(-1);
@@ -91,7 +91,7 @@ const FilterField = ({ choices, filter, setFilter }) => {
           value={inputValue}
           onChange={(e) => handleInputChange(e)}
           onKeyDown={handleKeyDown}
-          className="flex-1 min-w-[120px] outline-none bg-transparent"
+          className="outline-none bg-transparent flex-1 h-full"
           placeholder={chips.length === 0 ? `Enter a ${mapping[filter]}...` : ""}
           onBlur={() => {
             setShowDrop(false);
@@ -109,7 +109,7 @@ const FilterField = ({ choices, filter, setFilter }) => {
         >
           {options.map((option, index) => (
             <div 
-              className={`p-2 border rounded-md hover:border-slate-400 hover:bg-[#1c1f2e] ${index === focus ? "border-slate-400 bg-[#1c1f2e]" : "border-transparent"}`}
+              className={`p-2 border rounded-md ${index === focus ? "border-slate-400 bg-[#1c1f2e]" : "border-transparent"}`}
               onClick={() => {
                 setValues([...chips, option]);
                 setInputValue('');
@@ -117,6 +117,7 @@ const FilterField = ({ choices, filter, setFilter }) => {
               }}
               key={index}
               ref={focus == index ? focusRef : null}
+              onMouseMove={() => setFocus(index)}
             >
               {option}
             </div>

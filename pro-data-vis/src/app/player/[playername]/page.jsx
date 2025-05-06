@@ -1,4 +1,3 @@
-// import React from "react";
 import { Player } from "@/components";
 import { collectGraphData, collectPageData } from "@/app/actions";
 
@@ -15,7 +14,7 @@ export default async function ServerPage({ params }) {
   const pageData = await collectPageData();
 
   const end = performance.now();
-  console.log(end - start);
+  // console.log(end - start);
 
   const staticData = {
     champion: champions,
@@ -31,5 +30,3 @@ export default async function ServerPage({ params }) {
     />
   );
 };
-
-// export default PlayerPage;

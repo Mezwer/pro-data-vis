@@ -1,10 +1,10 @@
-import React from "react";
-import Checkbox from "../Checkbox/Checkbox";
-import FilterField from "../FilterField/FilterField";
+import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { FilterRange, FilterToggle, FilterField } from "..";
+import { filterToggle } from '@/constants/filters';
+import { mapping } from "@/constants/fields";
 
-const FilterToolbar = ({ choices, setFilter}) => {
+const FilterToolbar = ({ choices, setFilter }) => {
   const [collapse, setCollapse] = useState(false);
 
   return (
@@ -19,12 +19,29 @@ const FilterToolbar = ({ choices, setFilter}) => {
         </span>
       </div>
       
-      <div className="w-11/12 mt-5 mx-auto flex gap-10">
-        {
-          Object.keys(choices).map(filter => (
-            <FilterField choices={choices[filter]} filter={filter} setFilter={setFilter} key={filter}/>
-          ))
-        }
+      <div className={`w-11/12 mt-5 mx-auto left-0 right-0 flex flex-col gap-3 transition-all duration-150 ${collapse ? "-translate-y-4 opacity-0 pointer-events-none absolute" : ""}`}>
+        <div className="flex flex-row gap-5 flex-wrap">
+          {
+            Object.keys(choices).map(filter => (
+              <FilterField choices={choices[filter]} filter={filter} setFilter={setFilter} key={filter}/>
+            ))
+          }
+        </div>
+        
+        <div className="flex flex-row gap-10">
+          <div className="flex flex-col gap-0 flex-1">
+            <FilterRange filter={"Game Length"}/>
+            <FilterRange filter={"Game Length"}/>
+          </div>
+
+          <div className="flex-1">
+            {
+              filterToggle.map(filter => (
+                <FilterToggle label={mapping[filter]} filter={filter} setFilter={setFilter} key={filter} />
+              ))
+            }
+          </div>
+        </div>
       </div>
     </div>
   );
