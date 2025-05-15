@@ -1,6 +1,7 @@
 
 // only summable fields
 export const fields = [
+  "result",
   "kills",
   "deaths",
   "assists",
@@ -77,7 +78,7 @@ export const mapping = {
   ban4: "Ban4",
   ban5: "Ban5",
   gamelength: "Game Length",
-  result: "Result",
+  result: "Win Rate",
   kills: "Kills",
   deaths: "Deaths",
   assists: "Assists",
@@ -135,6 +136,10 @@ export const mapping = {
   deathsat25: "Deaths @ 25",
   champions: "Champion",
   opp_teamname: "Opposing Team",
+  win: "Win",
+  loss: "Loss",
+  blue: "Blue",
+  red: "Red",
 };
 
 export const staticColors = [ 
@@ -169,6 +174,7 @@ export const colors = createColors();
 export const years = [ 2022, 2023, 2024 ]; // will add more years after testing done
 
 export const averages = new Set([
+  "result",
   "ckpm",
   "dpm",
   "damageshare",

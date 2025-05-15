@@ -15,7 +15,7 @@ export const filterSelection = [
   "gamelength",
   "result",
   "opp_teamname",
-]
+];
 
 /**
  * To be used in a mapping from filter -> function for use in Player.jsx.
@@ -67,10 +67,16 @@ export const filterSelectionTemp = {
   game_length: range_include,
   league: include_exclude,
   playoffs: yes_no,
+  result: include_exclude,
+  side: include_exclude,
 }
 
 export const filterToggle = [
   "playoffs",
+  "win",
+  "loss",
+  "blue",
+  "red",
 ];
 
 export const filterBans = [

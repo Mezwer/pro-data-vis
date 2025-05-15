@@ -2,7 +2,7 @@
 import React from "react";
 import { LineGraph, StatToolbar, NamePlate, Spinner, FilterToolbar } from "@/components";
 import { useState, useEffect } from "react";
-import { fields, colors, mapping } from "@/constants/fields.js";
+import { fields, colors, mapping, averages } from "@/constants/fields.js";
 import { filterSelection, filterSelectionTemp } from "@/constants/filters";
 
 /**
@@ -20,7 +20,8 @@ const Player = ({ playername, graphData, staticData }) => {
     [
       mapping[field], 
       index, 
-      ["kills", "deaths", "assists", "total cs"].includes(field),
+      ["kills", "deaths", "assists", "result"].includes(field),
+      field,
     ]
   )));
 
@@ -30,6 +31,7 @@ const Player = ({ playername, graphData, staticData }) => {
     )
   );
 
+  console.log(filters);
   // layout of graphs: 0 = vertical, 1 = compact
   const [layout, setLayout] = useState(0);
 
@@ -93,8 +95,11 @@ const Player = ({ playername, graphData, staticData }) => {
         }
       });
 
-      newData.push({Year: year, [item]: sum / (avg ? count : 1)});
+      const number = (avg) ? (sum / count).toFixed(2) : sum;
+      newData.push({Year: year, [item]: number});
     }
+
+    // console.log(`${item} ${avg}`);
     return newData;
   };
 
@@ -119,7 +124,7 @@ const Player = ({ playername, graphData, staticData }) => {
             <span> {item[0]} </span>
             <LineGraph 
               color={colors[item[0]]}
-              data={getColData(item[0], filteredData, false)}
+              data={getColData(item[0], filteredData, averages.has(item[3]))}
               ydata={item[0]}
             />
           </div>

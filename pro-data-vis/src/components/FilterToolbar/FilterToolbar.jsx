@@ -29,15 +29,15 @@ const FilterToolbar = ({ choices, setFilter }) => {
         </div>
         
         <div className="flex flex-row gap-10">
-          <div className="flex flex-col gap-0 flex-1">
+          <div className="flex flex-col gap-0 flex-1 min-w-[50lvw]">
             <FilterRange filter={"Game Length"}/>
             <FilterRange filter={"Game Length"}/>
           </div>
 
-          <div className="flex-1">
+          <div className="flex-1 flex flex-row gap-7 justify-start align-top mb-auto flex-wrap">
             {
               filterToggle.map(filter => (
-                <FilterToggle label={mapping[filter]} filter={filter} setFilter={setFilter} key={filter} />
+                <FilterToggle label={mapping[filter] || filter} filter={filter} setFilter={setFilter} key={filter} />
               ))
             }
           </div>

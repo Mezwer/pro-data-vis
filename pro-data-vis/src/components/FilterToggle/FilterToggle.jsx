@@ -9,7 +9,22 @@ const FilterToggle = ({ label, filter, setFilter }) => {
       const newValue = !isChecked;
       setIsChecked(newValue);
       
-      setFilter(prev => ({...prev, [filter]: [newValue]}));
+      const special = {
+        "Loss": [0, "result"],
+        "Win": [1, "result"],
+        "Blue": ["Blue", "side"],
+        "Red": ["Red", "side"],
+      };
+
+      if (!Object.keys(special).includes(label)) setFilter(prev => ({...prev, [filter]: [newValue]}));
+      else {
+        // special architecture for win/loss, blue/red because of the field
+        setFilter(prev => {
+          const val = special[label][0], category = special[label][1];
+          const newVals = (newValue) ? [...prev[category], val] : [...prev[category]].filter(value => value !== val);
+          return {...prev, [category]: newVals};
+        });
+      }
     }
   };
   
