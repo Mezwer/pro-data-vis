@@ -44,6 +44,10 @@ export async function collectPageData() {
     "league",
   ].join(",");
 
+  const rangeFields = [
+    "gamelength",
+  ].join(",");
+
   const queries = years.map(year => {
     const tablename = `data_${year}_new`;
     return `(SELECT ${selectFields} FROM ${tablename})`;

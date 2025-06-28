@@ -64,7 +64,7 @@ function yes_no(row, filter, name, type) {
 export const filterSelectionTemp = {
   champion: include_exclude,
   opp_teamname: include_exclude,
-  game_length: range_include,
+  gamelength: range_include,
   league: include_exclude,
   playoffs: yes_no,
   result: include_exclude,

@@ -31,9 +31,9 @@ const Player = ({ playername, graphData, staticData }) => {
     )
   );
 
-  console.log(filters);
-  // layout of graphs: 0 = vertical, 1 = compact
-  const [layout, setLayout] = useState(0);
+  // console.log(filters);
+  // layout of graphs: 0 = vertical, 1 = compact, 2 = more compact
+  const [layout, setLayout] = useState(1);
 
   // const [data, setData] = useState(graphData);
   const [loading, setLoading] = useState(true);
@@ -107,7 +107,13 @@ const Player = ({ playername, graphData, staticData }) => {
     return (<Spinner />);
   }
 
-  const arrange = layout == 1 ? "grid grid-cols-3" : "";
+  let arrange = "";
+  if (layout == 1) {
+    arrange = "grid grid-cols-3";
+  } else if (layout == 2) {
+    arrange = "grid grid-cols-4";
+  }
+
   return (
     <>
       <NamePlate name={playername}/>
@@ -120,7 +126,10 @@ const Player = ({ playername, graphData, staticData }) => {
       <div className={`${arrange} place-items-center`}>
         {show.map((item) => 
           item[2] ? (
-          <div className="h-96 w-11/12 mx-auto flex flex-col gap-12 items-center justify-center border-solid border-zinc-800 bg-zinc-800/40 border-2 rounded-2xl mb-10" key={item[0]}>
+          <div 
+            className="h-96 w-11/12 mx-auto flex flex-col gap-12 items-center justify-center border-solid border-zinc-800 bg-zinc-800/40 border-2 rounded-2xl mb-10" 
+            key={item[0]}
+          >
             <span> {item[0]} </span>
             <LineGraph 
               color={colors[item[0]]}

@@ -30,8 +30,8 @@ const FilterToolbar = ({ choices, setFilter }) => {
         
         <div className="flex flex-row gap-10">
           <div className="flex flex-col gap-0 flex-1 min-w-[50lvw]">
-            <FilterRange filter={"Game Length"}/>
-            <FilterRange filter={"Game Length"}/>
+            <FilterRange label={"Game Length"} setFilter={setFilter} filter="gamelength"/>
+            {/* <FilterRange label={"Game Length"} setFilter={setFilter}/> */}
           </div>
 
           <div className="flex-1 flex flex-row gap-7 justify-start align-top mb-auto flex-wrap">

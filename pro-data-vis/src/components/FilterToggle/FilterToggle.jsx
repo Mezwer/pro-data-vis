@@ -28,28 +28,21 @@ const FilterToggle = ({ label, filter, setFilter }) => {
     }
   };
   
-  return (
-    <div className="flex items-center space-x-2">
-      {label && <label className="text-sm font-medium text-white">{label}</label>}
-      <button
-        type="button"
-        onClick={() => handleToggle()}
-        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
-          isChecked 
-            ? 'bg-blue-600' 
-            : 'bg-gray-200'
-        } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-        // disabled={disabled}
-        aria-pressed={isChecked}
-      >
-        <span
-          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-            isChecked ? 'translate-x-6' : 'translate-x-1'
-          }`}
-        />
-      </button>
-    </div>
-  );
+return (
+  <div className="flex items-center space-x-2">
+    {label && <label className="text-sm font-medium text-gray-200">{label}</label>}
+    <button
+      type="button"
+      onClick={() => handleToggle()}
+      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isChecked ? 'bg-blue-700':'bg-gray-700'}`}
+      aria-pressed={isChecked}
+    >
+      <span
+        className={`inline-block h-4 w-4 transform rounded-full transition-transform ${isChecked ? 'translate-x-6 bg-white':'translate-x-1 bg-gray-300'}`}
+      />
+    </button>
+  </div>
+);
 }
 
 export default FilterToggle;
