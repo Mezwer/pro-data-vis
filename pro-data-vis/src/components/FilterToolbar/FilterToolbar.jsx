@@ -3,8 +3,9 @@ import { ChevronDown } from "lucide-react";
 import { FilterRange, FilterToggle, FilterField } from "..";
 import { filterToggle } from '@/constants/filters';
 import { mapping } from "@/constants/fields";
+import { Tooltip } from "react-tooltip";
 
-const FilterToolbar = ({ choices, setFilter }) => {
+const FilterToolbar = ({ choices, setFilter, games }) => {
   const [collapse, setCollapse] = useState(false);
 
   return (
@@ -17,6 +18,17 @@ const FilterToolbar = ({ choices, setFilter }) => {
             onClick={() => {setCollapse(!collapse)}}
           /> 
         </span>
+        
+        <span id="gamescounter" className="mr-5 text-lg">
+          Games: { games }
+        </span>
+        <Tooltip 
+          anchorSelect="#gamescounter" 
+          place="bottom" 
+          content={"Number of games given the current filters"} 
+          opacity={1} 
+          className="!bg-slate-900 !text-xs !rounded-md z-10"
+        />
       </div>
       
       <div className={`w-11/12 mt-5 mx-auto left-0 right-0 flex flex-col gap-3 transition-all duration-150 ${collapse ? "-translate-y-4 opacity-0 pointer-events-none absolute" : ""}`}>

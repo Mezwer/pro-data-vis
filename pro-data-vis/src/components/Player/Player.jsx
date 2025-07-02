@@ -35,7 +35,6 @@ const Player = ({ playername, graphData, staticData }) => {
   // layout of graphs: 0 = vertical, 1 = compact, 2 = more compact
   const [layout, setLayout] = useState(1);
 
-  // const [data, setData] = useState(graphData);
   const [loading, setLoading] = useState(true);
   const [filteredData, setFilteredData] = useState([]);
 
@@ -121,7 +120,11 @@ const Player = ({ playername, graphData, staticData }) => {
         state={{show: show, setShow: changeShow}} 
         layoutState={{layout: layout, setLayout: setLayout}}
       />
-      <FilterToolbar choices={staticData} setFilter={setFilters}/>
+      <FilterToolbar 
+        choices={staticData} 
+        setFilter={setFilters} 
+        games={Object.values(filteredData).reduce((sum, arr) => sum + arr.length, 0)}
+      />
 
       <div className={`${arrange} place-items-center`}>
         {show.map((item) => 
