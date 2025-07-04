@@ -171,6 +171,130 @@ const createColors = () => {
 
 export const colors = createColors();
 
+
+export const chartConfigs = [
+  {
+    id: 'gradient1',
+    title: 'Electric Blue',
+    stops: [
+      { offset: '0%', color: '#06b6d4', opacity: 0.9 },
+      { offset: '50%', color: '#0891b2', opacity: 0.5 },
+      { offset: '100%', color: '#0e7490', opacity: 0.1 }
+    ],
+    stroke: '#06b6d4'
+  },
+  {
+    id: 'gradient2',
+    title: 'Emerald Green',
+    stops: [
+      { offset: '0%', color: '#10b981', opacity: 0.9 },
+      { offset: '50%', color: '#059669', opacity: 0.5 },
+      { offset: '100%', color: '#047857', opacity: 0.1 }
+    ],
+    stroke: '#10b981'
+  },
+  {
+    id: 'gradient3',
+    title: 'Sunset Orange',
+    stops: [
+      { offset: '0%', color: '#f97316', opacity: 0.9 },
+      { offset: '50%', color: '#ea580c', opacity: 0.5 },
+      { offset: '100%', color: '#c2410c', opacity: 0.1 }
+    ],
+    stroke: '#f97316'
+  },
+  {
+    id: 'gradient4',
+    title: 'Rose Pink',
+    stops: [
+      { offset: '0%', color: '#f43f5e', opacity: 0.9 },
+      { offset: '50%', color: '#e11d48', opacity: 0.5 },
+      { offset: '100%', color: '#be123c', opacity: 0.1 }
+    ],
+    stroke: '#f43f5e'
+  },
+  {
+    id: 'gradient5',
+    title: 'Golden Yellow',
+    stops: [
+      { offset: '0%', color: '#eab308', opacity: 0.9 },
+      { offset: '50%', color: '#ca8a04', opacity: 0.5 },
+      { offset: '100%', color: '#a16207', opacity: 0.1 }
+    ],
+    stroke: '#eab308'
+  },
+  {
+    id: 'gradient6',
+    title: 'Violet Dream',
+    stops: [
+      { offset: '0%', color: '#8b5cf6', opacity: 0.9 },
+      { offset: '50%', color: '#7c3aed', opacity: 0.5 },
+      { offset: '100%', color: '#6d28d9', opacity: 0.1 }
+    ],
+    stroke: '#8b5cf6'
+  },
+  {
+    id: 'gradient7',
+    title: 'Teal Mint',
+    stops: [
+      { offset: '0%', color: '#14b8a6', opacity: 0.9 },
+      { offset: '50%', color: '#0d9488', opacity: 0.5 },
+      { offset: '100%', color: '#0f766e', opacity: 0.1 }
+    ],
+    stroke: '#14b8a6'
+  },
+  {
+    id: 'gradient8',
+    title: 'Crimson Red',
+    stops: [
+      { offset: '0%', color: '#dc2626', opacity: 0.9 },
+      { offset: '50%', color: '#b91c1c', opacity: 0.5 },
+      { offset: '100%', color: '#991b1b', opacity: 0.1 }
+    ],
+    stroke: '#dc2626'
+  },
+  {
+    id: 'gradient9',
+    title: 'Sky Blue',
+    stops: [
+      { offset: '0%', color: '#0ea5e9', opacity: 0.9 },
+      { offset: '50%', color: '#0284c7', opacity: 0.5 },
+      { offset: '100%', color: '#0369a1', opacity: 0.1 }
+    ],
+    stroke: '#0ea5e9'
+  },
+  {
+    id: 'gradient10',
+    title: 'Lime Green',
+    stops: [
+      { offset: '0%', color: '#65a30d', opacity: 0.9 },
+      { offset: '50%', color: '#4d7c0f', opacity: 0.5 },
+      { offset: '100%', color: '#365314', opacity: 0.1 }
+    ],
+    stroke: '#65a30d'
+  },
+  {
+    id: 'gradient11',
+    title: 'Steel Blue',
+    stops: [
+      { offset: '0%', color: '#64748b', opacity: 0.9 },
+      { offset: '50%', color: '#475569', opacity: 0.5 },
+      { offset: '100%', color: '#334155', opacity: 0.1 }
+    ],
+    stroke: '#64748b'
+  },
+  {
+    id: 'gradient12',
+    title: 'Magenta Burst',
+    stops: [
+      { offset: '0%', color: '#d946ef', opacity: 0.9 },
+      { offset: '50%', color: '#c026d3', opacity: 0.5 },
+      { offset: '100%', color: '#a21caf', opacity: 0.1 }
+    ],
+    stroke: '#d946ef'
+  },
+];
+
 export const years = [ 2022, 2023, 2024 ]; // will add more years after testing done
 
 export const averages = new Set([

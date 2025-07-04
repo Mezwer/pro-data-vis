@@ -94,7 +94,7 @@ const Player = ({ playername, graphData, staticData }) => {
         }
       });
 
-      const number = (avg) ? (sum / count).toFixed(2) : sum;
+      const number = (avg) ? Number((sum / count).toFixed(2)) : sum;
       newData.push({Year: year, [item]: number});
     }
 
@@ -127,15 +127,15 @@ const Player = ({ playername, graphData, staticData }) => {
       />
 
       <div className={`${arrange} place-items-center`}>
-        {show.map((item) => 
+        {show.map((item, index) => 
           item[2] ? (
           <div 
-            className="h-96 w-11/12 mx-auto flex flex-col gap-12 items-center justify-center border-solid border-zinc-800 bg-zinc-800/40 border-2 rounded-2xl mb-10" 
+            className="h-96 w-[96%] mx-auto flex flex-col gap-8 items-center justify-center border-solid border-zinc-800 bg-zinc-800/40 border-2 rounded-lg mb-10" 
             key={item[0]}
           >
             <span> {item[0]} </span>
             <LineGraph 
-              color={colors[item[0]]}
+              color={index % 11} // maybe define this constant somewhere (is # of gradient colors)
               data={getColData(item[0], filteredData, averages.has(item[3]))}
               ydata={item[0]}
             />

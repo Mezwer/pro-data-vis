@@ -34,7 +34,6 @@ export async function collectGraphData(player) {
     return acc;
   }, {});
 
-  // console.log(groupedRes)
   return groupedRes;
 }
 
