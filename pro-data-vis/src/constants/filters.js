@@ -34,6 +34,23 @@ function include_exclude(row, filter, name, type) {
 }
 
 /**
+ * To be used in a mapping from filter -> function for use in Player.jsx.
+ * 
+ * Used when you need to filter by if something in the filter is in the row (opposite of include_exclude)
+ * 
+ * @param {Object} row - row of a list to validate
+ * @param {Array} filter - array of parameters to filter by
+ * @param {string} name - name of what to filter ```row``` by
+ * @param {number} type - 0 for exclude, 1 for include
+ * @returns {boolean} returns whether or not the row is "valid" or not based on the filters
+ */
+function reverse_include_exclude(row, filter, name, type) {
+  const bans = row[name];
+  const result = filter.every(item => bans.includes(item));
+  return type === 0 ? !result : result;
+}
+
+/**
  * to be used in a mapping from filter -> function for use in Player.jsx,
  * 
  * @param {*} row 
@@ -69,6 +86,7 @@ export const filterSelectionTemp = {
   playoffs: yes_no,
   result: include_exclude,
   side: include_exclude,
+  bans: reverse_include_exclude,
 }
 
 export const filterToggle = [

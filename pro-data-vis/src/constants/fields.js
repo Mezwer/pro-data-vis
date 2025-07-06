@@ -134,12 +134,15 @@ export const mapping = {
   killsat25: "Kills @ 25",
   assistsat25: "Assists @ 25",
   deathsat25: "Deaths @ 25",
+
+  // filters
   champions: "Champion",
   opp_teamname: "Opposing Team",
   win: "Win",
   loss: "Loss",
   blue: "Blue",
   red: "Red",
+  bans: "Ban",
 };
 
 export const staticColors = [ 

@@ -31,7 +31,7 @@ const Player = ({ playername, graphData, staticData }) => {
     )
   );
 
-  // console.log(filters);
+  // console.log(graphData);
   // layout of graphs: 0 = vertical, 1 = compact, 2 = more compact
   const [layout, setLayout] = useState(1);
 
@@ -77,6 +77,9 @@ const Player = ({ playername, graphData, staticData }) => {
       if (filter.length === 0) continue;
 
       const name = key;
+      // TODO: make bans "or", currently all bans in filter must be present for row to be valid
+      // i want bans to be x champ or y champ
+      // maybe make a special option to switch from "and" to "or"
       if (!filterSelectionTemp[name](row, filter, name, 1)) return false;
     }
 
@@ -95,7 +98,7 @@ const Player = ({ playername, graphData, staticData }) => {
       });
 
       const number = (avg) ? Number((sum / count).toFixed(2)) : sum;
-      newData.push({Year: year, [item]: number});
+      newData.push({ Year: year, [item]: number || 0 });
     }
 
     // console.log(`${item} ${avg}`);

@@ -18,6 +18,7 @@ export default async function ServerPage({ params }) {
 
   const staticData = {
     champion: champions,
+    bans: champions,
     ...pageData,
   }
 
