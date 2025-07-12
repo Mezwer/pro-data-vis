@@ -18,6 +18,19 @@ const LineGraph = ({ color, data, ydata }) => {
   const gradientId = `gradient${color}`;
   const gradientConfig = chartConfigs[color];
 
+  const roundNumber = (num) => {
+    let number;
+    if (num < 10) {
+      number = num.toFixed(2);
+    } else if (num >= 100) {
+      number = Math.round(num);
+    } else {
+      number = num.toFixed(1);
+    }
+
+    return Number(number);
+  }
+
   return (
     <ResponsiveContainer height="100%" width="95%">
       <AreaChart data={data}>
@@ -54,7 +67,8 @@ const LineGraph = ({ color, data, ydata }) => {
         />
         <YAxis 
           domain={[(dataMin) => dataMin - dataMin * 0.1, (dataMax) => dataMax + dataMax * 0.1]}
-          tick={{fontSize: ".8rem"}}
+          tick={{ fontSize: ".8rem" }}
+          tickFormatter={roundNumber}
           width={40}
         >
           {/* <Label value={yDataName} offset={12} position="insideLeft" angle={-90}/> */}
