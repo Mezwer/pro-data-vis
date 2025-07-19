@@ -1,4 +1,3 @@
-
 // only summable fields
 export const fields = [
   "result",
@@ -145,7 +144,7 @@ export const mapping = {
   bans: "Ban",
 };
 
-export const staticColors = [ 
+export const staticColors = [
   "#007BFF",
   "#FF5733",
   "#39FF14",
@@ -161,12 +160,11 @@ export const staticColors = [
 ];
 
 const createColors = () => {
-  const colors = {}
+  const colors = {};
   let index = 0;
   for (const [_, value] of Object.entries(mapping)) {
     colors[value] = staticColors[index++];
-    if (index >= staticColors.length) 
-      index = 0;
+    if (index >= staticColors.length) index = 0;
   }
 
   return colors;
@@ -174,131 +172,130 @@ const createColors = () => {
 
 export const colors = createColors();
 
-
 export const chartConfigs = [
   {
-    id: 'gradient1',
-    title: 'Electric Blue',
+    id: "gradient1",
+    title: "Electric Blue",
     stops: [
-      { offset: '0%', color: '#06b6d4', opacity: 0.9 },
-      { offset: '50%', color: '#0891b2', opacity: 0.5 },
-      { offset: '100%', color: '#0e7490', opacity: 0.1 }
+      { offset: "0%", color: "#06b6d4", opacity: 0.9 },
+      { offset: "50%", color: "#0891b2", opacity: 0.5 },
+      { offset: "100%", color: "#0e7490", opacity: 0.1 },
     ],
-    stroke: '#06b6d4'
+    stroke: "#06b6d4",
   },
   {
-    id: 'gradient2',
-    title: 'Emerald Green',
+    id: "gradient2",
+    title: "Emerald Green",
     stops: [
-      { offset: '0%', color: '#10b981', opacity: 0.9 },
-      { offset: '50%', color: '#059669', opacity: 0.5 },
-      { offset: '100%', color: '#047857', opacity: 0.1 }
+      { offset: "0%", color: "#10b981", opacity: 0.9 },
+      { offset: "50%", color: "#059669", opacity: 0.5 },
+      { offset: "100%", color: "#047857", opacity: 0.1 },
     ],
-    stroke: '#10b981'
+    stroke: "#10b981",
   },
   {
-    id: 'gradient3',
-    title: 'Sunset Orange',
+    id: "gradient3",
+    title: "Sunset Orange",
     stops: [
-      { offset: '0%', color: '#f97316', opacity: 0.9 },
-      { offset: '50%', color: '#ea580c', opacity: 0.5 },
-      { offset: '100%', color: '#c2410c', opacity: 0.1 }
+      { offset: "0%", color: "#f97316", opacity: 0.9 },
+      { offset: "50%", color: "#ea580c", opacity: 0.5 },
+      { offset: "100%", color: "#c2410c", opacity: 0.1 },
     ],
-    stroke: '#f97316'
+    stroke: "#f97316",
   },
   {
-    id: 'gradient4',
-    title: 'Rose Pink',
+    id: "gradient4",
+    title: "Rose Pink",
     stops: [
-      { offset: '0%', color: '#f43f5e', opacity: 0.9 },
-      { offset: '50%', color: '#e11d48', opacity: 0.5 },
-      { offset: '100%', color: '#be123c', opacity: 0.1 }
+      { offset: "0%", color: "#f43f5e", opacity: 0.9 },
+      { offset: "50%", color: "#e11d48", opacity: 0.5 },
+      { offset: "100%", color: "#be123c", opacity: 0.1 },
     ],
-    stroke: '#f43f5e'
+    stroke: "#f43f5e",
   },
   {
-    id: 'gradient5',
-    title: 'Golden Yellow',
+    id: "gradient5",
+    title: "Golden Yellow",
     stops: [
-      { offset: '0%', color: '#eab308', opacity: 0.9 },
-      { offset: '50%', color: '#ca8a04', opacity: 0.5 },
-      { offset: '100%', color: '#a16207', opacity: 0.1 }
+      { offset: "0%", color: "#eab308", opacity: 0.9 },
+      { offset: "50%", color: "#ca8a04", opacity: 0.5 },
+      { offset: "100%", color: "#a16207", opacity: 0.1 },
     ],
-    stroke: '#eab308'
+    stroke: "#eab308",
   },
   {
-    id: 'gradient6',
-    title: 'Violet Dream',
+    id: "gradient6",
+    title: "Violet Dream",
     stops: [
-      { offset: '0%', color: '#8b5cf6', opacity: 0.9 },
-      { offset: '50%', color: '#7c3aed', opacity: 0.5 },
-      { offset: '100%', color: '#6d28d9', opacity: 0.1 }
+      { offset: "0%", color: "#8b5cf6", opacity: 0.9 },
+      { offset: "50%", color: "#7c3aed", opacity: 0.5 },
+      { offset: "100%", color: "#6d28d9", opacity: 0.1 },
     ],
-    stroke: '#8b5cf6'
+    stroke: "#8b5cf6",
   },
   {
-    id: 'gradient7',
-    title: 'Teal Mint',
+    id: "gradient7",
+    title: "Teal Mint",
     stops: [
-      { offset: '0%', color: '#14b8a6', opacity: 0.9 },
-      { offset: '50%', color: '#0d9488', opacity: 0.5 },
-      { offset: '100%', color: '#0f766e', opacity: 0.1 }
+      { offset: "0%", color: "#14b8a6", opacity: 0.9 },
+      { offset: "50%", color: "#0d9488", opacity: 0.5 },
+      { offset: "100%", color: "#0f766e", opacity: 0.1 },
     ],
-    stroke: '#14b8a6'
+    stroke: "#14b8a6",
   },
   {
-    id: 'gradient8',
-    title: 'Crimson Red',
+    id: "gradient8",
+    title: "Crimson Red",
     stops: [
-      { offset: '0%', color: '#dc2626', opacity: 0.9 },
-      { offset: '50%', color: '#b91c1c', opacity: 0.5 },
-      { offset: '100%', color: '#991b1b', opacity: 0.1 }
+      { offset: "0%", color: "#dc2626", opacity: 0.9 },
+      { offset: "50%", color: "#b91c1c", opacity: 0.5 },
+      { offset: "100%", color: "#991b1b", opacity: 0.1 },
     ],
-    stroke: '#dc2626'
+    stroke: "#dc2626",
   },
   {
-    id: 'gradient9',
-    title: 'Sky Blue',
+    id: "gradient9",
+    title: "Sky Blue",
     stops: [
-      { offset: '0%', color: '#0ea5e9', opacity: 0.9 },
-      { offset: '50%', color: '#0284c7', opacity: 0.5 },
-      { offset: '100%', color: '#0369a1', opacity: 0.1 }
+      { offset: "0%", color: "#0ea5e9", opacity: 0.9 },
+      { offset: "50%", color: "#0284c7", opacity: 0.5 },
+      { offset: "100%", color: "#0369a1", opacity: 0.1 },
     ],
-    stroke: '#0ea5e9'
+    stroke: "#0ea5e9",
   },
   {
-    id: 'gradient10',
-    title: 'Lime Green',
+    id: "gradient10",
+    title: "Lime Green",
     stops: [
-      { offset: '0%', color: '#65a30d', opacity: 0.9 },
-      { offset: '50%', color: '#4d7c0f', opacity: 0.5 },
-      { offset: '100%', color: '#365314', opacity: 0.1 }
+      { offset: "0%", color: "#65a30d", opacity: 0.9 },
+      { offset: "50%", color: "#4d7c0f", opacity: 0.5 },
+      { offset: "100%", color: "#365314", opacity: 0.1 },
     ],
-    stroke: '#65a30d'
+    stroke: "#65a30d",
   },
   {
-    id: 'gradient11',
-    title: 'Steel Blue',
+    id: "gradient11",
+    title: "Steel Blue",
     stops: [
-      { offset: '0%', color: '#64748b', opacity: 0.9 },
-      { offset: '50%', color: '#475569', opacity: 0.5 },
-      { offset: '100%', color: '#334155', opacity: 0.1 }
+      { offset: "0%", color: "#64748b", opacity: 0.9 },
+      { offset: "50%", color: "#475569", opacity: 0.5 },
+      { offset: "100%", color: "#334155", opacity: 0.1 },
     ],
-    stroke: '#64748b'
+    stroke: "#64748b",
   },
   {
-    id: 'gradient12',
-    title: 'Magenta Burst',
+    id: "gradient12",
+    title: "Magenta Burst",
     stops: [
-      { offset: '0%', color: '#d946ef', opacity: 0.9 },
-      { offset: '50%', color: '#c026d3', opacity: 0.5 },
-      { offset: '100%', color: '#a21caf', opacity: 0.1 }
+      { offset: "0%", color: "#d946ef", opacity: 0.9 },
+      { offset: "50%", color: "#c026d3", opacity: 0.5 },
+      { offset: "100%", color: "#a21caf", opacity: 0.1 },
     ],
-    stroke: '#d946ef'
+    stroke: "#d946ef",
   },
 ];
 
-export const years = [ 2022, 2023, 2024 ]; // will add more years after testing done
+export const years = [2022, 2023, 2024]; // will add more years after testing done
 
 export const averages = new Set([
   "result",
@@ -341,37 +338,40 @@ export const averages = new Set([
 ]);
 
 export const descriptions = {
-  "Kills": "Total number of kills throughout the year.",
-  "Deaths": "Total number of deaths throughout the year",
-  "Assists": "Total number of assists throughout the year",
+  Kills: "Total number of kills throughout the year.",
+  Deaths: "Total number of deaths throughout the year",
+  Assists: "Total number of assists throughout the year",
   "Double Kills": "Total number of double kills throughout the year",
   "Triple Kills": "Total number of triple kills throughout the year",
   "Quadra Kills": "Total number of quadra kills throughout the year",
   "Penta Kills": "Total number of penta kills throughout the year",
   "First Blood Kill": "Total number of first blood kills throughout the year",
-  "First Blood Victim": "Total number of times the player was a first blood victim throughout the year",
-  "CKPM": "Average champion kills per minute across the year",
+  "First Blood Victim":
+    "Total number of times the player was a first blood victim throughout the year",
+  CKPM: "Average champion kills per minute across the year",
   "DMG To Champions": "Total damage to champions throughout the year",
-  "DPM": "Average damage per minute across the year",
+  DPM: "Average damage per minute across the year",
   "Damage Share": "Average damage share throughout the year",
   "DMG Taken/Min": "Average damage taken per minute throughout the year",
-  "DMG Mitigated/Min": "Average damage mitigated per minute throughout the year",
+  "DMG Mitigated/Min":
+    "Average damage mitigated per minute throughout the year",
   "Wards Placed": "Total wards placed throughout the year",
-  "WPM": "Average wards placed per minute across the year",
+  WPM: "Average wards placed per minute across the year",
   "Wards Killed": "Total wards killed throughout the year",
-  "WCPM": "",
+  WCPM: "",
   "Control Wards": "Control wards bought throughout the year",
   "Vision Score": "Total vision score throughout the year",
-  "VSPM": "Average vision score per minute across the year",
+  VSPM: "Average vision score per minute across the year",
   "Total Gold": "Total gold throughout the year",
   "Earned Gold": "Total earned gold throughout the year",
   "Earned GPM": "Average earned gold per minute across the year",
   "Earned Gold Share": "Average earned gold share across the year",
   "Gold Spent": "Total gold spent throughout the year",
-  "Total CS": "Total Creep Score (Minion + Jungle camp kills) throughout the year",
+  "Total CS":
+    "Total Creep Score (Minion + Jungle camp kills) throughout the year",
   "Minion Kills": "",
   "Monster Kills": "",
-  "CSPM": "Creep Score per minute",
+  CSPM: "Creep Score per minute",
   "Gold Diff @ 10": "",
   "XP Diff @ 10": "",
   "CS Diff @ 10": "",

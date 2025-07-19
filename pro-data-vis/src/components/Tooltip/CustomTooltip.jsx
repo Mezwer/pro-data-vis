@@ -2,8 +2,7 @@ import React from "react";
 
 // mod is a modifier for the year ('24 -> 2024)
 const CustomTooltip = ({ active, payload, data, mod }) => {
-  if (!active || !payload || !payload.length)
-    return;
+  if (!active || !payload || !payload.length) return;
 
   let val = payload[0].payload.Year;
   if (mod == 0) {

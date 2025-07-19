@@ -7,17 +7,17 @@ const FilterRange = ({ filter, label, setFilter }) => {
 
   const onValueChange = (val) => {
     setValue(val);
-    setFilter(prev => ({...prev, [filter]: val}));
-  }
+    setFilter((prev) => ({ ...prev, [filter]: val }));
+  };
 
   function secondsToHMS(totalSeconds) {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
 
-    const pad = (num) => String(num).padStart(2, '0');
+    const pad = (num) => String(num).padStart(2, "0");
 
-    return `${hours ? `${pad(hours)}:`: ""}${pad(minutes)}:${pad(seconds)}`;
+    return `${hours ? `${pad(hours)}:` : ""}${pad(minutes)}:${pad(seconds)}`;
   }
 
   return (
@@ -32,7 +32,7 @@ const FilterRange = ({ filter, label, setFilter }) => {
           max={max}
           step={1}
           minStepsBetweenThumbs={1}
-          onValueChange={vals => onValueChange(vals)}
+          onValueChange={(vals) => onValueChange(vals)}
         >
           <Slider.Track className="relative h-[3px] grow rounded-full bg-neutral-600">
             <Slider.Range className="absolute h-full rounded-full bg-[#ededed]" />
@@ -45,12 +45,12 @@ const FilterRange = ({ filter, label, setFilter }) => {
             className="block size-4 rounded-[10px] bg-[#ededed] focus:outline-none"
             aria-label="Volume"
           />
-		    </Slider.Root>
+        </Slider.Root>
 
         <span className="w-[2rem] text-sm"> {secondsToHMS(value[1])} </span>
       </div>
     </div>
   );
-}
+};
 
 export default FilterRange;

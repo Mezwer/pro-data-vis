@@ -3,10 +3,12 @@ import { collectGraphData, collectPageData } from "@/app/actions";
 
 export default async function ServerPage({ params }) {
   const start = performance.now();
-  
+
   // data fetching
   const { playername } = await params;
-  const championRes = await fetch("https://ddragon.leagueoflegends.com/cdn/15.2.1/data/en_US/champion.json"); // champion names 
+  const championRes = await fetch(
+    "https://ddragon.leagueoflegends.com/cdn/15.2.1/data/en_US/champion.json"
+  ); // champion names
   const champData = (await championRes.json()).data;
   const champions = Object.keys(champData).map((item) => champData[item].name);
 
@@ -20,14 +22,14 @@ export default async function ServerPage({ params }) {
     champion: champions,
     bans: champions,
     ...pageData,
-  }
+  };
 
   return (
-    <Player 
-      playername={playername} 
+    <Player
+      playername={playername}
       graphData={graphRes}
       champions={champions}
       staticData={staticData}
     />
   );
-};
+}

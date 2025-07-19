@@ -19,9 +19,9 @@ export const filterSelection = [
 
 /**
  * To be used in a mapping from filter -> function for use in Player.jsx.
- * 
+ *
  * Used when you need to filter by if something is included/excluded from a filter
- * 
+ *
  * @param {Object} row - row of a list to validate
  * @param {Array} filter - array of parameters to filter by
  * @param {string} name - name of what to filter ```row``` by
@@ -35,42 +35,47 @@ function include_exclude(row, filter, name, type) {
 
 /**
  * To be used in a mapping from filter -> function for use in Player.jsx.
- * 
+ *
  * Used when you need to filter by if something in the filter is in the row (opposite of include_exclude)
- * 
+ * However, there is no exclusion here, and instead type means something different
+ *
  * @param {Object} row - row of a list to validate
  * @param {Array} filter - array of parameters to filter by
  * @param {string} name - name of what to filter ```row``` by
- * @param {number} type - 0 for exclude, 1 for include
+ * @param {number} type - 0 for 'OR' logic, 1 for 'AND' logic
  * @returns {boolean} returns whether or not the row is "valid" or not based on the filters
  */
-function reverse_include_exclude(row, filter, name, type) {
+function reverse_include_and_or(row, filter, name, type) {
   const bans = row[name];
-  const result = filter.every(item => bans.includes(item));
-  return type === 0 ? !result : result;
+  // const result = filter.every((item) => bans.includes(item));
+  console.log(filter, bans);
+  return type === 0
+    ? filter.some((item) => bans.includes(item))
+    : filter.every((item) => bans.includes(item));
 }
 
 /**
  * to be used in a mapping from filter -> function for use in Player.jsx,
- * 
- * @param {*} row 
- * @param {*} filter 
- * @param {*} name 
- * @param {*} type 
+ *
+ * @param {*} row
+ * @param {*} filter
+ * @param {*} name
+ * @param {*} type
  * @returns {boolean} returns whether or not the row is "valid" or not based on the filters
  */
 function range_include(row, filter, name, type) {
-  const start = filter[0] || 0, end = filter[1] || 0;
+  const start = filter[0] || 0,
+    end = filter[1] || 0;
   return start <= row[name] && row[name] <= end;
 }
 
 /**
  * to be used in a mapping from filter -> function for use in Player.jsx,
- * 
- * @param {*} row 
- * @param {*} filter 
- * @param {*} name 
- * @param {*} type 
+ *
+ * @param {*} row
+ * @param {*} filter
+ * @param {*} name
+ * @param {*} type
  * @returns {boolean} returns whether or not the row is "valid" or not based on the filters
  */
 function yes_no(row, filter, name, type) {
@@ -86,16 +91,10 @@ export const filterSelectionTemp = {
   playoffs: yes_no,
   result: include_exclude,
   side: include_exclude,
-  bans: reverse_include_exclude,
-}
+  bans: reverse_include_and_or,
+};
 
-export const filterToggle = [
-  "playoffs",
-  "win",
-  "loss",
-  "blue",
-  "red",
-];
+export const filterToggle = ["playoffs", "win", "loss", "blue", "red"];
 
 export const filterBans = [
   "blue_ban1",
@@ -108,7 +107,7 @@ export const filterBans = [
   "red_ban3",
   "red_ban4",
   "red_ban5",
-]
+];
 
 export const filterPicks = [
   "blue_pick1",
@@ -121,7 +120,7 @@ export const filterPicks = [
   "red_pick3",
   "red_pick4",
   "red_pick5",
-]
+];
 
 export const filterNumeric = [
   "opp_kills",
@@ -174,4 +173,4 @@ export const filterNumeric = [
   "opp_killsat25",
   "opp_assistsat25",
   "opp_deathsat25",
-]
+];

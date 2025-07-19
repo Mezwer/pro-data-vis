@@ -1,72 +1,77 @@
 import React, { useState, useEffect, useRef } from "react";
 import { mapping } from "@/constants/fields";
-import { X } from 'lucide-react';
+import { X, ListChecks } from "lucide-react";
+import { Tooltip } from "react-tooltip";
 
-const FilterField = ({ choices, filter, setFilter }) => {
+const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
   const [chips, setChips] = useState([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [showDrop, setShowDrop] = useState(true);
   const [options, setOptions] = useState([]);
   const [hovering, setHovering] = useState(false);
   const [focus, setFocus] = useState(-1);
 
   const focusRef = useRef(null);
+  const id = mapping[filter].replace(/\s/g, "");
 
   useEffect(() => {
     if (focus >= 0 && focusRef.current) {
       focusRef.current.scrollIntoView({
-        block: "nearest"
+        block: "nearest",
       });
     }
   }, [focus]);
 
   const setValues = (newVal) => {
     setChips(newVal);
-    setFilter(prev => ({...prev, [filter]: newVal}));
-  }
+    setFilter((prev) => ({ ...prev, [filter]: newVal }));
+  };
 
   const handleKeyDown = (e) => {
     const trimmed = inputValue.trim();
-    if (e.key === 'Enter' && ((trimmed && options.includes(trimmed)) || focus != -1)) {
+    if (
+      e.key === "Enter" &&
+      ((trimmed && options.includes(trimmed)) || focus != -1)
+    ) {
       e.preventDefault();
 
       if (focus != -1 && !chips.includes(options[focus])) {
-        setValues([...chips, options[focus]])
-        setInputValue('');
+        setValues([...chips, options[focus]]);
+        setInputValue("");
         setFocus(-1);
         return;
       }
-
-      // if (!chips.includes(trimmed)) {
-      //   setValues([...chips, trimmed]);
-      //   setInputValue('');
-      // }
-    } else if (e.key === 'Backspace' && !inputValue && chips.length > 0) {
+    } else if (e.key === "Backspace" && !inputValue && chips.length > 0) {
       setValues(chips.slice(0, -1));
       setFocus(-1);
-    } else if (e.key === 'ArrowDown' && options.length > 0) {
-      if (focus != options.length - 1)
-        setFocus(focus + 1);
-    } else if (e.key === 'ArrowUp' && options.length > 0) {
-      if (focus != 0)
-        setFocus(focus - 1);
+    } else if (e.key === "ArrowDown" && options.length > 0) {
+      if (focus != options.length - 1) setFocus(focus + 1);
+    } else if (e.key === "ArrowUp" && options.length > 0) {
+      if (focus != 0) setFocus(focus - 1);
     }
   };
 
   const removeChip = (chipToRemove) => {
-    const newChips = chips.filter(chip => chip !== chipToRemove);
+    const newChips = chips.filter((chip) => chip !== chipToRemove);
     setValues(newChips);
   };
 
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-    
-    const filteredOptions = choices.filter(choice => choice.toLowerCase().includes(value.toLowerCase()));
+
+    const filteredOptions = choices.filter((choice) =>
+      choice.toLowerCase().includes(value.toLowerCase())
+    );
     setOptions(filteredOptions);
 
     setFocus(-1);
-  }
+  };
+
+  // TODO: eventually this will have to be more robust, as filters will have more types than just 0/1
+  const setType = (filter) => {
+    setTypes((prev) => ({ ...prev, [filter]: prev[filter] ? 0 : 1 }));
+  };
 
   return (
     <div className="relative flex-1">
@@ -91,28 +96,58 @@ const FilterField = ({ choices, filter, setFilter }) => {
           value={inputValue}
           onChange={(e) => handleInputChange(e)}
           onKeyDown={handleKeyDown}
-          className="outline-none bg-transparent flex-1 h-full"
-          placeholder={chips.length === 0 ? `Enter a ${mapping[filter]}...` : ""}
+          className="outline-none bg-transparent flex-1 h-full w-full"
+          placeholder={
+            chips.length === 0 ? `Enter a ${mapping[filter]}...` : ""
+          }
           onBlur={() => {
             setShowDrop(false);
             setFocus(-1);
           }}
           onFocus={() => setShowDrop(true)}
         />
+
+        {/* currently just for bans */}
+        {mapping[filter] === "Ban" ? (
+          <>
+            <button
+              onClick={() => setType(filter)}
+              aria-pressed={types[filter]}
+              aria-label={`Toggle ${filter}`}
+              className="outline-none transform transition duration-150 ease-in-out hover:scale-110 active:scale-95"
+            >
+              <ListChecks
+                color={types[filter] ? "#4ade80" : "#A3A3A3"}
+                focusable="false"
+                aria-hidden="true"
+              />
+            </button>
+            <Tooltip
+              anchorSelect={`#${id}`}
+              place="top"
+              className="!bg-slate-900 !text-xs !rounded-md z-10"
+              opacity={1}
+            ></Tooltip>
+          </>
+        ) : null}
       </div>
 
       {(options.length > 0 && inputValue && showDrop) || hovering ? (
-        <div 
+        <div
           className="scrollbar-thin scrollbar-thumb-white scrollbar-track-[#11131d]/95 scrollbar-track-rounded-md scrollbar-thumb-rounded-full absolute w-full bg-[#11131d]/95 translate-y-2 z-10 rounded-md max-h-64 overflow-y-scroll"
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
         >
           {options.map((option, index) => (
-            <div 
-              className={`p-2 border rounded-md ${index === focus ? "border-slate-400 bg-[#1c1f2e]" : "border-transparent"}`}
+            <div
+              className={`p-2 border rounded-md ${
+                index === focus
+                  ? "border-slate-400 bg-[#1c1f2e]"
+                  : "border-transparent"
+              }`}
               onClick={() => {
                 setValues([...chips, option]);
-                setInputValue('');
+                setInputValue("");
                 setHovering(false);
               }}
               key={index}
@@ -126,6 +161,6 @@ const FilterField = ({ choices, filter, setFilter }) => {
       ) : null}
     </div>
   );
-}
+};
 
 export default FilterField;

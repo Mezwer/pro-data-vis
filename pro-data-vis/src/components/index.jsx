@@ -1,4 +1,4 @@
-"use client"
+"use client";
 export { default as Arrangement } from "./Arrangement/Arrangement";
 export { default as Checkbox } from "./Checkbox/Checkbox";
 export { default as FilterField } from "./FilterField/FilterField";
