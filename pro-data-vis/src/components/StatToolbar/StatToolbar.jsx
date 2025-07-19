@@ -26,7 +26,7 @@ const StatToolbar = ({ state, layoutState }) => {
       </div>
 
       <div
-        className={`w-11/12 mt-5 mx-auto grid grid-cols-7 transition-all duration-150 ${
+        className={`w-11/12 mt-5 mx-auto left-0 right-0 grid grid-cols-7 transition-all duration-150 ${
           collapse
             ? "absolute -translate-y-4 opacity-0 pointer-events-none"
             : ""

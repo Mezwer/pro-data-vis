@@ -5,7 +5,14 @@ import { filterToggle } from "@/constants/filters";
 import { mapping } from "@/constants/fields";
 import { Tooltip } from "react-tooltip";
 
-const FilterToolbar = ({ choices, setFilter, types, setTypes, games }) => {
+const FilterToolbar = ({
+  choices,
+  setFilter,
+  types,
+  setTypes,
+  games,
+  totalGames,
+}) => {
   const [collapse, setCollapse] = useState(false);
 
   return (
@@ -24,7 +31,7 @@ const FilterToolbar = ({ choices, setFilter, types, setTypes, games }) => {
         </span>
 
         <span id="gamescounter" className="mr-5 text-lg">
-          Games: {games}
+          Games: {games} / {totalGames}
         </span>
         <Tooltip
           anchorSelect="#gamescounter"

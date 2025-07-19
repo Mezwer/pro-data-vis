@@ -119,6 +119,10 @@ const Player = ({ playername, graphData, staticData }) => {
     return newData;
   };
 
+  const getNumGames = (games) => {
+    return Object.values(games).reduce((sum, arr) => sum + arr.length, 0);
+  };
+
   if (loading) {
     return <Spinner />;
   }
@@ -139,10 +143,8 @@ const Player = ({ playername, graphData, staticData }) => {
         setFilter={setFilters}
         setTypes={setFilterType}
         types={filterType}
-        games={Object.values(filteredData).reduce(
-          (sum, arr) => sum + arr.length,
-          0
-        )}
+        games={getNumGames(filteredData)}
+        totalGames={getNumGames(graphData)}
       />
 
       <div className={`${arrange} place-items-center`}>
