@@ -65,6 +65,7 @@ const LineGraph = ({ color, data, ydata }) => {
           dot={false}
         />
 
+        {/* TODO: make x axis adaptable to year + split */}
         <XAxis dataKey={"Year"} tick={{ fontSize: ".8rem" }} />
         <YAxis
           domain={[

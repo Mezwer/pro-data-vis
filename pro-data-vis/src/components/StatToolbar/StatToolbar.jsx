@@ -4,7 +4,7 @@ import Arrangement from "../Arrangement/Arrangement";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-const StatToolbar = ({ state, layoutState }) => {
+const StatToolbar = ({ state, layoutState, granularityState }) => {
   const { show, setShow } = state;
   const [collapse, setCollapse] = useState(false);
 
@@ -22,7 +22,10 @@ const StatToolbar = ({ state, layoutState }) => {
             }}
           />
         </span>
-        <Arrangement layoutState={layoutState} />
+        <Arrangement
+          layoutState={layoutState}
+          granularityState={granularityState}
+        />
       </div>
 
       <div

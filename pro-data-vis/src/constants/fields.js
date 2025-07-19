@@ -159,19 +159,6 @@ export const staticColors = [
   "#FF00FF",
 ];
 
-const createColors = () => {
-  const colors = {};
-  let index = 0;
-  for (const [_, value] of Object.entries(mapping)) {
-    colors[value] = staticColors[index++];
-    if (index >= staticColors.length) index = 0;
-  }
-
-  return colors;
-};
-
-export const colors = createColors();
-
 export const chartConfigs = [
   {
     id: "gradient1",

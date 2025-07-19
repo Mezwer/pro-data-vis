@@ -47,6 +47,8 @@ const Player = ({ playername, graphData, staticData }) => {
   // console.log(graphData);
   // layout of graphs: 0 = vertical, 1 = compact, 2 = more compact
   const [layout, setLayout] = useState(1);
+  // how fine the data is: 0 = by year, 1 = by split, 2 = by split, separate playoffs
+  const [granularity, setGranularity] = useState(0);
 
   const [loading, setLoading] = useState(true);
   const [filteredData, setFilteredData] = useState([]);
@@ -105,7 +107,7 @@ const Player = ({ playername, graphData, staticData }) => {
       let sum = 0,
         count = 0;
       yrData.forEach((row) => {
-        if (row[item] != null) {
+        if (row[item] !== null) {
           sum += row[item];
           count += 1;
         }
@@ -117,6 +119,49 @@ const Player = ({ playername, graphData, staticData }) => {
 
     // console.log(`${item} ${avg}`);
     return newData;
+  };
+
+  const getColSplitData = (item, data, avg, includePlayoff = false) => {
+    const s = performance.now();
+    const newData = [];
+    for (const [yr, yrData] of Object.entries(data)) {
+      const splitSums = {};
+
+      for (const { split, [item]: value, league, playoffs } of yrData) {
+        let key = split ? `${league} ${split}` : league;
+        if (playoffs && includePlayoff) key += " Playoffs";
+
+        if (!splitSums[key]) {
+          splitSums[key] = { total: 0, count: 0 };
+        }
+
+        splitSums[key].total += value ?? 0;
+        splitSums[key].count += 1;
+      }
+
+      for (const [split, stats] of Object.entries(splitSums)) {
+        newData.push({
+          split: `${yr} ${split}`,
+          [item]: avg
+            ? Number((stats.total / stats.count).toFixed(2))
+            : stats.total,
+        });
+      }
+    }
+
+    const e = performance.now();
+    console.log(`${e - s}ms`);
+    return newData;
+  };
+
+  const chooseGranularity = (item, data, avg) => {
+    if (granularity === 0) {
+      return getColData(item, data, avg);
+    } else if (granularity === 1) {
+      return getColSplitData(item, data, avg, false);
+    }
+
+    return getColSplitData(item, data, avg, true);
   };
 
   const getNumGames = (games) => {
@@ -137,6 +182,10 @@ const Player = ({ playername, graphData, staticData }) => {
       <StatToolbar
         state={{ show: show, setShow: changeShow }}
         layoutState={{ layout: layout, setLayout: setLayout }}
+        granularityState={{
+          granularity: granularity,
+          setGranularity: setGranularity,
+        }}
       />
       <FilterToolbar
         choices={staticData}
@@ -157,7 +206,11 @@ const Player = ({ playername, graphData, staticData }) => {
               <span> {item[0]} </span>
               <LineGraph
                 color={index % (chartConfigLen - 1)}
-                data={getColData(item[0], filteredData, averages.has(item[3]))}
+                data={chooseGranularity(
+                  item[0],
+                  filteredData,
+                  averages.has(item[3])
+                )}
                 ydata={item[0]}
               />
             </div>

@@ -34,11 +34,9 @@ export async function collectGraphData(player) {
 
   const groupedRes = result.reduce((acc, row) => {
     const year = row.Year;
-    if (!acc[year]) {
-      acc[year] = [row];
-    } else {
-      acc[year].push(row);
-    }
+
+    if (!acc[year]) acc[year] = [row];
+    else acc[year].push(row);
 
     return acc;
   }, {});

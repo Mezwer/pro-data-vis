@@ -4,10 +4,11 @@ import React from "react";
 const CustomTooltip = ({ active, payload, data, mod }) => {
   if (!active || !payload || !payload.length) return;
 
-  let val = payload[0].payload.Year;
-  if (mod == 0) {
-    val = `20${val}`;
-  }
+  // console.log(payload)
+  let val = payload[0].payload.Year ?? payload[0].payload.split;
+  // if (mod == 0) {
+  //   val = `20${val}`;
+  // }
 
   return (
     <div className="p-4 bg-slate-950 flex flex-col gap-2 rounded-md">

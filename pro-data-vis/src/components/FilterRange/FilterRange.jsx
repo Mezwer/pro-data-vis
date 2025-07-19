@@ -2,6 +2,7 @@ import * as Slider from "@radix-ui/react-slider";
 import { useState } from "react";
 
 const FilterRange = ({ filter, label, setFilter }) => {
+  // TODO: find how to get the max value from the db
   const max = 6000;
   const [value, setValue] = useState([0, max]);
 
