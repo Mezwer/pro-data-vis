@@ -107,14 +107,14 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
           onFocus={() => setShowDrop(true)}
         />
 
-        {/* currently just for bans */}
+        {/* TODO: currently just for bans, might need to make this a separate component */}
         {mapping[filter] === "Ban" ? (
           <>
             <button
               onClick={() => setType(filter)}
-              aria-pressed={types[filter]}
-              aria-label={`Toggle ${filter}`}
               className="outline-none transform transition duration-150 ease-in-out hover:scale-110 active:scale-95"
+              id={id}
+              data-tooltip-delay-show={500}
             >
               <ListChecks
                 color={types[filter] ? "#4ade80" : "#A3A3A3"}
@@ -127,10 +127,12 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
               place="top"
               className="!bg-slate-900 !text-xs !rounded-md z-10"
               opacity={1}
-            ></Tooltip>
+              content={"Toggle for whether all bans must be present (green) or at least one (gray)."}
+            />
           </>
         ) : null}
       </div>
+
 
       {(options.length > 0 && inputValue && showDrop) || hovering ? (
         <div
