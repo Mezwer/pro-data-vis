@@ -13,7 +13,7 @@ const Checkbox = ({ label, state, setter, index }) => {
           checked={state}
           onChange={(e) => setter(index)}
           className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-800 checked:border-slate-800"
-          id="check"
+          id={id}
         />
         <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
           <svg

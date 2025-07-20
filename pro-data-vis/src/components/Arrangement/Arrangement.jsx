@@ -7,6 +7,7 @@ import {
   Columns3,
   Columns4,
 } from "lucide-react";
+import { Tooltip } from "react-tooltip";
 
 const Arrangement = ({ layoutState, granularityState }) => {
   const { layout, setLayout } = layoutState;
@@ -18,14 +19,42 @@ const Arrangement = ({ layoutState, granularityState }) => {
         <Columns2
           className={`hover:scale-125 transition-all active:scale-100 ${granularity === 0 ? "text-sky-500" : ""}`}
           onClick={() => setGranularity(0)}
+          id="Columns2"
+          data-tooltip-delay-show={500}
         />
+
+        <Tooltip 
+          anchorSelect="#Columns2"
+          place="bottom"
+          className="!bg-slate-900 !text-xs !rounded-md z-10"
+          content="X Axis is by year"
+        />
+
         <Columns3
           className={`hover:scale-125 transition-all active:scale-100 ${granularity === 1 ? "text-sky-500" : ""}`}
           onClick={() => setGranularity(1)}
+          id="Columns3"
+          data-tooltip-delay-show={500}
         />
+        <Tooltip 
+          anchorSelect="#Columns3"
+          place="bottom"
+          className="!bg-slate-900 !text-xs !rounded-md z-10"
+          content="X Axis is by split"
+        />
+
         <Columns4
           className={`hover:scale-125 transition-all active:scale-100 ${granularity === 2 ? "text-sky-500" : ""}`}
           onClick={() => setGranularity(2)}
+          id="Columns4"
+          data-tooltip-delay-show={500}
+        />
+
+        <Tooltip 
+          anchorSelect="#Columns4"
+          place="bottom"
+          className="!bg-slate-900 !text-xs !rounded-md z-10 outline-none"
+          content="X Axis is by split, with playoffs separated"
         />
       </div>
 

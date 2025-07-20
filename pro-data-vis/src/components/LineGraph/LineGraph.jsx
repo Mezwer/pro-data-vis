@@ -65,11 +65,11 @@ const LineGraph = ({ color, data, ydata }) => {
           dot={false}
         />
 
-        {/* TODO: make x axis adaptable to year + split */}
         <XAxis dataKey={"Year"} tick={{ fontSize: ".8rem" }} />
         <YAxis
           domain={[
-            (dataMin) => dataMin - dataMin * 0.1,
+            // TODO: this is a patchwork fix. find out why there is -infinity somewhere here
+            (dataMin) => isFinite(dataMin) ? dataMin - dataMin * 0.1 : 0,
             (dataMax) => dataMax + dataMax * 0.1,
           ]}
           tick={{ fontSize: ".8rem" }}
