@@ -150,34 +150,42 @@ const Player = ({ playername, graphData, staticData }) => {
     }
 
     const e = performance.now();
-    console.log(`${e - s}ms`);
+    // console.log(`${e - s}ms`);
     return newData;
   };
 
   const chooseGranularity = (item, data, avg) => {
-    if (granularity === 0) {
-      return getColData(item, data, avg);
-    } else if (granularity === 1) {
-      return getColSplitData(item, data, avg, false);
+    switch (granularity) {
+      case 0:
+        return getColData(item, data, avg);
+      case 1:
+        return getColSplitData(item, data, avg, false);
+      case 2:
+        return getColSplitData(item, data, avg, true);
+      default:
+        return getColData(item, data, avg);
     }
-
-    return getColSplitData(item, data, avg, true);
   };
 
   const getNumGames = (games) => {
     return Object.values(games).reduce((sum, arr) => sum + arr.length, 0);
   };
 
-  if (loading) {
-    return <Spinner />;
-  }
+  // if (loading) {
+  //   return <Spinner />;
+  // }
 
   let arrange = "";
   if (layout == 1) arrange = "grid grid-cols-3";
   else if (layout == 2) arrange = "grid grid-cols-4";
 
   return (
-    <>
+    <div
+      style={{
+          background: 'linear-gradient(135deg, #06101c 0%, #030712 25%, #010408 50%, #030712 75%, #06101c 100%)',
+      }}
+      // className="bg-[#030712]"
+    >
       <NamePlate name={playername} />
       <StatToolbar
         state={{ show: show, setShow: changeShow }}
@@ -217,7 +225,7 @@ const Player = ({ playername, graphData, staticData }) => {
           ) : null
         )}
       </div>
-    </>
+    </div>
   );
 };
 
