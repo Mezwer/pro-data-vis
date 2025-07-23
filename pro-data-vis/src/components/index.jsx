@@ -11,3 +11,4 @@ export { default as Tooltip } from "./Tooltip/CustomTooltip";
 export { default as Player } from "./Player/Player";
 export { default as FilterRange } from "./FilterRange/FilterRange";
 export { default as FilterToggle } from "./FilterToggle/FilterToggle";
+export { default as CustomXAxisTick } from "./CustomXAxisTick/CustomXAxisTick";

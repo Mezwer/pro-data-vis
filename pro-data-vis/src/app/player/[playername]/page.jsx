@@ -28,7 +28,6 @@ export default async function ServerPage({ params }) {
     <Player
       playername={playername}
       graphData={graphRes}
-      champions={champions}
       staticData={staticData}
     />
   );

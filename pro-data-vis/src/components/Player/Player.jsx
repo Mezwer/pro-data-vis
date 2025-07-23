@@ -17,7 +17,7 @@ import { filterSelection, filterSelectionTemp } from "@/constants/filters";
  * @param {Object} props
  * @param {string} props.playername - name of player
  * @param {Object[]} props.graphData - data for the player
- * @param {string[]} props.champions - list of champions in league
+ * @param {Object} props.staticData - static data for the page, such as champion names
  * @returns {React.JSX.Element}
  */
 const Player = ({ playername, graphData, staticData }) => {
@@ -49,17 +49,13 @@ const Player = ({ playername, graphData, staticData }) => {
   const [layout, setLayout] = useState(1);
   // how fine the data is: 0 = by year, 1 = by split, 2 = by split, separate playoffs
   const [granularity, setGranularity] = useState(0);
-
-  const [loading, setLoading] = useState(true);
   const [filteredData, setFilteredData] = useState([]);
 
   const chartConfigLen = chartConfigs.length;
 
   // update filtered data whenever filters are updated
   useEffect(() => {
-    const newData = filterData(graphData);
-    setFilteredData(newData);
-    setLoading(false);
+    setFilteredData(filterData(graphData));
   }, [filters, filterType]);
 
   // change what graphs are shown using the index in the state
@@ -71,8 +67,6 @@ const Player = ({ playername, graphData, staticData }) => {
   };
 
   const filterData = (data) => {
-    const start = performance.now();
-
     const newData = {};
     for (const [year, yrData] of Object.entries(data)) {
       const row = [];
@@ -84,7 +78,6 @@ const Player = ({ playername, graphData, staticData }) => {
       newData[year] = row;
     }
 
-    const end = performance.now();
     return newData;
   };
 
@@ -104,8 +97,8 @@ const Player = ({ playername, graphData, staticData }) => {
   const getColData = (item, data, avg) => {
     const newData = [];
     for (const [year, yrData] of Object.entries(data)) {
-      let sum = 0,
-        count = 0;
+      let sum = 0;
+      let count = 0;
       yrData.forEach((row) => {
         if (row[item] !== null) {
           sum += row[item];
@@ -117,18 +110,26 @@ const Player = ({ playername, graphData, staticData }) => {
       newData.push({ Year: year, [item]: number || 0 });
     }
 
-    // console.log(`${item} ${avg}`);
     return newData;
   };
 
+  const splitShort = (split) => {
+    if (split === "Spring")
+      return "Spr.";
+    else if (split === "Summer")
+      return "Su.";
+    else
+      return split;
+  }
+
+  // for more granular data aka instead of x axis being years, its now by split
   const getColSplitData = (item, data, avg, includePlayoff = false) => {
-    const s = performance.now();
     const newData = [];
     for (const [yr, yrData] of Object.entries(data)) {
       const splitSums = {};
 
       for (const { split, [item]: value, league, playoffs } of yrData) {
-        let key = split ? `${league} ${split}` : league;
+        let key = split ? `${league} ${split}` : league; // for use in graph display
         if (playoffs && includePlayoff) key += " Playoffs";
 
         if (!splitSums[key]) {
@@ -149,8 +150,6 @@ const Player = ({ playername, graphData, staticData }) => {
       }
     }
 
-    const e = performance.now();
-    // console.log(`${e - s}ms`);
     return newData;
   };
 
@@ -171,10 +170,6 @@ const Player = ({ playername, graphData, staticData }) => {
     return Object.values(games).reduce((sum, arr) => sum + arr.length, 0);
   };
 
-  // if (loading) {
-  //   return <Spinner />;
-  // }
-
   let arrange = "";
   if (layout == 1) arrange = "grid grid-cols-3";
   else if (layout == 2) arrange = "grid grid-cols-4";
@@ -182,7 +177,8 @@ const Player = ({ playername, graphData, staticData }) => {
   return (
     <div
       style={{
-          background: 'linear-gradient(135deg, #06101c 0%, #030712 25%, #010408 50%, #030712 75%, #06101c 100%)',
+        background:
+          "linear-gradient(135deg, #06101c 0%, #030712 25%, #010408 50%, #030712 75%, #06101c 100%)",
       }}
       // className="bg-[#030712]"
     >
@@ -208,10 +204,10 @@ const Player = ({ playername, graphData, staticData }) => {
         {show.map((item, index) =>
           item[2] ? (
             <div
-              className="h-96 w-[96%] mx-auto flex flex-col gap-8 items-center justify-center border-solid border-zinc-800 bg-zinc-800/40 border-2 rounded-lg mb-10"
+              className="h-[30rem] w-[96%] mx-auto flex flex-col gap-6 items-center justify-center border-solid border-zinc-800 bg-zinc-800/40 border-2 rounded-lg mb-10"
               key={item[0]}
             >
-              <span> {item[0]} </span>
+              <span className="mt-3"> {item[0]} </span>
               <LineGraph
                 color={index % (chartConfigLen - 1)}
                 data={chooseGranularity(

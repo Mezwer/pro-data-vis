@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import CustomTooltip from "../Tooltip/CustomTooltip.jsx";
 import { chartConfigs } from "@/constants/fields.js";
+import { CustomXAxisTick } from "../index.jsx";
 
 /**
  * Component for a graph depicting player data
@@ -26,6 +27,7 @@ const LineGraph = ({ color, data, ydata }) => {
   // Create a unique ID for each gradient using the color value
   const gradientId = `gradient${color}`;
   const gradientConfig = chartConfigs[color];
+  const key = data?.[0]?.Year ? "Year" : "split";
 
   const roundNumber = (num) => {
     if (num < 10) return +num.toFixed(2);
@@ -34,8 +36,8 @@ const LineGraph = ({ color, data, ydata }) => {
   };
 
   return (
-    <ResponsiveContainer height="100%" width="95%">
-      <AreaChart data={data}>
+    <ResponsiveContainer height="90%" width="95%">
+      <AreaChart data={data} overflow={'visible'}>
         <defs>
           <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
             {gradientConfig["stops"].map((item) => (
@@ -65,7 +67,12 @@ const LineGraph = ({ color, data, ydata }) => {
           dot={false}
         />
 
-        <XAxis dataKey={"Year"} tick={{ fontSize: ".8rem" }} />
+        <XAxis 
+          dataKey={key} 
+          tick={(<CustomXAxisTick />)} 
+          interval={0}
+          height={key === "Year" ? 30 : 50}
+        />
         <YAxis
           domain={[
             // TODO: this is a patchwork fix. find out why there is -infinity somewhere here
@@ -74,7 +81,7 @@ const LineGraph = ({ color, data, ydata }) => {
           ]}
           tick={{ fontSize: ".8rem" }}
           tickFormatter={roundNumber}
-          width={40}
+          width={35}
         >
           {/* <Label value={yDataName} offset={12} position="insideLeft" angle={-90}/> */}
         </YAxis>
