@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import CustomTooltip from "../Tooltip/CustomTooltip.jsx";
 import { chartConfigs } from "@/constants/fields.js";
-import { CustomXAxisTick } from "../index.jsx";
+import { CustomXAxisTick } from "@/components";
 
 /**
  * Component for a graph depicting player data
