@@ -1,12 +1,12 @@
-"use client"
-import React, { useEffect, useRef } from "react";
+'use client';
+import React, { useEffect, useRef } from 'react';
 
 const ParticleBackground = () => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     let animationFrameId;
 
     const resizeCanvas = () => {
@@ -14,7 +14,7 @@ const ParticleBackground = () => {
       canvas.height = window.innerHeight;
     };
 
-    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
     class Particle {
@@ -35,12 +35,7 @@ const ParticleBackground = () => {
         this.x += this.vx;
         this.y += this.vy;
 
-        if (
-          this.x < 0 ||
-          this.x > canvas.width ||
-          this.y < 0 ||
-          this.y > canvas.height
-        ) {
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
           this.reset();
         }
       }
@@ -73,9 +68,7 @@ const ParticleBackground = () => {
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(100, 210, 255, ${
-              0.3 * (1 - distance / 150)
-            })`;
+            ctx.strokeStyle = `rgba(100, 210, 255, ${0.3 * (1 - distance / 150)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -88,17 +81,13 @@ const ParticleBackground = () => {
     animate();
 
     return () => {
-      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none"
-      style={{ zIndex: 0 }}
-    />
+    <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }} />
   );
 };
 

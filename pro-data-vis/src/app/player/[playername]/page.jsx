@@ -1,5 +1,5 @@
-import { Player } from "@/components";
-import { collectGraphData, collectPageData } from "@/app/actions";
+import { Player } from '@/components';
+import { collectGraphData, collectPageData } from '@/app/actions';
 
 export default async function ServerPage({ params }) {
   const start = performance.now();
@@ -7,7 +7,7 @@ export default async function ServerPage({ params }) {
   // data fetching
   const { playername } = await params;
   const championRes = await fetch(
-    "https://ddragon.leagueoflegends.com/cdn/15.2.1/data/en_US/champion.json"
+    'https://ddragon.leagueoflegends.com/cdn/15.2.1/data/en_US/champion.json'
   ); // champion names
   const champData = (await championRes.json()).data;
   const champions = Object.keys(champData).map((item) => champData[item].name);
@@ -24,11 +24,5 @@ export default async function ServerPage({ params }) {
     ...pageData,
   };
 
-  return (
-    <Player
-      playername={playername}
-      graphData={graphRes}
-      staticData={staticData}
-    />
-  );
+  return <Player playername={playername} graphData={graphRes} staticData={staticData} />;
 }

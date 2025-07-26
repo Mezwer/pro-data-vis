@@ -1,7 +1,5 @@
-import { Spinner } from "@/components";
+import { Spinner } from '@/components';
 
 export default function Loading() {
-  return (
-    <Spinner />
-  );
+  return <Spinner />;
 }

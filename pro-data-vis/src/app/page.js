@@ -1,11 +1,11 @@
-"use client";
-import { useState } from "react";
-import { Search, X } from "lucide-react";
-import { useRouter } from "next/navigation";
+'use client';
+import { useState } from 'react';
+import { Search, X } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
   const handleSearch = (e) => {
@@ -14,7 +14,7 @@ export default function Home() {
   };
 
   const clearSearch = () => {
-    setSearchQuery("");
+    setSearchQuery('');
   };
 
   return (
@@ -30,15 +30,13 @@ export default function Home() {
           <div className="relative">
             <div
               className={`relative bg-gray-800 rounded-3xl shadow-xl transition-all duration-200 ${
-                isFocused
-                  ? "ring-2 ring-blue-600 shadow-blue-500/20"
-                  : "hover:shadow-gray-700/50"
+                isFocused ? 'ring-2 ring-blue-600 shadow-blue-500/20' : 'hover:shadow-gray-700/50'
               }`}
             >
               <div className="absolute left-6 top-1/2 transform -translate-y-1/2">
                 <Search
                   className={`w-6 h-6 transition-colors duration-200 ${
-                    isFocused ? "text-blue-400" : "text-gray-400"
+                    isFocused ? 'text-blue-400' : 'text-gray-400'
                   }`}
                 />
               </div>
@@ -50,7 +48,7 @@ export default function Home() {
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") {
+                  if (e.key === 'Enter') {
                     handleSearch(e);
                   }
                 }}

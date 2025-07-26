@@ -1,23 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
-import { mapping } from "@/constants/fields";
-import { X, ListChecks } from "lucide-react";
-import { Tooltip } from "react-tooltip";
+import React, { useState, useEffect, useRef } from 'react';
+import { mapping } from '@/constants/fields';
+import { X, ListChecks } from 'lucide-react';
+import { Tooltip } from 'react-tooltip';
 
 const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
   const [chips, setChips] = useState([]);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [showDrop, setShowDrop] = useState(true);
   const [options, setOptions] = useState([]);
   const [hovering, setHovering] = useState(false);
   const [focus, setFocus] = useState(-1);
 
   const focusRef = useRef(null);
-  const id = mapping[filter].replace(/\s/g, "");
+  const id = mapping[filter].replace(/\s/g, '');
 
   useEffect(() => {
     if (focus >= 0 && focusRef.current) {
       focusRef.current.scrollIntoView({
-        block: "nearest",
+        block: 'nearest',
       });
     }
   }, [focus]);
@@ -29,24 +29,21 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
 
   const handleKeyDown = (e) => {
     const trimmed = inputValue.trim();
-    if (
-      e.key === "Enter" &&
-      ((trimmed && options.includes(trimmed)) || focus != -1)
-    ) {
+    if (e.key === 'Enter' && ((trimmed && options.includes(trimmed)) || focus != -1)) {
       e.preventDefault();
 
       if (focus != -1 && !chips.includes(options[focus])) {
         setValues([...chips, options[focus]]);
-        setInputValue("");
+        setInputValue('');
         setFocus(-1);
         return;
       }
-    } else if (e.key === "Backspace" && !inputValue && chips.length > 0) {
+    } else if (e.key === 'Backspace' && !inputValue && chips.length > 0) {
       setValues(chips.slice(0, -1));
       setFocus(-1);
-    } else if (e.key === "ArrowDown" && options.length > 0) {
+    } else if (e.key === 'ArrowDown' && options.length > 0) {
       if (focus != options.length - 1) setFocus(focus + 1);
-    } else if (e.key === "ArrowUp" && options.length > 0) {
+    } else if (e.key === 'ArrowUp' && options.length > 0) {
       if (focus != 0) setFocus(focus - 1);
     }
   };
@@ -97,9 +94,7 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
           onChange={(e) => handleInputChange(e)}
           onKeyDown={handleKeyDown}
           className="outline-none bg-transparent flex-1 h-full w-full"
-          placeholder={
-            chips.length === 0 ? `Enter a ${mapping[filter]}...` : ""
-          }
+          placeholder={chips.length === 0 ? `Enter a ${mapping[filter]}...` : ''}
           onBlur={() => {
             setShowDrop(false);
             setFocus(-1);
@@ -108,7 +103,7 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
         />
 
         {/* TODO: currently just for bans, might need to make this a separate component */}
-        {mapping[filter] === "Ban" ? (
+        {mapping[filter] === 'Ban' ? (
           <>
             <button
               onClick={() => setType(filter)}
@@ -117,7 +112,7 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
               data-tooltip-delay-show={500}
             >
               <ListChecks
-                color={types[filter] ? "#4ade80" : "#A3A3A3"}
+                color={types[filter] ? '#4ade80' : '#A3A3A3'}
                 focusable="false"
                 aria-hidden="true"
               />
@@ -127,12 +122,13 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
               place="top"
               className="!bg-slate-900 !text-xs !rounded-md z-10"
               opacity={1}
-              content={"Toggle for whether all bans must be present (green) or at least one (gray)."}
+              content={
+                'Toggle for whether all bans must be present (green) or at least one (gray).'
+              }
             />
           </>
         ) : null}
       </div>
-
 
       {(options.length > 0 && inputValue && showDrop) || hovering ? (
         <div
@@ -143,13 +139,11 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
           {options.map((option, index) => (
             <div
               className={`p-2 border rounded-md ${
-                index === focus
-                  ? "border-slate-400 bg-[#1c1f2e]"
-                  : "border-transparent"
+                index === focus ? 'border-slate-400 bg-[#1c1f2e]' : 'border-transparent'
               }`}
               onClick={() => {
                 setValues([...chips, option]);
-                setInputValue("");
+                setInputValue('');
                 setHovering(false);
               }}
               key={index}

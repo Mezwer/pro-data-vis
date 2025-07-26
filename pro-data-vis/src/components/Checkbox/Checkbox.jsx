@@ -1,6 +1,6 @@
-import React from "react";
-import { Tooltip } from "react-tooltip";
-import { descriptions } from "@/constants/fields";
+import React from 'react';
+import { Tooltip } from 'react-tooltip';
+import { descriptions } from '@/constants/fields';
 
 const Checkbox = ({ label, state, setter, index }) => {
   const id = `checkbox${index}`;
@@ -35,12 +35,13 @@ const Checkbox = ({ label, state, setter, index }) => {
       <label
         id={id}
         data-tooltip-delay-show={500}
+        data-tooltip-id={id}
         className="cursor-pointer ml-2 text-slate-300 text-sm truncate"
       >
         {label}
       </label>
       <Tooltip
-        anchorSelect={`#${id}`}
+        id={id}
         place="bottom"
         content={descriptions[label]}
         opacity={1}

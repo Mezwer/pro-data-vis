@@ -1,8 +1,8 @@
-import React from "react";
-import Checkbox from "../Checkbox/Checkbox";
-import Arrangement from "../Arrangement/Arrangement";
-import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import React from 'react';
+import Checkbox from '../Checkbox/Checkbox';
+import Arrangement from '../Arrangement/Arrangement';
+import { ChevronDown } from 'lucide-react';
+import { useState } from 'react';
 
 const StatToolbar = ({ state, layoutState, granularityState }) => {
   const { show, setShow } = state;
@@ -15,24 +15,19 @@ const StatToolbar = ({ state, layoutState, granularityState }) => {
           Stats
           <ChevronDown
             className={`relative -bottom-[3px] hover:scale-125 active:scale-100 transition-all duration-200 ease-linear ${
-              collapse ? "rotate-180" : ""
+              collapse ? 'rotate-180' : ''
             }`}
             onClick={() => {
               setCollapse(!collapse);
             }}
           />
         </span>
-        <Arrangement
-          layoutState={layoutState}
-          granularityState={granularityState}
-        />
+        <Arrangement layoutState={layoutState} granularityState={granularityState} />
       </div>
 
       <div
         className={`w-11/12 mt-5 mx-auto left-0 right-0 grid grid-cols-7 transition-all duration-150 ${
-          collapse
-            ? "absolute -translate-y-4 opacity-0 pointer-events-none"
-            : ""
+          collapse ? 'absolute -translate-y-4 opacity-0 pointer-events-none' : ''
         }`}
       >
         {show.map((field) => (

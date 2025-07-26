@@ -1,13 +1,6 @@
-import React from "react";
-import {
-  LayoutGrid,
-  StretchHorizontal,
-  Grid3X3,
-  Columns2,
-  Columns3,
-  Columns4,
-} from "lucide-react";
-import { Tooltip } from "react-tooltip";
+import React from 'react';
+import { LayoutGrid, StretchHorizontal, Grid3X3, Columns2, Columns3, Columns4 } from 'lucide-react';
+import { Tooltip } from 'react-tooltip';
 
 const Arrangement = ({ layoutState, granularityState }) => {
   const { layout, setLayout } = layoutState;
@@ -18,14 +11,14 @@ const Arrangement = ({ layoutState, granularityState }) => {
       <div className="flex flex-row gap-3 w-32 justify-end">
         <button
           onClick={() => setGranularity(0)}
-          id="Columns2"
+          data-tooltip-id="Columns2"
           data-tooltip-delay-show={500}
           className="hover:scale-125 transition-all active:scale-100 outline-none"
         >
-          <Columns2 className={`${granularity === 0 ? "text-sky-500" : ""}`} />
+          <Columns2 className={`${granularity === 0 ? 'text-sky-500' : ''}`} />
         </button>
         <Tooltip
-          anchorSelect="#Columns2"
+          id="Columns2"
           place="bottom"
           className="!bg-slate-900 !text-xs !rounded-md z-10 outline-none"
           content="X Axis is by year"
@@ -33,14 +26,14 @@ const Arrangement = ({ layoutState, granularityState }) => {
 
         <button
           onClick={() => setGranularity(1)}
-          id="Columns3"
+          data-tooltip-id="Columns3"
           data-tooltip-delay-show={500}
           className="hover:scale-125 transition-all active:scale-100 outline-none"
         >
-          <Columns3 className={`${granularity === 1 ? "text-sky-500" : ""}`} />
+          <Columns3 className={`${granularity === 1 ? 'text-sky-500' : ''}`} />
         </button>
         <Tooltip
-          anchorSelect="#Columns3"
+          id="Columns3"
           place="bottom"
           className="!bg-slate-900 !text-xs !rounded-md z-10"
           content="X Axis is by split"
@@ -48,14 +41,14 @@ const Arrangement = ({ layoutState, granularityState }) => {
 
         <button
           onClick={() => setGranularity(2)}
-          id="Columns4"
+          data-tooltip-id="Columns4"
           data-tooltip-delay-show={500}
           className="hover:scale-125 transition-all active:scale-100 outline-none"
         >
-          <Columns4 className={`${granularity === 2 ? "text-sky-500" : ""}`} />
+          <Columns4 className={`${granularity === 2 ? 'text-sky-500' : ''}`} />
         </button>
         <Tooltip
-          anchorSelect="#Columns4"
+          id="Columns4"
           place="bottom"
           className="!bg-slate-900 !text-xs !rounded-md z-10 outline-none"
           content="X Axis is by split, with playoffs separated"
@@ -67,21 +60,19 @@ const Arrangement = ({ layoutState, granularityState }) => {
           onClick={() => setLayout(2)}
           className="hover:scale-125 transition-all active:scale-100 outline-none"
         >
-          <Grid3X3 className={`${layout === 2 ? "text-sky-500" : ""}`} />
+          <Grid3X3 className={`${layout === 2 ? 'text-sky-500' : ''}`} />
         </button>
         <button
           onClick={() => setLayout(1)}
           className="hover:scale-125 transition-all active:scale-100 outline-none"
         >
-          <LayoutGrid className={`${layout === 1 ? "text-sky-500" : ""}`} />
+          <LayoutGrid className={`${layout === 1 ? 'text-sky-500' : ''}`} />
         </button>
         <button
           onClick={() => setLayout(0)}
           className="hover:scale-125 transition-all active:scale-100 outline-none"
         >
-          <StretchHorizontal
-            className={`${layout === 0 ? "text-sky-500" : ""}`}
-          />
+          <StretchHorizontal className={`${layout === 0 ? 'text-sky-500' : ''}`} />
         </button>
       </div>
     </div>

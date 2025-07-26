@@ -1,5 +1,5 @@
-import * as Slider from "@radix-ui/react-slider";
-import { useState } from "react";
+import * as Slider from '@radix-ui/react-slider';
+import { useState } from 'react';
 
 const FilterRange = ({ filter, label, setFilter }) => {
   // TODO: find how to get the max value from the db
@@ -16,9 +16,9 @@ const FilterRange = ({ filter, label, setFilter }) => {
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
 
-    const pad = (num) => String(num).padStart(2, "0");
+    const pad = (num) => String(num).padStart(2, '0');
 
-    return `${hours ? `${pad(hours)}:` : ""}${pad(minutes)}:${pad(seconds)}`;
+    return `${hours ? `${pad(hours)}:` : ''}${pad(minutes)}:${pad(seconds)}`;
   }
 
   return (

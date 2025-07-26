@@ -18,6 +18,6 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: "Red Hat Display", Helvetica, sans-serif;
+  font-family: 'Red Hat Display', Helvetica, sans-serif;
   overflow-x: hidden;
 }

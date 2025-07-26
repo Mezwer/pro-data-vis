@@ -1,15 +1,9 @@
-"use client";
-import React from "react";
-import {
-  LineGraph,
-  StatToolbar,
-  NamePlate,
-  Spinner,
-  FilterToolbar,
-} from "@/components";
-import { useState, useEffect } from "react";
-import { fields, mapping, averages, chartConfigs } from "@/constants/fields.js";
-import { filterSelection, filterSelectionTemp } from "@/constants/filters";
+'use client';
+import React from 'react';
+import { LineGraph, StatToolbar, NamePlate, Spinner, FilterToolbar } from '@/components';
+import { useState, useEffect } from 'react';
+import { fields, mapping, averages, chartConfigs } from '@/constants/fields.js';
+import { filterSelection, filterSelectionTemp } from '@/constants/filters';
 
 /**
  * Renders the page of a player, with all graphs and data
@@ -25,12 +19,7 @@ const Player = ({ playername, graphData, staticData }) => {
   const [show, setShow] = useState(
     fields.map((field, index) =>
       // maybe later make this an object to better readability
-      [
-        mapping[field],
-        index,
-        ["kills", "deaths", "assists", "result"].includes(field),
-        field,
-      ]
+      [mapping[field], index, ['kills', 'deaths', 'assists', 'result'].includes(field), field]
     )
   );
 
@@ -39,16 +28,16 @@ const Player = ({ playername, graphData, staticData }) => {
   );
 
   const [filterType, setFilterType] = useState(
-    Object.fromEntries(
-      Object.keys(filterSelectionTemp).map((filter) => [filter, 1])
-    )
+    Object.fromEntries(Object.keys(filterSelectionTemp).map((filter) => [filter, 1]))
   );
 
-  // console.log(graphData);
   // layout of graphs: 0 = vertical, 1 = compact, 2 = more compact
   const [layout, setLayout] = useState(1);
   // how fine the data is: 0 = by year, 1 = by split, 2 = by split, separate playoffs
   const [granularity, setGranularity] = useState(0);
+  // 1 = split, 0 = no split
+  const [split, setSplit] = useState(0);
+
   const [filteredData, setFilteredData] = useState([]);
 
   const chartConfigLen = chartConfigs.length;
@@ -87,8 +76,7 @@ const Player = ({ playername, graphData, staticData }) => {
 
       const name = key;
       // console.log(filterType[filter], filter);
-      if (!filterSelectionTemp[name](row, filter, name, filterType[name]))
-        return false;
+      if (!filterSelectionTemp[name](row, filter, name, filterType[name])) return false;
     }
 
     return true;
@@ -113,15 +101,6 @@ const Player = ({ playername, graphData, staticData }) => {
     return newData;
   };
 
-  const splitShort = (split) => {
-    if (split === "Spring")
-      return "Spr.";
-    else if (split === "Summer")
-      return "Su.";
-    else
-      return split;
-  }
-
   // for more granular data aka instead of x axis being years, its now by split
   const getColSplitData = (item, data, avg, includePlayoff = false) => {
     const newData = [];
@@ -130,7 +109,7 @@ const Player = ({ playername, graphData, staticData }) => {
 
       for (const { split, [item]: value, league, playoffs } of yrData) {
         let key = split ? `${league} ${split}` : league; // for use in graph display
-        if (playoffs && includePlayoff) key += " Playoffs";
+        if (playoffs && includePlayoff) key += ' Playoffs';
 
         if (!splitSums[key]) {
           splitSums[key] = { total: 0, count: 0 };
@@ -143,9 +122,7 @@ const Player = ({ playername, graphData, staticData }) => {
       for (const [split, stats] of Object.entries(splitSums)) {
         newData.push({
           split: `${yr} ${split}`,
-          [item]: avg
-            ? Number((stats.total / stats.count).toFixed(2))
-            : stats.total,
+          [item]: avg ? Number((stats.total / stats.count).toFixed(2)) : stats.total,
         });
       }
     }
@@ -170,15 +147,15 @@ const Player = ({ playername, graphData, staticData }) => {
     return Object.values(games).reduce((sum, arr) => sum + arr.length, 0);
   };
 
-  let arrange = "";
-  if (layout == 1) arrange = "grid grid-cols-3";
-  else if (layout == 2) arrange = "grid grid-cols-4";
+  let arrange = '';
+  if (layout == 1) arrange = 'grid grid-cols-3';
+  else if (layout == 2) arrange = 'grid grid-cols-4';
 
   return (
     <div
       style={{
         background:
-          "linear-gradient(135deg, #06101c 0%, #030712 25%, #010408 50%, #030712 75%, #06101c 100%)",
+          'linear-gradient(135deg, #06101c 0%, #030712 25%, #010408 50%, #030712 75%, #06101c 100%)',
       }}
       // className="bg-[#030712]"
     >
@@ -196,6 +173,8 @@ const Player = ({ playername, graphData, staticData }) => {
         setFilter={setFilters}
         setTypes={setFilterType}
         types={filterType}
+        setSplit={setSplit}
+        split={split}
         games={getNumGames(filteredData)}
         totalGames={getNumGames(graphData)}
       />
@@ -210,12 +189,10 @@ const Player = ({ playername, graphData, staticData }) => {
               <span className="mt-3"> {item[0]} </span>
               <LineGraph
                 color={index % (chartConfigLen - 1)}
-                data={chooseGranularity(
-                  item[0],
-                  filteredData,
-                  averages.has(item[3])
-                )}
+                data={chooseGranularity(item[0], filteredData, averages.has(item[3]))}
+                originalData={chooseGranularity(item[0], graphData, averages.has(item[3]))}
                 ydata={item[0]}
+                split={split}
               />
             </div>
           ) : null
