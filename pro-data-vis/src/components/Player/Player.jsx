@@ -13,13 +13,13 @@ const LineGraph = dynamic(() => import('../LineGraph/LineGraph'), { ssr: false }
 
 /**
  * Renders the page of a player, with all graphs and data
-*
-* @param {Object} props
-* @param {string} props.playername - name of player
-* @param {Object[]} props.graphData - data for the player
-* @param {Object} props.staticData - static data for the page, such as champion names
-* @returns {React.JSX.Element}
-*/
+ *
+ * @param {Object} props
+ * @param {string} props.playername - name of player
+ * @param {Object[]} props.graphData - data for the player
+ * @param {Object} props.staticData - static data for the page, such as champion names
+ * @returns {React.JSX.Element}
+ */
 const Player = ({ playername, graphData, staticData }) => {
   // show which items
   const [show, setShow] = useState(
@@ -57,7 +57,7 @@ const Player = ({ playername, graphData, staticData }) => {
 
   useEffect(() => {
     setIsClient(true);
-  }, [])
+  }, []);
 
   // change what graphs are shown using the index in the state
   const changeShow = (index) => {

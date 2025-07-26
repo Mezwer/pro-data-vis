@@ -5,7 +5,6 @@ import { BarChart3, LineChart, PieChart, Globe } from 'lucide-react';
 const HomePage = () => {
   return (
     <div className="relative min-h-screen bg-gray-950/90 text-gray-100">
-
       <header className="relative">
         <nav className="sticky top-0 border-b border-gray-800/50 bg-gray-900/40 backdrop-blur-lg supports-[backdrop-filter]:bg-gray-900/20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
