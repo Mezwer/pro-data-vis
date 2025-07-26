@@ -4,11 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db": "nodemon src/lib/db.js"
+    "db": "nodemon src/lib/db.js",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",

@@ -1,4 +1,4 @@
-import { Player } from '@/components';
+import Player from '@/components/Player/Player';
 import { collectGraphData, collectPageData } from '@/app/actions';
 
 export default async function ServerPage({ params }) {

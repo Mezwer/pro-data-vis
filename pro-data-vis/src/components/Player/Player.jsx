@@ -1,19 +1,25 @@
 'use client';
 import React from 'react';
-import { LineGraph, StatToolbar, NamePlate, Spinner, FilterToolbar } from '@/components';
+import StatToolbar from '../StatToolbar/StatToolbar';
+import NamePlate from '../NamePlate/NamePlate';
+import FilterToolbar from '../FilterToolbar/FilterToolbar';
+import Spinner from '../Spinner/Spinner';
 import { useState, useEffect } from 'react';
 import { fields, mapping, averages, chartConfigs } from '@/constants/fields.js';
-import { filterSelection, filterSelectionTemp } from '@/constants/filters';
+import { filterSelection, filterSelectionTemp } from '@/constants/filters.js';
+import dynamic from 'next/dynamic';
+
+const LineGraph = dynamic(() => import('../LineGraph/LineGraph'), { ssr: false });
 
 /**
  * Renders the page of a player, with all graphs and data
- *
- * @param {Object} props
- * @param {string} props.playername - name of player
- * @param {Object[]} props.graphData - data for the player
- * @param {Object} props.staticData - static data for the page, such as champion names
- * @returns {React.JSX.Element}
- */
+*
+* @param {Object} props
+* @param {string} props.playername - name of player
+* @param {Object[]} props.graphData - data for the player
+* @param {Object} props.staticData - static data for the page, such as champion names
+* @returns {React.JSX.Element}
+*/
 const Player = ({ playername, graphData, staticData }) => {
   // show which items
   const [show, setShow] = useState(
@@ -22,6 +28,8 @@ const Player = ({ playername, graphData, staticData }) => {
       [mapping[field], index, ['kills', 'deaths', 'assists', 'result'].includes(field), field]
     )
   );
+
+  const [isClient, setIsClient] = useState(false);
 
   const [filters, setFilters] = useState(
     Object.fromEntries(filterSelection.map((filter) => [filter, []]))
@@ -38,7 +46,7 @@ const Player = ({ playername, graphData, staticData }) => {
   // 1 = split, 0 = no split
   const [split, setSplit] = useState(0);
 
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState({});
 
   const chartConfigLen = chartConfigs.length;
 
@@ -46,6 +54,10 @@ const Player = ({ playername, graphData, staticData }) => {
   useEffect(() => {
     setFilteredData(filterData(graphData));
   }, [filters, filterType]);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, [])
 
   // change what graphs are shown using the index in the state
   const changeShow = (index) => {
@@ -144,12 +156,17 @@ const Player = ({ playername, graphData, staticData }) => {
   };
 
   const getNumGames = (games) => {
+    // return [];
     return Object.values(games).reduce((sum, arr) => sum + arr.length, 0);
   };
 
   let arrange = '';
   if (layout == 1) arrange = 'grid grid-cols-3';
   else if (layout == 2) arrange = 'grid grid-cols-4';
+
+  if (!isClient) {
+    return <Spinner />;
+  }
 
   return (
     <div

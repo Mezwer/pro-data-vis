@@ -1,12 +1,10 @@
 'use client';
 import React from 'react';
 import { BarChart3, LineChart, PieChart, Globe } from 'lucide-react';
-import ParticleBackground from '@/components/ParticleBackground/ParticleBackground.jsx';
 
 const HomePage = () => {
   return (
     <div className="relative min-h-screen bg-gray-950/90 text-gray-100">
-      <ParticleBackground />
 
       <header className="relative">
         <nav className="sticky top-0 border-b border-gray-800/50 bg-gray-900/40 backdrop-blur-lg supports-[backdrop-filter]:bg-gray-900/20">

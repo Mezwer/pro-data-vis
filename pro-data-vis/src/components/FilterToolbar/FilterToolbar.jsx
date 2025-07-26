@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ChevronDown, SquareSplitVertical } from 'lucide-react';
-import { FilterRange, FilterToggle, FilterField } from '..';
+import FilterRange from '../FilterRange/FilterRange';
+import FilterField from '../FilterField/FilterField';
+import FilterToggle from '../FilterToggle/FilterToggle';
 import { filterToggle } from '@/constants/filters';
 import { mapping } from '@/constants/fields';
 import { Tooltip } from 'react-tooltip';

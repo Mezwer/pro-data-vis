@@ -40,15 +40,11 @@ const FilterToggle = ({ label, filter, setFilter }) => {
       <button
         type="button"
         onClick={() => handleToggle()}
-        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-          isChecked ? 'bg-blue-700' : 'bg-gray-700'
-        }`}
+        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isChecked ? 'bg-blue-700' : 'bg-gray-700'}`}
         aria-pressed={isChecked}
       >
         <span
-          className={`inline-block h-4 w-4 transform rounded-full transition-transform ${
-            isChecked ? 'translate-x-6 bg-white' : 'translate-x-1 bg-gray-300'
-          }`}
+          className={`inline-block h-4 w-4 transform rounded-full transition-transform ${isChecked ? 'translate-x-6 bg-white' : 'translate-x-1 bg-gray-300'}`}
         />
       </button>
     </div>

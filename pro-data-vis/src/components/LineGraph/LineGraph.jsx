@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import {
   Area,
@@ -11,7 +12,7 @@ import {
 } from 'recharts';
 import CustomTooltip from '../Tooltip/CustomTooltip.jsx';
 import { chartConfigs } from '@/constants/fields.js';
-import { CustomXAxisTick } from '@/components';
+import CustomXAxisTick from '../CustomXAxisTick/CustomXAxisTick.jsx';
 
 /**
  * Component for a graph depicting player data
