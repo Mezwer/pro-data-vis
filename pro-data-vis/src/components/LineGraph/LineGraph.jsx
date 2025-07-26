@@ -36,6 +36,8 @@ const LineGraph = ({ color, data, originalData, ydata, split }) => {
     return +num.toFixed(1);
   };
 
+  // TODO: need to fix when filtering by league
+  // remove filtered leagues from X axis on graph
   const mergeData = () => {
     const merged = originalData.map((item) => {
       const filtered = data.find((filteredItem) => filteredItem[key] === item[key]);

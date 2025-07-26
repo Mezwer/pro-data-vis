@@ -282,7 +282,7 @@ export const chartConfigs = [
   },
 ];
 
-export const years = [2021, 2022, 2023, 2024]; // will add more years after testing done
+export const years = [2019, 2020, 2021, 2022, 2023, 2024]; // will add more years after testing done
 
 export const averages = new Set([
   'result',
