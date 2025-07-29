@@ -35,19 +35,17 @@ const FilterToggle = ({ label, filter, setFilter }) => {
   };
 
   return (
-    <div className="flex items-center space-x-2">
-      {label && <label className="text-sm font-medium text-gray-200">{label}</label>}
-      <button
-        type="button"
-        onClick={() => handleToggle()}
-        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isChecked ? 'bg-blue-700' : 'bg-gray-700'}`}
-        aria-pressed={isChecked}
+    <button
+      className="hover:scale-105 active:scale-95 transition-all duration-150 ease-linear"
+      onClick={handleToggle}
+      aria-pressed={isChecked}
+    >
+      <div
+        className={`rounded-xl outline-1 bg-slate-900 px-3 py-1 text-sm text-center ${isChecked ? 'outline outline-green-400 text-green-400' : ''}`}
       >
-        <span
-          className={`inline-block h-4 w-4 transform rounded-full transition-transform ${isChecked ? 'translate-x-6 bg-white' : 'translate-x-1 bg-gray-300'}`}
-        />
-      </button>
-    </div>
+        {label}
+      </div>
+    </button>
   );
 };
 

@@ -29,6 +29,8 @@ const Player = ({ playername, graphData, staticData }) => {
     )
   );
 
+  console.log(show)
+
   const [isClient, setIsClient] = useState(false);
 
   const [filters, setFilters] = useState(
@@ -188,7 +190,6 @@ const Player = ({ playername, graphData, staticData }) => {
         background:
           'linear-gradient(135deg, #06101c 0%, #030712 25%, #010408 50%, #030712 75%, #06101c 100%)',
       }}
-      // className="bg-[#030712]"
     >
       <NamePlate name={playername} />
       <StatToolbar
@@ -217,7 +218,7 @@ const Player = ({ playername, graphData, staticData }) => {
               className="h-[30rem] w-[96%] mx-auto flex flex-col gap-6 items-center justify-center border-solid border-zinc-800 bg-zinc-800/40 border-2 rounded-lg mb-10"
               key={item[0]}
             >
-              <span className="mt-3"> {item[0]} </span>
+              <span className="mt-3 mx-auto"> {item[0]} </span>
               <LineGraph
                 color={index % (chartConfigLen - 1)}
                 data={chooseGranularity(item[0], filteredData, averages.has(item[3]))}

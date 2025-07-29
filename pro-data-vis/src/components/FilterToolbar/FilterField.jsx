@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { mapping } from '@/constants/fields';
 import { X, ListChecks } from 'lucide-react';
-import { Tooltip } from 'react-tooltip';
+import FilterTypeControl from './FilterTypeControl';
+import { filterTypeMap } from '@/constants/filters';
 
 const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
   const [chips, setChips] = useState([]);
@@ -14,6 +15,7 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
   const focusRef = useRef(null);
   const id = mapping[filter].replace(/\s/g, '');
 
+  console.log(filter);
   useEffect(() => {
     if (focus >= 0 && focusRef.current) {
       focusRef.current.scrollIntoView({
@@ -103,31 +105,9 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
         />
 
         {/* TODO: currently just for bans, might need to make this a separate component */}
-        {mapping[filter] === 'Ban' ? (
-          <>
-            <button
-              onClick={() => setType(filter)}
-              className="outline-none transform transition duration-150 ease-in-out hover:scale-110 active:scale-95"
-              id={id}
-              data-tooltip-delay-show={500}
-            >
-              <ListChecks
-                color={types[filter] ? '#4ade80' : '#A3A3A3'}
-                focusable="false"
-                aria-hidden="true"
-              />
-            </button>
-            <Tooltip
-              anchorSelect={`#${id}`}
-              place="top"
-              className="!bg-slate-900 !text-xs !rounded-md z-10"
-              opacity={1}
-              content={
-                'Toggle for whether all bans must be present (green) or at least one (gray).'
-              }
-            />
-          </>
-        ) : null}
+        {filterTypeMap?.[filter] && (
+          <FilterTypeControl filter={filter} types={types} setType={setType} id={id} />
+        )}
       </div>
 
       {(options.length > 0 && inputValue && showDrop) || hovering ? (
