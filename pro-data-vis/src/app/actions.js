@@ -17,7 +17,7 @@ export async function collectGraphData(player) {
   // Use a UNION ALL query to fetch data for all years in a single database call
   const queries = years.map((year) => {
     const tablename = `data_${year}_new`;
-    return `(SELECT ${selectFields}, '${year % 100}' as "Year" FROM ${tablename} WHERE playername = '${player}')`;
+    return `(SELECT ${selectFields}, '${year % 100}' as "Year" FROM ${tablename} WHERE playername = '${player}' ORDER BY date, game)`;
   });
 
   const unionQuery = queries.join(' UNION ALL ');
