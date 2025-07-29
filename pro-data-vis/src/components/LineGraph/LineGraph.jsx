@@ -45,6 +45,8 @@ const LineGraph = ({ color, data, originalData, ydata, split }) => {
         [key]: item[key],
         series1: item[ydata],
         series2: filtered?.[ydata] ?? 0,
+        games: item.games,
+        gamesFiltered: filtered?.games ?? 0,
       };
     });
 

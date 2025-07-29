@@ -12,8 +12,19 @@ const CustomTooltip = ({ active, payload, data, mod }) => {
   return (
     <div className="p-4 bg-slate-950 flex flex-col gap-2 rounded-md">
       <p className="text-medium underline decoration-1">{val}</p>
-      <p className="text-sm">
-        {data}: {payload[0].value}
+      <p className="text-sm flex flex-col gap-1">
+        {payload.length > 1 ? (
+          <>
+            {data}: {payload[1].value} ({payload[1].payload.gamesFiltered} games)
+            <span>
+              {data} (Unfiltered): {payload[0].value} ({payload[0].payload.games} games)
+            </span>
+          </>
+        ) : (
+          <>
+            {data}: {payload[0].value} ({payload[0].payload.gamesFiltered} games)
+          </>
+        )}
       </p>
     </div>
   );

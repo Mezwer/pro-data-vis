@@ -82,6 +82,19 @@ const Player = ({ playername, graphData, staticData }) => {
     return newData;
   };
 
+  const filterDataLeague = (data) => {
+    const newData = {};
+    for (const [year, yrData] of Object.entries(data)) {
+      const row = [];
+      yrData.forEach((item) => {
+        if (filters['league'].includes(item.league)) row.push(item);
+      });
+      newData[year] = row;
+    }
+
+    return newData;
+  };
+
   const checkRow = (row) => {
     for (const [key, filter] of Object.entries(filters)) {
       if (filter.length === 0) continue;
@@ -107,7 +120,7 @@ const Player = ({ playername, graphData, staticData }) => {
       });
 
       const number = avg ? Number((sum / count).toFixed(2)) : sum;
-      newData.push({ Year: year, [item]: number || 0 });
+      newData.push({ Year: year, [item]: number || 0, games: count });
     }
 
     return newData;
@@ -135,6 +148,7 @@ const Player = ({ playername, graphData, staticData }) => {
         newData.push({
           split: `${yr} ${split}`,
           [item]: avg ? Number((stats.total / stats.count).toFixed(2)) : stats.total,
+          games: stats.count,
         });
       }
     }
@@ -207,7 +221,13 @@ const Player = ({ playername, graphData, staticData }) => {
               <LineGraph
                 color={index % (chartConfigLen - 1)}
                 data={chooseGranularity(item[0], filteredData, averages.has(item[3]))}
-                originalData={chooseGranularity(item[0], graphData, averages.has(item[3]))}
+                // currently filtering in the Player component, but i think if the animations are a
+                // something i want back it's possible to move some of the filtering to the graph component
+                originalData={chooseGranularity(
+                  item[0],
+                  filters['league'].length > 0 ? filterDataLeague(graphData) : graphData,
+                  averages.has(item[3])
+                )}
                 ydata={item[0]}
                 split={split}
               />
