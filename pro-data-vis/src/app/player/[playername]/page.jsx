@@ -6,23 +6,27 @@ export default async function ServerPage({ params }) {
 
   // data fetching
   const { playername } = await params;
+
   const championRes = await fetch(
-    'https://ddragon.leagueoflegends.com/cdn/15.2.1/data/en_US/champion.json'
+    'https://ddragon.leagueoflegends.com/cdn/15.2.1/data/en_US/champion.json',
+    { cache: 'force-cache' }
   ); // champion names
   const champData = (await championRes.json()).data;
   const champions = Object.keys(champData).map((item) => champData[item].name);
 
-  const graphRes = await collectGraphData(playername);
-  const pageData = await collectPageData();
-
+  
+  const [graphData, pageData] = await Promise.all([
+    collectGraphData(playername),
+    collectPageData(),
+  ]);
+  
   const end = performance.now();
-  // console.log(end - start);
-
+  console.log(end - start);
   const staticData = {
     champion: champions,
     bans: champions,
     ...pageData,
   };
 
-  return <Player playername={playername} graphData={graphRes} staticData={staticData} />;
+  return <Player playername={playername} graphData={graphData} staticData={staticData} />;
 }
