@@ -56,22 +56,13 @@ const Arrangement = () => {
       </div>
 
       <div className="flex flex-row gap-3 mr-5 w-32 justify-end">
-        <button
-          onClick={() => setLayout(2)}
-          className="hover:scale-125 transition-all active:scale-100 outline-none"
-        >
+        <button onClick={() => setLayout(2)} className="hover:scale-125 transition-all active:scale-100 outline-none">
           <Grid3X3 className={`${layout === 2 ? 'text-sky-500' : ''}`} />
         </button>
-        <button
-          onClick={() => setLayout(1)}
-          className="hover:scale-125 transition-all active:scale-100 outline-none"
-        >
+        <button onClick={() => setLayout(1)} className="hover:scale-125 transition-all active:scale-100 outline-none">
           <LayoutGrid className={`${layout === 1 ? 'text-sky-500' : ''}`} />
         </button>
-        <button
-          onClick={() => setLayout(0)}
-          className="hover:scale-125 transition-all active:scale-100 outline-none"
-        >
+        <button onClick={() => setLayout(0)} className="hover:scale-125 transition-all active:scale-100 outline-none">
           <StretchHorizontal className={`${layout === 0 ? 'text-sky-500' : ''}`} />
         </button>
       </div>

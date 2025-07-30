@@ -19,8 +19,8 @@ const HomePage = () => {
               <span className="text-blue-400"> pros </span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-300">
-              Visual representation of professional League of Legends statistics across the four
-              major regions: LCK, LPL, LEC, LCS.
+              Visual representation of professional League of Legends statistics across the four major regions: LCK,
+              LPL, LEC, LCS.
             </p>
           </div>
         </div>

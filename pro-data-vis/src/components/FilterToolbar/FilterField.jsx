@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { mapping } from '@/constants/fields';
 import { X } from 'lucide-react';
 import FilterTypeControl from './FilterTypeControl';
 import { filterTypeMap } from '@/constants/filters';
+import { AppContext } from '@/contexts/StateProvider';
 
-const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
+const FilterField = ({ choices, filter }) => {
   const [chips, setChips] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [showDrop, setShowDrop] = useState(true);
   const [options, setOptions] = useState([]);
   const [hovering, setHovering] = useState(false);
   const [focus, setFocus] = useState(-1);
+  const { filterType, setFilterType, setFilters } = useContext(AppContext);
 
   const focusRef = useRef(null);
   const id = mapping[filter].replace(/\s/g, '');
@@ -23,7 +25,7 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
 
   const setValues = (newVal) => {
     setChips(newVal);
-    setFilter((prev) => ({ ...prev, [filter]: newVal }));
+    setFilters((prev) => ({ ...prev, [filter]: newVal }));
   };
 
   const handleKeyDown = (e) => {
@@ -56,9 +58,7 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
     const value = e.target.value;
     setInputValue(value);
 
-    const filteredOptions = choices.filter((choice) =>
-      choice.toLowerCase().includes(value.toLowerCase())
-    );
+    const filteredOptions = choices.filter((choice) => choice.toLowerCase().includes(value.toLowerCase()));
     setOptions(filteredOptions);
 
     setFocus(-1);
@@ -66,22 +66,16 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
 
   // TODO: eventually this will have to be more robust, as filters will have more types than just 0/1
   const setType = (filter) => {
-    setTypes((prev) => ({ ...prev, [filter]: prev[filter] ? 0 : 1 }));
+    setFilterType((prev) => ({ ...prev, [filter]: prev[filter] ? 0 : 1 }));
   };
 
   return (
     <div className="relative flex-1">
       <div className="p-2 rounded-md flex flex-wrap gap-2 outline-none bg-[#1E202880] focus-within:ring-[1px] focus-within:ring-white">
         {chips.map((chip) => (
-          <div
-            key={chip}
-            className="flex items-center gap-1 px-2 bg-neutral-200 text-black rounded-full text-sm"
-          >
+          <div key={chip} className="flex items-center gap-1 px-2 bg-neutral-200 text-black rounded-full text-sm">
             <span>{chip}</span>
-            <button
-              onClick={() => removeChip(chip)}
-              className="hover:bg-neutral-300 rounded-full p-0.5 transition-all"
-            >
+            <button onClick={() => removeChip(chip)} className="hover:bg-neutral-300 rounded-full p-0.5 transition-all">
               <X size={14} />
             </button>
           </div>
@@ -101,9 +95,7 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
           onFocus={() => setShowDrop(true)}
         />
 
-        {filterTypeMap?.[filter] && (
-          <FilterTypeControl filter={filter} types={types} setType={setType} id={id} />
-        )}
+        {filterTypeMap?.[filter] && <FilterTypeControl filter={filter} types={filterType} setType={setType} id={id} />}
       </div>
 
       {(options.length > 0 && inputValue && showDrop) || hovering ? (

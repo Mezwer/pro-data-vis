@@ -14,10 +14,7 @@ export default async function ServerPage({ params }) {
   ).data;
   const champions = Object.values(champData).map((champ) => champ.name);
 
-  const [graphData, pageData] = await Promise.all([
-    collectGraphData(playername),
-    collectPageData(),
-  ]);
+  const [graphData, pageData] = await Promise.all([collectGraphData(playername), collectPageData()]);
 
   const end = performance.now();
   // console.log(end - start);

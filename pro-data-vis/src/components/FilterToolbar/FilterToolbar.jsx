@@ -8,9 +8,9 @@ import FilterRange from './FilterRange';
 import FilterField from './FilterField';
 import FilterToggle from './FilterToggle';
 
-const FilterToolbar = ({ choices, setFilter, types, setTypes, games, totalGames }) => {
+const FilterToolbar = ({ choices, setFilter, games, totalGames }) => {
   const [collapse, setCollapse] = useState(false);
-  const { split, setSplit, useAverages, setUseAverages } = useContext(AppContext);
+  const { split, setSplit, useAverages, setUseAverages, showGap, setShowGap } = useContext(AppContext);
 
   return (
     <div className="mb-10">
@@ -26,10 +26,21 @@ const FilterToolbar = ({ choices, setFilter, types, setTypes, games, totalGames 
         <div className="flex flex-row gap-3 justify-center items-center">
           <button
             className="hover:scale-105 active:scale-95 transition-all duration-150 ease-linear"
+            onClick={() => setShowGap((prev) => !prev)}
+          >
+            <div
+              className={`rounded-md outline-1 bg-slate-900 px-3 py-1 text-sm text-center ${showGap ? 'outline outline-sky-400 text-sky-400' : ''}`}
+            >
+              Gap
+            </div>
+          </button>
+
+          <button
+            className="hover:scale-105 active:scale-95 transition-all duration-150 ease-linear"
             onClick={() => setUseAverages((prev) => !prev)}
           >
             <div
-              className={`rounded-md outline-1 bg-slate-900 px-3 py-1 text-sm text-center ${useAverages ? 'outline outline-sky-500 text-sky-500' : ''}`}
+              className={`rounded-md outline-1 bg-slate-900 px-3 py-1 text-sm text-center ${useAverages ? 'outline outline-sky-400 text-sky-400' : ''}`}
             >
               Averages
             </div>
@@ -40,13 +51,13 @@ const FilterToolbar = ({ choices, setFilter, types, setTypes, games, totalGames 
             onClick={() => setSplit((prev) => (prev ? 0 : 1))}
           >
             <div
-              className={`rounded-md outline-1 bg-slate-900 px-3 py-1 text-sm text-center ${split ? 'outline outline-sky-500 text-sky-500' : ''}`}
+              className={`rounded-md outline-1 bg-slate-900 px-3 py-1 text-sm text-center ${split ? 'outline outline-sky-400 text-sky-400' : ''}`}
             >
               Split
             </div>
           </button>
 
-          <span id="gamescounter" className="mr-5 text-lg">
+          <span id="gamescounter" className="mr-5 text-lg ml-2" data-tooltip-delay-show={500}>
             Games: {games} / {totalGames}
           </span>
           <Tooltip
@@ -64,30 +75,18 @@ const FilterToolbar = ({ choices, setFilter, types, setTypes, games, totalGames 
       >
         <div className="flex flex-row gap-5 flex-wrap">
           {Object.keys(choices).map((filter) => (
-            <FilterField
-              choices={choices[filter]}
-              filter={filter}
-              setFilter={setFilter}
-              types={types}
-              setTypes={setTypes}
-              key={filter}
-            />
+            <FilterField choices={choices[filter]} filter={filter} key={filter} />
           ))}
         </div>
 
         <div className="flex flex-row gap-10">
           <div className="flex flex-col gap-0 flex-1 min-w-[50lvw]">
-            <FilterRange label={'Game Length'} setFilter={setFilter} filter="gamelength" />
+            <FilterRange label={'Game Length'} filter="gamelength" />
           </div>
 
           <div className="flex-1 flex flex-row gap-3 items-end justify-end">
             {filterToggle.map((filter) => (
-              <FilterToggle
-                label={mapping[filter] || filter}
-                filter={filter}
-                setFilter={setFilter}
-                key={filter}
-              />
+              <FilterToggle label={mapping[filter] || filter} filter={filter} key={filter} />
             ))}
           </div>
         </div>

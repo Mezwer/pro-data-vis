@@ -1,14 +1,6 @@
 'use client';
 import { React, useContext } from 'react';
-import {
-  Area,
-  AreaChart,
-  Tooltip,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-} from 'recharts';
+import { Area, AreaChart, Tooltip, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
 import CustomTooltip from '../Tooltip/CustomTooltip.jsx';
 import CustomXAxisTick from '../CustomXAxisTick/CustomXAxisTick.jsx';
 import { chartConfigs } from '@/constants/fields.js';
@@ -38,8 +30,7 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
     return +num.toFixed(1);
   };
 
-  // TODO: need to fix when filtering by league
-  // remove filtered leagues from X axis on graph
+  // TODO: change so that gaps in the data are removed when "showGap" is false;
   const mergeData = () => {
     const merged = originalData.map((item) => {
       const filtered = data.find((filteredItem) => filteredItem[key] === item[key]);
@@ -98,12 +89,7 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
           dot={false}
         />
 
-        <XAxis
-          dataKey={key}
-          tick={<CustomXAxisTick />}
-          interval={0}
-          height={key === 'Year' ? 30 : 55}
-        />
+        <XAxis dataKey={key} tick={<CustomXAxisTick />} interval={0} height={key === 'Year' ? 30 : 55} />
         <YAxis
           domain={[
             // TODO: this is a patchwork fix. find out why there is -infinity somewhere here

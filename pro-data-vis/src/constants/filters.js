@@ -51,9 +51,7 @@ function reverse_include_and_or(row, filter, name, type) {
   const bans = row[name];
   // const result = filter.every((item) => bans.includes(item));
   console.log(filter, bans);
-  return type === 0
-    ? filter.some((item) => bans.includes(item))
-    : filter.every((item) => bans.includes(item));
+  return type === 0 ? filter.some((item) => bans.includes(item)) : filter.every((item) => bans.includes(item));
 }
 
 /**

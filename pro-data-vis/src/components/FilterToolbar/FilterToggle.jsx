@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AppContext } from '@/contexts/StateProvider';
 
-const FilterToggle = ({ label, filter, setFilter }) => {
+const FilterToggle = ({ label, filter }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [disabled, setDisabled] = useState(false);
+
+  const { setFilters } = useContext(AppContext);
 
   const handleToggle = () => {
     if (!disabled) {
@@ -16,17 +19,14 @@ const FilterToggle = ({ label, filter, setFilter }) => {
         Red: ['Red', 'side'],
       };
 
-      if (!Object.keys(special).includes(label))
-        setFilter((prev) => ({ ...prev, [filter]: [newValue] }));
+      if (!Object.keys(special).includes(label)) setFilters((prev) => ({ ...prev, [filter]: [newValue] }));
       else {
         // special architecture for win/loss, blue/red because of the field
-        setFilter((prev) => {
+        setFilters((prev) => {
           const val = special[label][0];
           const category = special[label][1];
 
-          const newVals = newValue
-            ? [...prev[category], val]
-            : [...prev[category]].filter((value) => value !== val);
+          const newVals = newValue ? [...prev[category], val] : [...prev[category]].filter((value) => value !== val);
 
           return { ...prev, [category]: newVals };
         });
@@ -41,7 +41,7 @@ const FilterToggle = ({ label, filter, setFilter }) => {
       aria-pressed={isChecked}
     >
       <div
-        className={`rounded-xl outline-1 bg-slate-800/90 px-3 py-1 text-sm text-center ${isChecked ? 'outline outline-green-400 text-green-400' : ''}`}
+        className={`rounded-xl outline-1 bg-slate-800/90 px-4 py-1 text-sm text-center ${isChecked ? 'outline outline-green-400 text-green-400' : ''}`}
       >
         {label}
       </div>

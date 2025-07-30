@@ -21,9 +21,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4 bg-gradient-to-br from-black via-gray-900 to-gray-800">
       <div className="w-full max-w-4xl">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">
-            Search for a pro player
-          </h1>
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">Search for a pro player</h1>
         </div>
 
         <div className="relative">

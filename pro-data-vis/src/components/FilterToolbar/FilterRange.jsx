@@ -1,17 +1,19 @@
 import * as Slider from '@radix-ui/react-slider';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AppContext } from '@/contexts/StateProvider';
 
-const FilterRange = ({ filter, label, setFilter }) => {
+const FilterRange = ({ filter, label }) => {
   // TODO: find how to get the max value from the db
   const max = 6000;
   const [value, setValue] = useState([0, max]);
+  const { setFilters } = useContext(AppContext);
 
   const onValueChange = (val) => {
     setValue(val);
-    setFilter((prev) => ({ ...prev, [filter]: val }));
+    setFilters((prev) => ({ ...prev, [filter]: val }));
   };
 
-  function secondsToHMS(totalSeconds) {
+  const secondsToHMS = (totalSeconds) => {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
@@ -19,7 +21,7 @@ const FilterRange = ({ filter, label, setFilter }) => {
     const pad = (num) => String(num).padStart(2, '0');
 
     return `${hours ? `${pad(hours)}:` : ''}${pad(minutes)}:${pad(seconds)}`;
-  }
+  };
 
   return (
     <div className="flex flex-col w-full">
@@ -38,14 +40,8 @@ const FilterRange = ({ filter, label, setFilter }) => {
           <Slider.Track className="relative h-[3px] grow rounded-full bg-neutral-600">
             <Slider.Range className="absolute h-full rounded-full bg-[#ededed]" />
           </Slider.Track>
-          <Slider.Thumb
-            className="block size-4 rounded-[10px] bg-[#ededed] focus:outline-none"
-            aria-label="Volume"
-          />
-          <Slider.Thumb
-            className="block size-4 rounded-[10px] bg-[#ededed] focus:outline-none"
-            aria-label="Volume"
-          />
+          <Slider.Thumb className="block size-4 rounded-[10px] bg-[#ededed] focus:outline-none" aria-label="Volume" />
+          <Slider.Thumb className="block size-4 rounded-[10px] bg-[#ededed] focus:outline-none" aria-label="Volume" />
         </Slider.Root>
 
         <span className="w-[2rem] text-sm"> {secondsToHMS(value[1])} </span>

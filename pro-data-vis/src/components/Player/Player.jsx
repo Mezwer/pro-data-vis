@@ -30,14 +30,12 @@ const Player = ({ playername, graphData, staticData }) => {
     )
   );
   const [isClient, setIsClient] = useState(false);
-  const [filters, setFilters] = useState(
-    Object.fromEntries(filterSelection.map((filter) => [filter, []]))
-  );
-  const [filterType, setFilterType] = useState(
-    Object.fromEntries(Object.keys(filterSelectionTemp).map((filter) => [filter, 1]))
-  );
+  // const [filters, setFilters] = useState(
+  //   Object.fromEntries(filterSelection.map((filter) => [filter, []]))
+  // );
+
   const [filteredData, setFilteredData] = useState({});
-  const { layout, granularity, useAverages } = useContext(AppContext);
+  const { layout, granularity, useAverages, filterType, filters } = useContext(AppContext);
 
   const chartConfigLen = chartConfigs.length;
 
@@ -175,20 +173,12 @@ const Player = ({ playername, graphData, staticData }) => {
   return (
     <div
       style={{
-        background:
-          'linear-gradient(135deg, #06101c 0%, #030712 25%, #010408 50%, #030712 75%, #06101c 100%)',
+        background: 'linear-gradient(135deg, #06101c 0%, #030712 25%, #010408 50%, #030712 75%, #06101c 100%)',
       }}
     >
       <NamePlate name={playername} />
       <StatToolbar state={{ show: show, setShow: changeShow }} />
-      <FilterToolbar
-        choices={staticData}
-        setFilter={setFilters}
-        setTypes={setFilterType}
-        types={filterType}
-        games={getNumGames(filteredData)}
-        totalGames={getNumGames(graphData)}
-      />
+      <FilterToolbar choices={staticData} games={getNumGames(filteredData)} totalGames={getNumGames(graphData)} />
 
       <div className={`${arrange} place-items-center`}>
         {show.map((item, index) =>
