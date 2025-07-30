@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import { React, useContext } from 'react';
 import {
   Area,
   AreaChart,
@@ -8,11 +8,11 @@ import {
   YAxis,
   CartesianGrid,
   ResponsiveContainer,
-  Label,
 } from 'recharts';
 import CustomTooltip from '../Tooltip/CustomTooltip.jsx';
-import { chartConfigs } from '@/constants/fields.js';
 import CustomXAxisTick from '../CustomXAxisTick/CustomXAxisTick.jsx';
+import { chartConfigs } from '@/constants/fields.js';
+import { AppContext } from '@/contexts/StateProvider';
 
 /**
  * Component for a graph depicting player data
@@ -24,11 +24,13 @@ import CustomXAxisTick from '../CustomXAxisTick/CustomXAxisTick.jsx';
  * @param {string} props.ydata - key for what the y-axis data is
  * @returns {React.JSX.Element}
  */
-const LineGraph = ({ color, data, originalData, ydata, split }) => {
+const LineGraph = ({ color, data, originalData, ydata }) => {
   // Create a unique ID for each gradient using the color value
   const gradientId = `gradient${color}`;
   const gradientConfig = chartConfigs[color];
   const key = data?.[0]?.Year ? 'Year' : 'split';
+
+  const { split } = useContext(AppContext);
 
   const roundNumber = (num) => {
     if (num < 10) return +num.toFixed(2);

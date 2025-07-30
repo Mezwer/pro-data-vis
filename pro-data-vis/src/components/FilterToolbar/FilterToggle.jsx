@@ -41,7 +41,7 @@ const FilterToggle = ({ label, filter, setFilter }) => {
       aria-pressed={isChecked}
     >
       <div
-        className={`rounded-xl outline-1 bg-slate-900 px-3 py-1 text-sm text-center ${isChecked ? 'outline outline-green-400 text-green-400' : ''}`}
+        className={`rounded-xl outline-1 bg-slate-800/90 px-3 py-1 text-sm text-center ${isChecked ? 'outline outline-green-400 text-green-400' : ''}`}
       >
         {label}
       </div>

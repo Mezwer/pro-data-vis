@@ -1,10 +1,9 @@
-import React from 'react';
 import Checkbox from '../Checkbox/Checkbox';
 import Arrangement from '../Arrangement/Arrangement';
 import { ChevronDown } from 'lucide-react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-const StatToolbar = ({ state, layoutState, granularityState }) => {
+const StatToolbar = ({ state }) => {
   const { show, setShow } = state;
   const [collapse, setCollapse] = useState(false);
 
@@ -18,7 +17,7 @@ const StatToolbar = ({ state, layoutState, granularityState }) => {
             onClick={() => setCollapse(!collapse)}
           />
         </span>
-        <Arrangement layoutState={layoutState} granularityState={granularityState} />
+        <Arrangement />
       </div>
 
       <div

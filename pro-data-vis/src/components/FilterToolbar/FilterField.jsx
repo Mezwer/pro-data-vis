@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { mapping } from '@/constants/fields';
-import { X, ListChecks } from 'lucide-react';
+import { X } from 'lucide-react';
 import FilterTypeControl from './FilterTypeControl';
 import { filterTypeMap } from '@/constants/filters';
 
@@ -15,12 +15,9 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
   const focusRef = useRef(null);
   const id = mapping[filter].replace(/\s/g, '');
 
-  console.log(filter);
   useEffect(() => {
     if (focus >= 0 && focusRef.current) {
-      focusRef.current.scrollIntoView({
-        block: 'nearest',
-      });
+      focusRef.current.scrollIntoView({ block: 'nearest' });
     }
   }, [focus]);
 
@@ -43,10 +40,10 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
     } else if (e.key === 'Backspace' && !inputValue && chips.length > 0) {
       setValues(chips.slice(0, -1));
       setFocus(-1);
-    } else if (e.key === 'ArrowDown' && options.length > 0) {
-      if (focus != options.length - 1) setFocus(focus + 1);
-    } else if (e.key === 'ArrowUp' && options.length > 0) {
-      if (focus != 0) setFocus(focus - 1);
+    } else if (e.key === 'ArrowDown' && options.length > 0 && focus != options.length - 1) {
+      setFocus(focus + 1);
+    } else if (e.key === 'ArrowUp' && options.length > 0 && focus != 0) {
+      setFocus(focus - 1);
     }
   };
 
@@ -104,7 +101,6 @@ const FilterField = ({ choices, filter, setFilter, types, setTypes }) => {
           onFocus={() => setShowDrop(true)}
         />
 
-        {/* TODO: currently just for bans, might need to make this a separate component */}
         {filterTypeMap?.[filter] && (
           <FilterTypeControl filter={filter} types={types} setType={setType} id={id} />
         )}

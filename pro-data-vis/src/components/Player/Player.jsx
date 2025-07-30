@@ -1,12 +1,13 @@
 'use client';
-import React from 'react';
+import React, { use } from 'react';
 import StatToolbar from '../StatToolbar/StatToolbar';
 import NamePlate from '../NamePlate/NamePlate';
 import FilterToolbar from '../FilterToolbar/FilterToolbar';
 import Spinner from '../Spinner/Spinner';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { fields, mapping, averages, chartConfigs } from '@/constants/fields.js';
 import { filterSelection, filterSelectionTemp } from '@/constants/filters.js';
+import { AppContext } from '@/contexts/StateProvider';
 import dynamic from 'next/dynamic';
 
 const LineGraph = dynamic(() => import('../LineGraph/LineGraph'), { ssr: false });
@@ -28,27 +29,15 @@ const Player = ({ playername, graphData, staticData }) => {
       [mapping[field], index, ['kills', 'deaths', 'assists', 'result'].includes(field), field]
     )
   );
-
-  console.log(show)
-
   const [isClient, setIsClient] = useState(false);
-
   const [filters, setFilters] = useState(
     Object.fromEntries(filterSelection.map((filter) => [filter, []]))
   );
-
   const [filterType, setFilterType] = useState(
     Object.fromEntries(Object.keys(filterSelectionTemp).map((filter) => [filter, 1]))
   );
-
-  // layout of graphs: 0 = vertical, 1 = compact, 2 = more compact
-  const [layout, setLayout] = useState(1);
-  // how fine the data is: 0 = by year, 1 = by split, 2 = by split, separate playoffs
-  const [granularity, setGranularity] = useState(0);
-  // 1 = split, 0 = no split
-  const [split, setSplit] = useState(0);
-
   const [filteredData, setFilteredData] = useState({});
+  const { layout, granularity, useAverages } = useContext(AppContext);
 
   const chartConfigLen = chartConfigs.length;
 
@@ -121,7 +110,7 @@ const Player = ({ playername, graphData, staticData }) => {
         }
       });
 
-      const number = avg ? Number((sum / count).toFixed(2)) : sum;
+      const number = avg || useAverages ? Number((sum / count).toFixed(2)) : sum;
       newData.push({ Year: year, [item]: number || 0, games: count });
     }
 
@@ -149,7 +138,7 @@ const Player = ({ playername, graphData, staticData }) => {
       for (const [split, stats] of Object.entries(splitSums)) {
         newData.push({
           split: `${yr} ${split}`,
-          [item]: avg ? Number((stats.total / stats.count).toFixed(2)) : stats.total,
+          [item]: avg || useAverages ? Number((stats.total / stats.count).toFixed(2)) : stats.total,
           games: stats.count,
         });
       }
@@ -172,7 +161,6 @@ const Player = ({ playername, graphData, staticData }) => {
   };
 
   const getNumGames = (games) => {
-    // return [];
     return Object.values(games).reduce((sum, arr) => sum + arr.length, 0);
   };
 
@@ -192,21 +180,12 @@ const Player = ({ playername, graphData, staticData }) => {
       }}
     >
       <NamePlate name={playername} />
-      <StatToolbar
-        state={{ show: show, setShow: changeShow }}
-        layoutState={{ layout: layout, setLayout: setLayout }}
-        granularityState={{
-          granularity: granularity,
-          setGranularity: setGranularity,
-        }}
-      />
+      <StatToolbar state={{ show: show, setShow: changeShow }} />
       <FilterToolbar
         choices={staticData}
         setFilter={setFilters}
         setTypes={setFilterType}
         types={filterType}
-        setSplit={setSplit}
-        split={split}
         games={getNumGames(filteredData)}
         totalGames={getNumGames(graphData)}
       />
@@ -230,7 +209,6 @@ const Player = ({ playername, graphData, staticData }) => {
                   averages.has(item[3])
                 )}
                 ydata={item[0]}
-                split={split}
               />
             </div>
           ) : null

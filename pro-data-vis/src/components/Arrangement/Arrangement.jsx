@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { LayoutGrid, StretchHorizontal, Grid3X3, Columns2, Columns3, Columns4 } from 'lucide-react';
 import { Tooltip } from 'react-tooltip';
+import { AppContext } from '@/contexts/StateProvider';
 
-const Arrangement = ({ layoutState, granularityState }) => {
-  const { layout, setLayout } = layoutState;
-  const { granularity, setGranularity } = granularityState;
+const Arrangement = () => {
+  const { layout, setLayout, granularity, setGranularity } = useContext(AppContext);
 
   return (
     <div className="flex flex-row">

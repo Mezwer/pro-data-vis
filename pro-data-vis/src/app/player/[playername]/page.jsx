@@ -1,5 +1,6 @@
 import Player from '@/components/Player/Player';
 import { collectGraphData, collectPageData } from '@/app/actions';
+import { StateProvider } from '@/contexts/StateProvider';
 
 export default async function ServerPage({ params }) {
   const start = performance.now();
@@ -19,12 +20,16 @@ export default async function ServerPage({ params }) {
   ]);
 
   const end = performance.now();
-  console.log(end - start);
+  // console.log(end - start);
   const staticData = {
     champion: champions,
     bans: champions,
     ...pageData,
   };
 
-  return <Player playername={playername} graphData={graphData} staticData={staticData} />;
+  return (
+    <StateProvider>
+      <Player playername={playername} graphData={graphData} staticData={staticData} />
+    </StateProvider>
+  );
 }

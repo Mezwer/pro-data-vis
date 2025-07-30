@@ -1,23 +1,16 @@
-import React, { useState } from 'react';
-import { ChevronDown, SquareSplitVertical } from 'lucide-react';
-import FilterRange from './FilterRange';
-import FilterField from './FilterField';
-import FilterToggle from './FilterToggle';
+import React, { useContext, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { filterToggle } from '@/constants/filters';
 import { mapping } from '@/constants/fields';
 import { Tooltip } from 'react-tooltip';
+import { AppContext } from '@/contexts/StateProvider.jsx';
+import FilterRange from './FilterRange';
+import FilterField from './FilterField';
+import FilterToggle from './FilterToggle';
 
-const FilterToolbar = ({
-  choices,
-  setFilter,
-  types,
-  setTypes,
-  split,
-  setSplit,
-  games,
-  totalGames,
-}) => {
+const FilterToolbar = ({ choices, setFilter, types, setTypes, games, totalGames }) => {
   const [collapse, setCollapse] = useState(false);
+  const { split, setSplit, useAverages, setUseAverages } = useContext(AppContext);
 
   return (
     <div className="mb-10">
@@ -25,9 +18,7 @@ const FilterToolbar = ({
         <span className="text-2xl ml-10 underline flex flex-row items-center justify-center gap-1">
           Filters
           <ChevronDown
-            className={`relative -bottom-[3px] hover:scale-125 active:scale-100 transition-all duration-200 ease-linear ${
-              collapse ? 'rotate-180' : ''
-            }`}
+            className={`relative -bottom-[3px] hover:scale-125 active:scale-100 transition-all duration-200 ease-linear ${collapse ? 'rotate-180' : ''}`}
             onClick={() => setCollapse(!collapse)}
           />
         </span>
@@ -35,10 +26,21 @@ const FilterToolbar = ({
         <div className="flex flex-row gap-3 justify-center items-center">
           <button
             className="hover:scale-105 active:scale-95 transition-all duration-150 ease-linear"
+            onClick={() => setUseAverages((prev) => !prev)}
+          >
+            <div
+              className={`rounded-md outline-1 bg-slate-900 px-3 py-1 text-sm text-center ${useAverages ? 'outline outline-sky-500 text-sky-500' : ''}`}
+            >
+              Averages
+            </div>
+          </button>
+
+          <button
+            className="hover:scale-105 active:scale-95 transition-all duration-150 ease-linear"
             onClick={() => setSplit((prev) => (prev ? 0 : 1))}
           >
             <div
-              className={`rounded-xl outline-1 bg-slate-900 px-3 py-1 text-sm text-center ${split ? 'outline outline-sky-500 text-sky-500' : ''}`}
+              className={`rounded-md outline-1 bg-slate-900 px-3 py-1 text-sm text-center ${split ? 'outline outline-sky-500 text-sky-500' : ''}`}
             >
               Split
             </div>
@@ -58,9 +60,7 @@ const FilterToolbar = ({
       </div>
 
       <div
-        className={`w-11/12 mt-5 mx-auto left-0 right-0 flex flex-col gap-3 transition-all duration-10 ${
-          collapse ? '-translate-y-4 opacity-0 pointer-events-none absolute' : ''
-        }`}
+        className={`w-11/12 mt-5 mx-auto left-0 right-0 flex flex-col gap-3 transition-all duration-10 ${collapse ? '-translate-y-4 opacity-0 pointer-events-none absolute' : ''}`}
       >
         <div className="flex flex-row gap-5 flex-wrap">
           {Object.keys(choices).map((filter) => (
@@ -80,7 +80,7 @@ const FilterToolbar = ({
             <FilterRange label={'Game Length'} setFilter={setFilter} filter="gamelength" />
           </div>
 
-          <div className="flex-1 flex flex-row gap-7 items-end justify-end">
+          <div className="flex-1 flex flex-row gap-3 items-end justify-end">
             {filterToggle.map((filter) => (
               <FilterToggle
                 label={mapping[filter] || filter}
