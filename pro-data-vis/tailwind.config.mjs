@@ -10,6 +10,8 @@ export default {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        back: '#161616',
+        fore: '#1e1e20',
       },
       keyframes: {
         slideUp: {

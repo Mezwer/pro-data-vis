@@ -1,6 +1,6 @@
 'use client';
 import { React, useContext } from 'react';
-import { Area, AreaChart, Tooltip, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { Area, AreaChart, Tooltip, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine } from 'recharts';
 import CustomTooltip from '../Tooltip/CustomTooltip.jsx';
 import CustomXAxisTick from '../CustomXAxisTick/CustomXAxisTick.jsx';
 import { chartConfigs } from '@/constants/fields.js';
@@ -22,7 +22,7 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
   const gradientConfig = chartConfigs[color];
   const key = data?.[0]?.Year ? 'Year' : 'split';
 
-  const { split } = useContext(AppContext);
+  const { split, showGap } = useContext(AppContext);
 
   const roundNumber = (num) => {
     if (num < 10) return +num.toFixed(2);
@@ -30,19 +30,23 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
     return +num.toFixed(1);
   };
 
-  // TODO: change so that gaps in the data are removed when "showGap" is false;
   const mergeData = () => {
-    const merged = originalData.map((item) => {
-      const filtered = data.find((filteredItem) => filteredItem[key] === item[key]);
+    // console.log(data)
+    const first = showGap ? originalData : data;
+    const second = showGap ? data : originalData;
+
+    const merged = first.map(item => {
+      const filtered = second.find(secondItem => secondItem[key] === item[key]);
+
       return {
         [key]: item[key],
-        series1: item[ydata],
-        series2: filtered?.[ydata] ?? 0,
-        games: item.games,
-        gamesFiltered: filtered?.games ?? 0,
-      };
-    });
-
+        series1: showGap ? item[ydata] : filtered[ydata],
+        series2: showGap ? filtered?.[ydata] ?? 0 : item[ydata],
+        games: showGap ? item.games : filtered.games,
+        gamesFiltered: showGap ? filtered?.games ?? 0 : item.games,
+      }
+    })
+    
     return merged;
   };
 
@@ -93,7 +97,7 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
         <YAxis
           domain={[
             // TODO: this is a patchwork fix. find out why there is -infinity somewhere here
-            (dataMin) => (isFinite(dataMin) ? dataMin - dataMin * 0.1 : 0),
+            (dataMin) => (isFinite(dataMin) ? dataMin - (dataMin * (dataMin >= 0 ? .1 : -.1)) : 0),
             (dataMax) => dataMax + dataMax * 0.1,
           ]}
           tick={{ fontSize: '.8rem' }}
@@ -103,6 +107,7 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
           {/* <Label value={yDataName} offset={12} position="insideLeft" angle={-90}/> */}
         </YAxis>
         <Tooltip content={<CustomTooltip data={ydata} mod={0} />} />
+        <ReferenceLine y={0} strokeWidth={1} stroke="#374151"/>
       </AreaChart>
     </ResponsiveContainer>
   );

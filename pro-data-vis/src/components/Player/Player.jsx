@@ -35,7 +35,7 @@ const Player = ({ playername, graphData, staticData }) => {
   // );
 
   const [filteredData, setFilteredData] = useState({});
-  const { layout, granularity, useAverages, filterType, filters } = useContext(AppContext);
+  const { layout, granularity, useAverages, filterType, filters, showGap } = useContext(AppContext);
 
   const chartConfigLen = chartConfigs.length;
 
@@ -68,6 +68,7 @@ const Player = ({ playername, graphData, staticData }) => {
       newData[year] = row;
     }
 
+    console.log(newData);
     return newData;
   };
 
@@ -164,27 +165,25 @@ const Player = ({ playername, graphData, staticData }) => {
 
   let arrange = '';
   if (layout == 1) arrange = 'grid grid-cols-3';
-  else if (layout == 2) arrange = 'grid grid-cols-4';
+  else if (layout == 2) arrange = 'grid grid-cols-5';
 
   if (!isClient) {
     return <Spinner />;
   }
 
   return (
-    <div
-      style={{
-        background: 'linear-gradient(135deg, #06101c 0%, #030712 25%, #010408 50%, #030712 75%, #06101c 100%)',
-      }}
-    >
+    <div className='bg-back'>
       <NamePlate name={playername} />
-      <StatToolbar state={{ show: show, setShow: changeShow }} />
-      <FilterToolbar choices={staticData} games={getNumGames(filteredData)} totalGames={getNumGames(graphData)} />
+      <div className='bg-black/20 backdrop-blur-lg py-5 mx-6 my-5 rounded-md border border-white/10 border-2'>
+        <StatToolbar state={{ show: show, setShow: changeShow }} />
+        <FilterToolbar choices={staticData} games={getNumGames(filteredData)} totalGames={getNumGames(graphData)} />
+      </div>
 
-      <div className={`${arrange} place-items-center`}>
+      <div className={`${arrange} place-items-center mx-6 gap-4`}>
         {show.map((item, index) =>
           item[2] ? (
             <div
-              className="h-[30rem] w-[96%] mx-auto flex flex-col gap-6 items-center justify-center border-solid border-zinc-800 bg-zinc-800/40 border-2 rounded-lg mb-10"
+              className={`w-[100%] mx-auto flex flex-col gap-6 items-center justify-center bg-black/30 backdrop-blur-lg rounded-lg mb-10 ${layout == 2 ? 'h-[20rem]' : 'h-[30rem]'}`}
               key={item[0]}
             >
               <span className="mt-3 mx-auto"> {item[0]} </span>

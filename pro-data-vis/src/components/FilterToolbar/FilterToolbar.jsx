@@ -8,14 +8,14 @@ import FilterRange from './FilterRange';
 import FilterField from './FilterField';
 import FilterToggle from './FilterToggle';
 
-const FilterToolbar = ({ choices, setFilter, games, totalGames }) => {
+const FilterToolbar = ({ choices, games, totalGames }) => {
   const [collapse, setCollapse] = useState(false);
   const { split, setSplit, useAverages, setUseAverages, showGap, setShowGap } = useContext(AppContext);
 
   return (
     <div className="mb-10">
       <div className="flex justify-between flex-row items-center">
-        <span className="text-2xl ml-10 underline flex flex-row items-center justify-center gap-1">
+        <span className="text-2xl ml-5 underline flex flex-row items-center justify-center gap-1">
           Filters
           <ChevronDown
             className={`relative -bottom-[3px] hover:scale-125 active:scale-100 transition-all duration-200 ease-linear ${collapse ? 'rotate-180' : ''}`}
@@ -29,7 +29,7 @@ const FilterToolbar = ({ choices, setFilter, games, totalGames }) => {
             onClick={() => setShowGap((prev) => !prev)}
           >
             <div
-              className={`rounded-md outline-1 bg-slate-900 px-3 py-1 text-sm text-center ${showGap ? 'outline outline-sky-400 text-sky-400' : ''}`}
+              className={`rounded-md outline-1 bg-zinc-800/90 px-3 py-1 text-sm text-center ${showGap ? 'outline outline-sky-400 text-sky-400' : ''}`}
             >
               Gap
             </div>
@@ -40,7 +40,7 @@ const FilterToolbar = ({ choices, setFilter, games, totalGames }) => {
             onClick={() => setUseAverages((prev) => !prev)}
           >
             <div
-              className={`rounded-md outline-1 bg-slate-900 px-3 py-1 text-sm text-center ${useAverages ? 'outline outline-sky-400 text-sky-400' : ''}`}
+              className={`rounded-md outline-1 bg-zinc-800/90 px-3 py-1 text-sm text-center ${useAverages ? 'outline outline-sky-400 text-sky-400' : ''}`}
             >
               Averages
             </div>
@@ -51,7 +51,7 @@ const FilterToolbar = ({ choices, setFilter, games, totalGames }) => {
             onClick={() => setSplit((prev) => (prev ? 0 : 1))}
           >
             <div
-              className={`rounded-md outline-1 bg-slate-900 px-3 py-1 text-sm text-center ${split ? 'outline outline-sky-400 text-sky-400' : ''}`}
+              className={`rounded-md outline-1 bg-zinc-800/90 px-3 py-1 text-sm text-center ${split ? 'outline outline-sky-400 text-sky-400' : ''}`}
             >
               Split
             </div>

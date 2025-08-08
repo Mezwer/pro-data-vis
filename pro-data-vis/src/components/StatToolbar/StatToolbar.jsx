@@ -10,7 +10,7 @@ const StatToolbar = ({ state }) => {
   return (
     <div className="mb-10">
       <div className="flex justify-between flex-row items-center">
-        <span className="text-2xl ml-10 underline flex flex-row items-center justify-center gap-1">
+        <span className="text-2xl ml-5 underline flex flex-row items-center justify-center gap-1">
           Stats
           <ChevronDown
             className={`relative -bottom-[3px] hover:scale-125 active:scale-100 transition-all duration-200 ease-linear ${collapse ? 'rotate-180' : ''}`}
