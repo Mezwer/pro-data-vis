@@ -100,15 +100,13 @@ const FilterField = ({ choices, filter }) => {
 
       {(options.length > 0 && inputValue && showDrop) || hovering ? (
         <div
-          className="scrollbar-thin scrollbar-thumb-white scrollbar-track-[#11131d]/95 scrollbar-track-rounded-md scrollbar-thumb-rounded-full absolute w-full bg-[#11131d]/95 translate-y-2 z-10 rounded-md max-h-64 overflow-y-scroll"
+          className="scrollbar-thin scrollbar-thumb-white scrollbar-track-fore/95 scrollbar-track-rounded-md scrollbar-thumb-rounded-full absolute w-full bg-fore translate-y-2 z-10 rounded-md max-h-64 overflow-y-scroll"
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
         >
           {options.map((option, index) => (
             <div
-              className={`p-2 border rounded-md ${
-                index === focus ? 'border-slate-400 bg-[#1c1f2e]' : 'border-transparent'
-              }`}
+              className={`p-2 border rounded-md ${index === focus ? 'border-slate-400 bg-fore/50' : 'border-transparent'}`}
               onClick={() => {
                 setValues([...chips, option]);
                 setInputValue('');

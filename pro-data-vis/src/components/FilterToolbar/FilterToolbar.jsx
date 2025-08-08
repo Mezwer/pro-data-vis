@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { filterToggle } from '@/constants/filters';
+import { filterToggle, filterField } from '@/constants/filters';
 import { mapping } from '@/constants/fields';
 import { Tooltip } from 'react-tooltip';
 import { AppContext } from '@/contexts/StateProvider.jsx';
@@ -8,7 +8,7 @@ import FilterRange from './FilterRange';
 import FilterField from './FilterField';
 import FilterToggle from './FilterToggle';
 
-const FilterToolbar = ({ choices, games, totalGames }) => {
+const FilterToolbar = ({ data, games, totalGames }) => {
   const [collapse, setCollapse] = useState(false);
   const { split, setSplit, useAverages, setUseAverages, showGap, setShowGap } = useContext(AppContext);
 
@@ -74,8 +74,8 @@ const FilterToolbar = ({ choices, games, totalGames }) => {
         className={`w-11/12 mt-5 mx-auto left-0 right-0 flex flex-col gap-3 transition-all duration-10 ${collapse ? '-translate-y-4 opacity-0 pointer-events-none absolute' : ''}`}
       >
         <div className="flex flex-row gap-5 flex-wrap">
-          {Object.keys(choices).map((filter) => (
-            <FilterField choices={choices[filter]} filter={filter} key={filter} />
+          {filterField.map((filter) => (
+            <FilterField choices={data[filter]} filter={filter} key={filter} />
           ))}
         </div>
 

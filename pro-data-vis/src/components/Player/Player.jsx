@@ -175,9 +175,9 @@ const Player = ({ playername, graphData, staticData }) => {
   return (
     <div className="bg-back">
       <NamePlate name={playername} />
-      <div className="bg-black/20 backdrop-blur-lg py-5 mx-6 my-5 rounded-md border border-white/10 border-2">
+      <div className="bg-black/20 py-5 mx-6 my-5 rounded-md border border-white/10 border-2">
         <StatToolbar state={{ show: show, setShow: changeShow }} />
-        <FilterToolbar choices={staticData} games={getNumGames(filteredData)} totalGames={getNumGames(graphData)} />
+        <FilterToolbar data={staticData} games={getNumGames(filteredData)} totalGames={getNumGames(graphData)} />
       </div>
 
       <div className={`${arrange} place-items-center mx-6 gap-4`}>

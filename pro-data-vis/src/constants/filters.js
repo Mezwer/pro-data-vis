@@ -96,6 +96,8 @@ export const filterSelectionTemp = {
 
 export const filterToggle = ['playoffs', 'win', 'loss', 'blue', 'red'];
 
+export const filterField = ['champion', 'bans', 'opp_teamname', 'league'];
+
 export const filterBans = [
   'blue_ban1',
   'blue_ban2',
