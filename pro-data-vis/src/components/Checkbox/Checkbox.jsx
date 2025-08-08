@@ -43,7 +43,7 @@ const Checkbox = ({ label, state, setter, index }) => {
       <Tooltip
         id={id}
         place="bottom"
-        content={descriptions[label]}
+        content={descriptions[label].description}
         opacity={1}
         className="!bg-slate-900 !text-xs !rounded-md z-10"
       />

@@ -35,18 +35,18 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
     const first = showGap ? originalData : data;
     const second = showGap ? data : originalData;
 
-    const merged = first.map(item => {
-      const filtered = second.find(secondItem => secondItem[key] === item[key]);
+    const merged = first.map((item) => {
+      const filtered = second.find((secondItem) => secondItem[key] === item[key]);
 
       return {
         [key]: item[key],
         series1: showGap ? item[ydata] : filtered[ydata],
-        series2: showGap ? filtered?.[ydata] ?? 0 : item[ydata],
+        series2: showGap ? (filtered?.[ydata] ?? 0) : item[ydata],
         games: showGap ? item.games : filtered.games,
-        gamesFiltered: showGap ? filtered?.games ?? 0 : item.games,
-      }
-    })
-    
+        gamesFiltered: showGap ? (filtered?.games ?? 0) : item.games,
+      };
+    });
+
     return merged;
   };
 
@@ -97,7 +97,7 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
         <YAxis
           domain={[
             // TODO: this is a patchwork fix. find out why there is -infinity somewhere here
-            (dataMin) => (isFinite(dataMin) ? dataMin - (dataMin * (dataMin >= 0 ? .1 : -.1)) : 0),
+            (dataMin) => (isFinite(dataMin) ? dataMin - dataMin * (dataMin >= 0 ? 0.1 : -0.1) : 0),
             (dataMax) => dataMax + dataMax * 0.1,
           ]}
           tick={{ fontSize: '.8rem' }}
@@ -107,7 +107,7 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
           {/* <Label value={yDataName} offset={12} position="insideLeft" angle={-90}/> */}
         </YAxis>
         <Tooltip content={<CustomTooltip data={ydata} mod={0} />} />
-        <ReferenceLine y={0} strokeWidth={1} stroke="#374151"/>
+        <ReferenceLine y={0} strokeWidth={1} stroke="#374151" />
       </AreaChart>
     </ResponsiveContainer>
   );

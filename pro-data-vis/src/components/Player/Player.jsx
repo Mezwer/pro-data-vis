@@ -4,6 +4,7 @@ import StatToolbar from '../StatToolbar/StatToolbar';
 import NamePlate from '../NamePlate/NamePlate';
 import FilterToolbar from '../FilterToolbar/FilterToolbar';
 import Spinner from '../Spinner/Spinner';
+import GraphIcon from './GraphIcon';
 import { useState, useEffect, useContext } from 'react';
 import { fields, mapping, averages, chartConfigs } from '@/constants/fields.js';
 import { filterSelection, filterSelectionTemp } from '@/constants/filters.js';
@@ -172,9 +173,9 @@ const Player = ({ playername, graphData, staticData }) => {
   }
 
   return (
-    <div className='bg-back'>
+    <div className="bg-back">
       <NamePlate name={playername} />
-      <div className='bg-black/20 backdrop-blur-lg py-5 mx-6 my-5 rounded-md border border-white/10 border-2'>
+      <div className="bg-black/20 backdrop-blur-lg py-5 mx-6 my-5 rounded-md border border-white/10 border-2">
         <StatToolbar state={{ show: show, setShow: changeShow }} />
         <FilterToolbar choices={staticData} games={getNumGames(filteredData)} totalGames={getNumGames(graphData)} />
       </div>
@@ -186,7 +187,10 @@ const Player = ({ playername, graphData, staticData }) => {
               className={`w-[100%] mx-auto flex flex-col gap-6 items-center justify-center bg-black/30 backdrop-blur-lg rounded-lg mb-10 ${layout == 2 ? 'h-[20rem]' : 'h-[30rem]'}`}
               key={item[0]}
             >
-              <span className="mt-3 mx-auto"> {item[0]} </span>
+              <span className="mt-3 mx-auto flex flex-row gap-2 items-center">
+                <GraphIcon name={item[0]} />
+                {item[0]}
+              </span>
               <LineGraph
                 color={index % (chartConfigLen - 1)}
                 data={chooseGranularity(item[0], filteredData, averages.has(item[3]))}
