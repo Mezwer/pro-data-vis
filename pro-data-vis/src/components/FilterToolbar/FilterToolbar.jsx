@@ -11,6 +11,7 @@ import FilterToggle from './FilterToggle';
 const FilterToolbar = ({ data, games, totalGames }) => {
   const [collapse, setCollapse] = useState(false);
   const { split, setSplit, useAverages, setUseAverages, showGap, setShowGap } = useContext(AppContext);
+  const { maxTime } = data;
 
   return (
     <div className="mb-10">
@@ -81,7 +82,7 @@ const FilterToolbar = ({ data, games, totalGames }) => {
 
         <div className="flex flex-row gap-10">
           <div className="flex flex-col gap-0 flex-1 min-w-[50lvw]">
-            <FilterRange label={'Game Length'} filter="gamelength" />
+            <FilterRange label={'Game Length'} filter="gamelength" maxTime={maxTime} />
           </div>
 
           <div className="flex-1 flex flex-row gap-3 items-end justify-end">

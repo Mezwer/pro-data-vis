@@ -23,7 +23,7 @@ import {
   View,
   CircleDollarSign,
   ChartNoAxesCombined,
-  ScanEye
+  ScanEye,
 } from 'lucide-react';
 
 export const fields = [

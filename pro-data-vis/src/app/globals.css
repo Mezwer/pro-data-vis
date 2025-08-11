@@ -3,14 +3,13 @@
 @tailwind utilities;
 
 :root {
-  /* --background: #030712; */
-  --background: #2f2f2f;
+  --background: linear-gradient(to bottom right, #111827, #0f172a, #030712);
   --foreground: #ededed;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #030712;
+    --background: linear-gradient(to bottom right, #111827, #080f20, #030712);
     --foreground: #ededed;
   }
 }
@@ -20,4 +19,6 @@ body {
   background: var(--background);
   font-family: 'Red Hat Display', Helvetica, sans-serif;
   overflow-x: hidden;
+  min-height: 100vh;
+  height: auto;
 }

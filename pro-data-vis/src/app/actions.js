@@ -37,25 +37,31 @@ export async function collectGraphData(player) {
 
 export async function collectPageData() {
   const selectFields = ['teamname', 'league'].join(',');
-
-  const rangeFields = ['gamelength'].join(',');
-
-  const queries = years.map((year) => {
-    const tablename = `data_${year}_new`;
-    return `(SELECT ${selectFields} FROM ${tablename})`;
-  });
+  const queries = years
+    .map((year) => {
+      const tablename = `data_${year}_new`;
+      return `(SELECT ${selectFields} FROM ${tablename})`;
+    })
+    .join(' UNION ');
 
   // console.log(queries);
+  const result = await sql(queries);
 
-  const unionQuery = queries.join(' UNION ');
-  const result = await sql(unionQuery);
+  const timeQuery = years
+    .map((year) => {
+      const tablename = `data_${year}_new`;
+      return `SELECT gamelength FROM ${tablename}`;
+    })
+    .join(' UNION ALL ');
+
+  const time = await sql(`SELECT max(gamelength) FROM (${timeQuery}) AS all_games`);
 
   const names = [...new Set(result.map((teamname) => teamname.teamname))].sort();
   const league = [...new Set(result.map((league) => league.league))].sort();
-  // console.log(names);
 
   return {
     opp_teamname: names,
     league: league,
+    maxTime: time[0].max,
   };
 }

@@ -71,7 +71,7 @@ const FilterField = ({ choices, filter }) => {
 
   return (
     <div className="relative flex-1">
-      <div className="p-2 rounded-md flex flex-wrap gap-2 outline-none bg-[#1E202880] focus-within:ring-[1px] focus-within:ring-white">
+      <div className="p-2 rounded-md flex flex-wrap gap-2 outline-none bg-[#1E202880] shadow-md focus-within:ring-[1px] focus-within:ring-white focus-within:shadow-slate-600">
         {chips.map((chip) => (
           <div key={chip} className="flex items-center gap-1 px-2 bg-neutral-200 text-black rounded-full text-sm">
             <span>{chip}</span>

@@ -2,10 +2,9 @@ import * as Slider from '@radix-ui/react-slider';
 import { useState, useContext } from 'react';
 import { AppContext } from '@/contexts/StateProvider';
 
-const FilterRange = ({ filter, label }) => {
+const FilterRange = ({ filter, label, maxTime }) => {
   // TODO: find how to get the max value from the db
-  const max = 6000;
-  const [value, setValue] = useState([0, max]);
+  const [value, setValue] = useState([0, maxTime]);
   const { setFilters } = useContext(AppContext);
 
   const onValueChange = (val) => {
@@ -32,7 +31,7 @@ const FilterRange = ({ filter, label }) => {
         <Slider.Root
           className="relative flex h-5 w-full touch-none select-none items-center my-auto"
           defaultValue={value}
-          max={max}
+          max={maxTime}
           step={1}
           minStepsBetweenThumbs={1}
           onValueChange={(vals) => onValueChange(vals)}

@@ -1,16 +1,16 @@
 export default function InfoPage() {
   return (
     <div
-      style={{
-        background: 'linear-gradient(135deg, #06101c 0%, #030712 25%, #010408 50%, #030712 75%, #06101c 100%)',
-      }}
-      className="h-screen w-screen"
+      // style={{
+      //   background: 'linear-gradient(135deg, #06101c 0%, #030712 25%, #010408 50%, #030712 75%, #06101c 100%)',
+      // }}
+      className="w-screen min-h-screen"
     >
       <div className="w-full text-center pt-4">
         <span className="text-3xl font-extrabold"> About </span>
       </div>
 
-      <div className="h-full p-10">
+      <div className="h-full p-10 bg-transparent">
         <h1 className="text-2xl font-bold"> Info </h1>
         <p>
           This site is still under development. <br />

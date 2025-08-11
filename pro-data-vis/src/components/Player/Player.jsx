@@ -173,9 +173,9 @@ const Player = ({ playername, graphData, staticData }) => {
   }
 
   return (
-    <div className="bg-back">
+    <div className="">
       <NamePlate name={playername} />
-      <div className="bg-black/20 py-5 mx-6 my-5 rounded-md border border-white/10 border-2">
+      <div className="bg-black/30 py-5 mx-6 my-5 rounded-md border border-white/10 border-2">
         <StatToolbar state={{ show: show, setShow: changeShow }} />
         <FilterToolbar data={staticData} games={getNumGames(filteredData)} totalGames={getNumGames(graphData)} />
       </div>
@@ -184,11 +184,11 @@ const Player = ({ playername, graphData, staticData }) => {
         {show.map((item, index) =>
           item[2] ? (
             <div
-              className={`w-[100%] mx-auto flex flex-col gap-6 items-center justify-center bg-black/30 backdrop-blur-lg rounded-lg mb-10 ${layout == 2 ? 'h-[20rem]' : 'h-[30rem]'}`}
+              className={`w-[100%] mx-auto flex flex-col gap-6 items-center justify-center bg-black/40 backdrop-blur-lg rounded-lg mb-10 ${layout == 2 ? 'h-[20rem]' : 'h-[30rem]'}`}
               key={item[0]}
             >
               <span className="mt-3 mx-auto flex flex-row gap-2 items-center">
-                <GraphIcon name={item[0]} />
+                <GraphIcon name={item[0]} color={index % (chartConfigLen - 1)} />
                 {item[0]}
               </span>
               <LineGraph
