@@ -3,12 +3,10 @@ import { useState, useContext } from 'react';
 import { AppContext } from '@/contexts/StateProvider';
 
 const FilterRange = ({ filter, label, maxTime }) => {
-  // TODO: find how to get the max value from the db
-  const [value, setValue] = useState([0, maxTime]);
-  const { setFilters } = useContext(AppContext);
+  const { filters, setFilters } = useContext(AppContext);
+  const value = filters[filter].length > 0 ? filters[filter] : [0, maxTime];
 
   const onValueChange = (val) => {
-    setValue(val);
     setFilters((prev) => ({ ...prev, [filter]: val }));
   };
 
@@ -30,7 +28,7 @@ const FilterRange = ({ filter, label, maxTime }) => {
         <span className="w-[2rem] text-sm"> {secondsToHMS(value[0])} </span>
         <Slider.Root
           className="relative flex h-5 w-full touch-none select-none items-center my-auto"
-          defaultValue={value}
+          value={value}
           max={maxTime}
           step={1}
           minStepsBetweenThumbs={1}

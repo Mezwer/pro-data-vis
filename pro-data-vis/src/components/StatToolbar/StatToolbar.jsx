@@ -21,7 +21,7 @@ const StatToolbar = ({ state }) => {
       </div>
 
       <div
-        className={`w-11/12 mt-5 mx-auto left-0 right-0 grid grid-cols-7 gap-y-[2px] transition-all duration-150 ${collapse ? 'absolute -translate-y-4 opacity-0 pointer-events-none' : ''}`}
+        className={`w-11/12 mx-auto px-1 left-0 right-0 grid grid-cols-7 gap-y-[2px] transition-all duration-150 overflow-hidden ${collapse ? 'h-0' : 'h-48 mt-5'}`}
       >
         {show.map((field) => (
           <Checkbox label={field[0]} key={field[0]} state={field[2]} setter={setShow} index={field[1]} />

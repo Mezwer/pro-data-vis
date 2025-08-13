@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, RefreshCcw } from 'lucide-react';
 import { filterToggle, filterField } from '@/constants/filters';
 import { mapping } from '@/constants/fields';
 import { Tooltip } from 'react-tooltip';
@@ -10,11 +10,19 @@ import FilterToggle from './FilterToggle';
 
 const FilterToolbar = ({ data, games, totalGames }) => {
   const [collapse, setCollapse] = useState(false);
-  const { split, setSplit, useAverages, setUseAverages, showGap, setShowGap } = useContext(AppContext);
+  const [rotate, setRotate] = useState(1);
   const { maxTime } = data;
+  const { split, setSplit, useAverages, setUseAverages, showGap, setShowGap, setFilters, setFilterType } =
+    useContext(AppContext);
+
+  const refreshFilters = () => {
+    setRotate((prev) => prev + 1);
+    setFilters((prev) => Object.fromEntries(Object.entries(prev).map(([key, _value]) => [key, []])));
+    setFilterType((prev) => Object.fromEntries(Object.entries(prev).map(([key, value]) => [key, [value[0], 1]])));
+  };
 
   return (
-    <div className="mb-10">
+    <div className={`${collapse ? '': 'mb-5'} transition-all`}>
       <div className="flex justify-between flex-row items-center">
         <span className="text-2xl ml-5 underline flex flex-row items-center justify-center gap-1">
           Filters
@@ -25,6 +33,13 @@ const FilterToolbar = ({ data, games, totalGames }) => {
         </span>
 
         <div className="flex flex-row gap-3 justify-center items-center">
+          <button onClick={refreshFilters} className="p-1 transition-all duration-200 hover:scale-110 active:scale-95">
+            <RefreshCcw
+              className="text-white transition-transform duration-500 ease-in-out"
+              style={{ transform: `rotate(-${rotate * 360}deg)` }}
+            />
+          </button>
+
           <button
             className="hover:scale-105 active:scale-95 transition-all duration-150 ease-linear"
             onClick={() => setShowGap((prev) => !prev)}
@@ -72,7 +87,7 @@ const FilterToolbar = ({ data, games, totalGames }) => {
       </div>
 
       <div
-        className={`w-11/12 mt-5 mx-auto left-0 right-0 flex flex-col gap-3 transition-all duration-10 ${collapse ? '-translate-y-4 opacity-0 pointer-events-none absolute' : ''}`}
+        className={`w-11/12 mx-auto px-1 left-0 right-0 flex flex-col gap-3 transition-all duration-150 overflow-hidden ${collapse ? 'h-0' : 'h-32 pt-5'}`}
       >
         <div className="flex flex-row gap-5 flex-wrap">
           {filterField.map((filter) => (

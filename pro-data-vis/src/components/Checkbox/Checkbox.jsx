@@ -6,7 +6,7 @@ const Checkbox = ({ label, state, setter, index }) => {
   const id = `checkbox${index}`;
 
   return (
-    <div className="inline-flex items-center float-left">
+    <div className="inline-flex items-center">
       <label className="flex items-center cursor-pointer relative">
         <input
           type="checkbox"

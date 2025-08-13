@@ -31,9 +31,6 @@ const Player = ({ playername, graphData, staticData }) => {
     )
   );
   const [isClient, setIsClient] = useState(false);
-  // const [filters, setFilters] = useState(
-  //   Object.fromEntries(filterSelection.map((filter) => [filter, []]))
-  // );
 
   const [filteredData, setFilteredData] = useState({});
   const { layout, granularity, useAverages, filterType, filters, showGap } = useContext(AppContext);
@@ -175,7 +172,7 @@ const Player = ({ playername, graphData, staticData }) => {
   return (
     <div className="">
       <NamePlate name={playername} />
-      <div className="bg-black/30 py-5 mx-6 my-5 rounded-md border border-white/10 border-2">
+      <div className="bg-black/40 py-5 mx-6 my-5 rounded-md border border-white/10 border-2">
         <StatToolbar state={{ show: show, setShow: changeShow }} />
         <FilterToolbar data={staticData} games={getNumGames(filteredData)} totalGames={getNumGames(graphData)} />
       </div>

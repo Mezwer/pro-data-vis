@@ -2,35 +2,42 @@ import { useState, useContext } from 'react';
 import { AppContext } from '@/contexts/StateProvider';
 
 const FilterToggle = ({ label, filter }) => {
-  const [isChecked, setIsChecked] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  // const [isChecked, setIsChecked] = useState(false);
 
-  const { setFilters } = useContext(AppContext);
+  const { filters, setFilters } = useContext(AppContext);
+  const special = {
+    Loss: [0, 'result'],
+    Win: [1, 'result'],
+    Blue: ['Blue', 'side'],
+    Red: ['Red', 'side'],
+  };
+
+  const checkIsChecked = () => {
+    if (!Object.keys(special).includes(label)) {
+      return filters[filter][0] ?? false;
+    }
+
+    const category = special[label][1];
+    const target = special[label][0];
+
+    return filters[category].includes(target);
+  };
+  const isChecked = checkIsChecked();
 
   const handleToggle = () => {
-    if (!disabled) {
-      const newValue = !isChecked;
-      setIsChecked(newValue);
+    const newValue = !isChecked;
 
-      const special = {
-        Loss: [0, 'result'],
-        Win: [1, 'result'],
-        Blue: ['Blue', 'side'],
-        Red: ['Red', 'side'],
-      };
+    if (!Object.keys(special).includes(label)) setFilters((prev) => ({ ...prev, [filter]: [newValue] }));
+    else {
+      // special architecture for win/loss, blue/red because of the field
+      setFilters((prev) => {
+        const val = special[label][0];
+        const category = special[label][1];
 
-      if (!Object.keys(special).includes(label)) setFilters((prev) => ({ ...prev, [filter]: [newValue] }));
-      else {
-        // special architecture for win/loss, blue/red because of the field
-        setFilters((prev) => {
-          const val = special[label][0];
-          const category = special[label][1];
+        const newVals = newValue ? [...prev[category], val] : [...prev[category]].filter((value) => value !== val);
 
-          const newVals = newValue ? [...prev[category], val] : [...prev[category]].filter((value) => value !== val);
-
-          return { ...prev, [category]: newVals };
-        });
-      }
+        return { ...prev, [category]: newVals };
+      });
     }
   };
 

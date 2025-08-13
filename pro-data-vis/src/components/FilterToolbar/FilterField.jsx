@@ -6,16 +6,16 @@ import { filterTypeMap } from '@/constants/filters';
 import { AppContext } from '@/contexts/StateProvider';
 
 const FilterField = ({ choices, filter }) => {
-  const [chips, setChips] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [showDrop, setShowDrop] = useState(true);
   const [options, setOptions] = useState([]);
   const [hovering, setHovering] = useState(false);
   const [focus, setFocus] = useState(-1);
-  const { filterType, setFilterType, setFilters } = useContext(AppContext);
+  const { filters, filterType, setFilterType, setFilters } = useContext(AppContext);
 
   const focusRef = useRef(null);
   const id = mapping[filter].replace(/\s/g, '');
+  const chips = filters[filter] ?? [];
 
   useEffect(() => {
     if (focus >= 0 && focusRef.current) {
@@ -24,7 +24,6 @@ const FilterField = ({ choices, filter }) => {
   }, [focus]);
 
   const setValues = (newVal) => {
-    setChips(newVal);
     setFilters((prev) => ({ ...prev, [filter]: newVal }));
   };
 
