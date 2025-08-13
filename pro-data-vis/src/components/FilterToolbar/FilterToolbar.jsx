@@ -7,6 +7,7 @@ import { AppContext } from '@/contexts/StateProvider.jsx';
 import FilterRange from './FilterRange';
 import FilterField from './FilterField';
 import FilterToggle from './FilterToggle';
+import FilterSettingsToggle from './FilterSettingsToggle';
 
 const FilterToolbar = ({ data, games, totalGames }) => {
   const [collapse, setCollapse] = useState(false);
@@ -22,7 +23,7 @@ const FilterToolbar = ({ data, games, totalGames }) => {
   };
 
   return (
-    <div className={`${collapse ? '': 'mb-5'} transition-all`}>
+    <div className={`${collapse ? '' : 'mb-5'} transition-all`}>
       <div className="flex justify-between flex-row items-center">
         <span className="text-2xl ml-5 underline flex flex-row items-center justify-center gap-1">
           Filters
@@ -40,38 +41,24 @@ const FilterToolbar = ({ data, games, totalGames }) => {
             />
           </button>
 
-          <button
-            className="hover:scale-105 active:scale-95 transition-all duration-150 ease-linear"
-            onClick={() => setShowGap((prev) => !prev)}
-          >
-            <div
-              className={`rounded-md outline-1 bg-zinc-800/90 px-3 py-1 text-sm text-center ${showGap ? 'outline outline-sky-400 text-sky-400' : ''}`}
-            >
-              Gap
-            </div>
-          </button>
-
-          <button
-            className="hover:scale-105 active:scale-95 transition-all duration-150 ease-linear"
-            onClick={() => setUseAverages((prev) => !prev)}
-          >
-            <div
-              className={`rounded-md outline-1 bg-zinc-800/90 px-3 py-1 text-sm text-center ${useAverages ? 'outline outline-sky-400 text-sky-400' : ''}`}
-            >
-              Averages
-            </div>
-          </button>
-
-          <button
-            className="hover:scale-105 active:scale-95 transition-all duration-150 ease-linear"
-            onClick={() => setSplit((prev) => (prev ? 0 : 1))}
-          >
-            <div
-              className={`rounded-md outline-1 bg-zinc-800/90 px-3 py-1 text-sm text-center ${split ? 'outline outline-sky-400 text-sky-400' : ''}`}
-            >
-              Split
-            </div>
-          </button>
+          <FilterSettingsToggle 
+            name="Gap"
+            callback={() => setShowGap((prev) => !prev)}
+            value={showGap}
+            description="Show/hide any points where the player has 0 games"
+          />
+          <FilterSettingsToggle 
+            name="Averages"
+            callback={() => setUseAverages(prev => !prev)}
+            value={useAverages}
+            description="Show the averages of every stat"
+          />
+          <FilterSettingsToggle
+            name="Split"
+            callback={() => setSplit((prev) => (prev ? 0 : 1))}
+            value={split}
+            description="Compare filtered data (lighter) vs unfiltered data (darker)"
+          />
 
           <span id="gamescounter" className="mr-5 text-lg ml-2" data-tooltip-delay-show={500}>
             Games: {games} / {totalGames}
@@ -87,7 +74,7 @@ const FilterToolbar = ({ data, games, totalGames }) => {
       </div>
 
       <div
-        className={`w-11/12 mx-auto px-1 left-0 right-0 flex flex-col gap-3 transition-all duration-150 overflow-hidden ${collapse ? 'h-0' : 'h-32 pt-5'}`}
+        className={`w-11/12 mx-auto px-1 left-0 right-0 flex flex-col gap-3 transition-all duration-150 ${collapse ? 'h-0 overflow-hidden' : 'h-32 pt-5'}`}
       >
         <div className="flex flex-row gap-5 flex-wrap">
           {filterField.map((filter) => (
