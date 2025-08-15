@@ -33,7 +33,7 @@ const Player = ({ playername, graphData, staticData }) => {
   const [isClient, setIsClient] = useState(false);
 
   const [filteredData, setFilteredData] = useState({});
-  const { layout, granularity, useAverages, filterType, filters, showGap } = useContext(AppContext);
+  const { layout, granularity, useAverages, filterType, filters } = useContext(AppContext);
 
   const chartConfigLen = chartConfigs.length;
 

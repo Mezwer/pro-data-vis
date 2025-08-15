@@ -31,7 +31,6 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
   };
 
   const mergeData = () => {
-    // console.log(data)
     const first = showGap ? originalData : data;
     const second = showGap ? data : originalData;
 
@@ -45,7 +44,7 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
         games: showGap ? item.games : filtered.games,
         gamesFiltered: showGap ? (filtered?.games ?? 0) : item.games,
       };
-    });
+    }).filter(row => showGap || row.gamesFiltered !== 0);
 
     return merged;
   };
