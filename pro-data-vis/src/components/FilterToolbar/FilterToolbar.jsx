@@ -23,7 +23,7 @@ const FilterToolbar = ({ data, games, totalGames }) => {
   };
 
   return (
-    <div className={`${collapse ? '' : 'mb-5'} transition-all`}>
+    <div className={`${collapse ? 'mb-2' : 'mb-5'} transition-all`}>
       <div className="flex justify-between flex-row items-center">
         <span className="text-2xl ml-5 underline flex flex-row items-center justify-center gap-1">
           Filters
@@ -41,15 +41,15 @@ const FilterToolbar = ({ data, games, totalGames }) => {
             />
           </button>
 
-          <FilterSettingsToggle 
+          <FilterSettingsToggle
             name="Gap"
             callback={() => setShowGap((prev) => !prev)}
             value={showGap}
             description="Show/hide any points where the player has 0 games"
           />
-          <FilterSettingsToggle 
+          <FilterSettingsToggle
             name="Averages"
-            callback={() => setUseAverages(prev => !prev)}
+            callback={() => setUseAverages((prev) => !prev)}
             value={useAverages}
             description="Show the averages of every stat"
           />

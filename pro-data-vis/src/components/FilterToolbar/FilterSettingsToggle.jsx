@@ -1,4 +1,4 @@
-import { Tooltip } from "react-tooltip";
+import { Tooltip } from 'react-tooltip';
 
 const FilterSettingsToggle = ({ name, callback, value, description }) => {
   return (
@@ -15,7 +15,7 @@ const FilterSettingsToggle = ({ name, callback, value, description }) => {
           {name}
         </div>
       </button>
-      <Tooltip 
+      <Tooltip
         id={name}
         place="bottom"
         className="!bg-slate-900 !text-xs !rounded-md z-10 outline-none"

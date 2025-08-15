@@ -24,6 +24,7 @@ import {
   CircleDollarSign,
   ChartNoAxesCombined,
   ScanEye,
+  Percent,
 } from 'lucide-react';
 
 export const fields = [
@@ -338,10 +339,7 @@ export const averages = new Set([
 
 // TODO: Add more icons and such
 export const descriptions = {
-  Kills: {
-    description: 'Total number of kills throughout the year.',
-    icon: Swords,
-  },
+  Kills: { description: 'Total number of kills throughout the year.', icon: Swords },
   Deaths: { description: 'Total number of deaths throughout the year', icon: Skull },
   Assists: { description: 'Total number of assists throughout the year', icon: Users },
   'Double Kills': { description: 'Total number of double kills throughout the year', icon: Sword },
@@ -399,5 +397,5 @@ export const descriptions = {
   'Kills @ 25': { description: '', icon: '' },
   'Assists @ 25': { description: '', icon: '' },
   'Deaths @ 25': { description: '', icon: '' },
-  'Win Rate': { description: '', icon: '' },
+  'Win Rate': { description: '', icon: Percent },
 };

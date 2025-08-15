@@ -1,8 +1,8 @@
 'use client';
 import { React, useContext } from 'react';
 import { Area, AreaChart, Tooltip, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine } from 'recharts';
-import CustomTooltip from '../Tooltip/CustomTooltip.jsx';
-import CustomXAxisTick from '../CustomXAxisTick/CustomXAxisTick.jsx';
+import CustomTooltip from './CustomTooltip.jsx';
+import CustomXAxisTick from './CustomXAxisTick.jsx';
 import { chartConfigs } from '@/constants/fields.js';
 import { AppContext } from '@/contexts/StateProvider';
 
