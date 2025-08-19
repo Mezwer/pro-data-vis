@@ -60,7 +60,7 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
         <TriangleAlert className="text-red-500" />
         <span className="text-red-500 font-bold"> No Data </span>
       </div>
-    )
+    );
   }
 
   return (

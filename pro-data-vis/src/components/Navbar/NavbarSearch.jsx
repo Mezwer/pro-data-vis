@@ -35,7 +35,7 @@ const NavbarSearch = () => {
       <input
         type="text"
         placeholder={placeholder}
-        value={isFocused ? searchValue : ""}
+        value={isFocused ? searchValue : ''}
         onChange={(e) => setSearchValue(e.target.value)}
         onKeyUp={handleKeyPress}
         onFocus={() => setIsFocused(true)}

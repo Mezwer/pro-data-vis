@@ -22,3 +22,20 @@ body {
   min-height: 100vh;
   height: auto;
 }
+
+html {
+  background: #111827;
+}
+
+@layer components {
+  .link {
+    @apply text-blue-600 underline underline-offset-2 cursor-pointer hover:text-blue-800 hover:decoration-blue-800 transition-all duration-200;
+  }
+
+  .link-underline {
+    @apply relative 
+          after:content-[''] after:absolute after:left-0 after:bottom-0
+          after:h-[1px] after:w-0 after:bg-white
+          after:transition-all after:duration-300 hover:after:w-full;
+  }
+}
