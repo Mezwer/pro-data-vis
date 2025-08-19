@@ -34,17 +34,19 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
     const first = showGap ? originalData : data;
     const second = showGap ? data : originalData;
 
-    const merged = first.map((item) => {
-      const filtered = second.find((secondItem) => secondItem[key] === item[key]);
+    const merged = first
+      .map((item) => {
+        const filtered = second.find((secondItem) => secondItem[key] === item[key]);
 
-      return {
-        [key]: item[key],
-        series1: showGap ? item[ydata] : filtered[ydata],
-        series2: showGap ? (filtered?.[ydata] ?? 0) : item[ydata],
-        games: showGap ? item.games : filtered.games,
-        gamesFiltered: showGap ? (filtered?.games ?? 0) : item.games,
-      };
-    }).filter(row => showGap || row.gamesFiltered !== 0);
+        return {
+          [key]: item[key],
+          series1: showGap ? item[ydata] : (filtered?.[ydata] ?? 0),
+          series2: showGap ? (filtered?.[ydata] ?? 0) : item[ydata],
+          games: showGap ? item.games : (filtered?.games ?? 0),
+          gamesFiltered: showGap ? (filtered?.games ?? 0) : item.games,
+        };
+      })
+      .filter((row) => showGap || row.gamesFiltered !== 0);
 
     return merged;
   };
@@ -106,7 +108,7 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
           {/* <Label value={yDataName} offset={12} position="insideLeft" angle={-90}/> */}
         </YAxis>
         <Tooltip content={<CustomTooltip data={ydata} mod={0} />} />
-        <ReferenceLine y={0} strokeWidth={1} stroke="#374151" />
+        <ReferenceLine y={0} strokeWidth={1} stroke="#626262" />
       </AreaChart>
     </ResponsiveContainer>
   );

@@ -166,7 +166,11 @@ const Player = ({ playername, graphData, staticData }) => {
   else if (layout == 2) arrange = 'grid grid-cols-5';
 
   if (!isClient) {
-    return <Spinner />;
+    return (
+      <div className='w-screen h-screen'>
+        <Spinner />
+      </div>
+    );
   }
 
   return (
