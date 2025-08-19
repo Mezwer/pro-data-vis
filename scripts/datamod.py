@@ -3,10 +3,96 @@ import os
 
 GREEN = '\033[92m'
 RESET = '\033[0m'
-data_path = "./data/data_2024.csv"
 
 pick_cols = ["blue_pick1", "blue_pick2", "blue_pick3", "blue_pick4", "blue_pick5", "red_pick1", "red_pick2", "red_pick3", "red_pick4", "red_pick5"]
 ban_cols = ["blue_ban1", "blue_ban2", "blue_ban3", "blue_ban4", "blue_ban5", "red_ban1", "red_ban2", "red_ban3", "red_ban4", "red_ban5"]
+top_leagues = ["LCK", "LPL", "LEC", "LCS", "EU LCS", "NA LCS"]
+years = ["2019", "2020", "2021", "2022", "2023", "2024"]
+columns = [
+  "gameid", 
+  "datacompleteness", 
+  "league", 
+  "year", 
+  "split", 
+  "playoffs", 
+  "date", 
+  "game", 
+  "patch", 
+  "side", 
+  "position", 
+  "playername", 
+  "teamname", 
+  "champion", 
+  "ban1", 
+  "ban2", 
+  "ban3", 
+  "ban4", 
+  "ban5", 
+  "gamelength", 
+  "result", 
+  "kills", 
+  "deaths", 
+  "assists", 
+  "doublekills", 
+  "triplekills", 
+  "quadrakills", 
+  "pentakills", 
+  "firstbloodkill", 
+  "firstbloodvictim", 
+  "ckpm", 
+  "damagetochampions", 
+  "dpm", 
+  "damageshare", 
+  "damagetakenperminute", 
+  "damagemitigatedperminute", 
+  "wardsplaced", 
+  "wpm", 
+  "wardskilled", 
+  "wcpm", 
+  "controlwardsbought", 
+  "visionscore", 
+  "vspm", 
+  "totalgold", 
+  "earnedgold", 
+  "earned gpm", 
+  "earnedgoldshare", 
+  "goldspent", 
+  "total cs", 
+  "minionkills", 
+  "monsterkills", 
+  "cspm", 
+  "golddiffat10", 
+  "xpdiffat10", 
+  "csdiffat10", 
+  "killsat10", 
+  "assistsat10", 
+  "deathsat10", 
+  "golddiffat15", 
+  "xpdiffat15", 
+  "csdiffat15", 
+  "killsat15", 
+  "assistsat15", 
+  "deathsat15", 
+  "golddiffat20", 
+  "xpdiffat20", 
+  "csdiffat20", 
+  "killsat20", 
+  "assistsat20", 
+  "deathsat20", 
+  "golddiffat25", 
+  "xpdiffat25", 
+  "csdiffat25", 
+  "killsat25", 
+  "assistsat25", 
+  "deathsat25",
+]
+
+def filter_cols(df: pd.DataFrame):
+  new_df = df[df["league"].isin(top_leagues)]
+  new_df = new_df[columns]
+
+  print(GREEN + "✓ Finished filtering columns." + RESET)
+  return new_df
 
 # basically just filling in the fb team info
 def fill_team_info(df: pd.DataFrame):
@@ -138,13 +224,19 @@ def add_tourneys(data: pd.DataFrame, df: pd.DataFrame):
   filtered = new_tourn[df.columns]
   return pd.concat([df, filtered], ignore_index=True)
 
+def add_calc_fields(data: pd.DataFrame):
+  pass
 
-yr = 2022
+def add_all(data: pd.DataFrame, yr: int):
+  new_df = add_tourneys(data, filter_cols(data))
+  new_df = add_bans(add_picks(new_df)) # add picks & bans
+  new_df = fill_team_info(new_df)
+  new_df = merge_rows(new_df)
+
+  new_df.to_csv(f"./new_data2_{yr}.csv")
+
+yr = 2018
 data = pd.read_csv(f"./datasets/{yr}_data.csv")
-df = pd.read_csv(f"./data/data_{yr}.csv")
-new_df = add_tourneys(data, df)
+add_all(data, yr)
+# filter_cols(data).to_csv(f"./data/data_{yr}.csv")
 
-new_df = add_bans(add_picks(new_df))
-new_df = fill_team_info(new_df)
-new_df = merge_rows(new_df)
-new_df.to_csv(f"./new_data2_{yr}.csv")

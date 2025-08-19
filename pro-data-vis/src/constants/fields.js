@@ -295,7 +295,7 @@ export const chartConfigs = [
   },
 ];
 
-export const years = [2019, 2020, 2021, 2022, 2023, 2024]; // will add more years after testing done
+export const years = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]; // will add more years after testing done
 
 export const averages = new Set([
   'result',
@@ -337,7 +337,6 @@ export const averages = new Set([
   'deathsat25',
 ]);
 
-// TODO: Add more icons and such
 export const descriptions = {
   Kills: { description: 'Total number of kills throughout the year.', icon: Swords },
   Deaths: { description: 'Total number of deaths throughout the year', icon: Skull },
