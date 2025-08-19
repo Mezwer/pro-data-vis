@@ -167,7 +167,7 @@ const Player = ({ playername, graphData, staticData }) => {
 
   if (!isClient) {
     return (
-      <div className='w-screen h-screen'>
+      <div className="w-screen h-screen">
         <Spinner />
       </div>
     );

@@ -54,7 +54,7 @@ const FilterToolbar = ({ data, games, totalGames }) => {
             description="Show the averages of every stat"
           />
           <FilterSettingsToggle
-            name="Split"
+            name="Split View"
             callback={() => setSplit((prev) => (prev ? 0 : 1))}
             value={split}
             description="Compare filtered data (lighter) vs unfiltered data (darker)"

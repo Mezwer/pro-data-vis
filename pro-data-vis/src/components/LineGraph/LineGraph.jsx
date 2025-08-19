@@ -5,6 +5,7 @@ import CustomTooltip from './CustomTooltip.jsx';
 import CustomXAxisTick from './CustomXAxisTick.jsx';
 import { chartConfigs } from '@/constants/fields.js';
 import { AppContext } from '@/contexts/StateProvider';
+import { TriangleAlert } from 'lucide-react';
 
 /**
  * Component for a graph depicting player data
@@ -52,6 +53,15 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
   };
 
   const mergedData = mergeData();
+
+  if (mergedData.length === 0) {
+    return (
+      <div className="w-full h-full pb-20 flex flex-row gap-3 justify-center items-center animate-pulse">
+        <TriangleAlert className="text-red-500" />
+        <span className="text-red-500 font-bold"> No Data </span>
+      </div>
+    )
+  }
 
   return (
     <ResponsiveContainer height="90%" width="95%">
