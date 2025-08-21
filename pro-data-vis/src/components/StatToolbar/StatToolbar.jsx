@@ -1,5 +1,5 @@
 import Checkbox from '../Checkbox/Checkbox';
-import Arrangement from '../Arrangement/Arrangement';
+import Arrangement from './Arrangement';
 import { ChevronDown } from 'lucide-react';
 import React, { useState } from 'react';
 

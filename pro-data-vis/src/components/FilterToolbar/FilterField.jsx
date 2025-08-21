@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { mapping } from '@/constants/fields';
 import { X } from 'lucide-react';
-import FilterTypeControl from './FilterTypeControl';
 import { filterTypeMap } from '@/constants/filters';
 import { AppContext } from '@/contexts/StateProvider';
+import FilterTypeControl from './FilterTypeControl';
+import Fuse from 'fuse.js';
 
 const FilterField = ({ choices, filter }) => {
   const [inputValue, setInputValue] = useState('');
   const [showDrop, setShowDrop] = useState(true);
-  const [options, setOptions] = useState([]);
   const [hovering, setHovering] = useState(false);
   const [focus, setFocus] = useState(-1);
   const { filters, filterType, setFilterType, setFilters } = useContext(AppContext);
@@ -16,6 +16,9 @@ const FilterField = ({ choices, filter }) => {
   const focusRef = useRef(null);
   const id = mapping[filter].replace(/\s/g, '');
   const chips = filters[filter] ?? [];
+
+  const fuse = new Fuse(choices, { threshold: 0.4 });
+  const fuseResult = fuse.search(inputValue);
 
   useEffect(() => {
     if (focus >= 0 && focusRef.current) {
@@ -29,11 +32,11 @@ const FilterField = ({ choices, filter }) => {
 
   const handleKeyDown = (e) => {
     const trimmed = inputValue.trim();
-    if (e.key === 'Enter' && ((trimmed && options.includes(trimmed)) || focus != -1)) {
+    if (e.key === 'Enter' && ((trimmed && fuseResult.includes(trimmed)) || focus != -1)) {
       e.preventDefault();
 
-      if (focus != -1 && !chips.includes(options[focus])) {
-        setValues([...chips, options[focus]]);
+      if (focus != -1 && !chips.includes(fuseResult[focus].item)) {
+        setValues([...chips, fuseResult[focus].item]);
         setInputValue('');
         setFocus(-1);
         return;
@@ -41,9 +44,9 @@ const FilterField = ({ choices, filter }) => {
     } else if (e.key === 'Backspace' && !inputValue && chips.length > 0) {
       setValues(chips.slice(0, -1));
       setFocus(-1);
-    } else if (e.key === 'ArrowDown' && options.length > 0 && focus != options.length - 1) {
+    } else if (e.key === 'ArrowDown' && fuseResult.length > 0 && focus != fuseResult.length - 1) {
       setFocus(focus + 1);
-    } else if (e.key === 'ArrowUp' && options.length > 0 && focus != 0) {
+    } else if (e.key === 'ArrowUp' && fuseResult.length > 0 && focus != 0) {
       setFocus(focus - 1);
     }
   };
@@ -56,10 +59,6 @@ const FilterField = ({ choices, filter }) => {
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-
-    const filteredOptions = choices.filter((choice) => choice.toLowerCase().includes(value.toLowerCase()));
-    setOptions(filteredOptions);
-
     setFocus(-1);
   };
 
@@ -97,27 +96,30 @@ const FilterField = ({ choices, filter }) => {
         {filterTypeMap?.[filter] && <FilterTypeControl filter={filter} types={filterType} setType={setType} id={id} />}
       </div>
 
-      {(options.length > 0 && inputValue && showDrop) || hovering ? (
+      {(fuseResult.length > 0 && inputValue && showDrop) || hovering ? (
         <div
           className="scrollbar-thin scrollbar-thumb-white scrollbar-track-fore/95 scrollbar-track-rounded-md scrollbar-thumb-rounded-full absolute w-full bg-fore translate-y-2 z-10 rounded-md max-h-64 overflow-y-scroll"
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
         >
-          {options.map((option, index) => (
-            <div
-              className={`p-2 border rounded-md ${index === focus ? 'border-slate-400 bg-fore/50' : 'border-transparent'}`}
-              onClick={() => {
-                setValues([...chips, option]);
-                setInputValue('');
-                setHovering(false);
-              }}
-              key={index}
-              ref={focus == index ? focusRef : null}
-              onMouseMove={() => setFocus(index)}
-            >
-              {option}
-            </div>
-          ))}
+          {fuseResult.map((option, index) => {
+            const item = option.item;
+            return (
+              <div
+                className={`p-2 border rounded-md ${index === focus ? 'border-neutral-500 bg-neutral-900' : 'border-transparent'}`}
+                onClick={() => {
+                  setValues([...chips, item]);
+                  setInputValue('');
+                  setHovering(false);
+                }}
+                key={index}
+                ref={focus == index ? focusRef : null}
+                onMouseMove={() => setFocus(index)}
+              >
+                {item}
+              </div>
+            );
+          })}
         </div>
       ) : null}
     </div>

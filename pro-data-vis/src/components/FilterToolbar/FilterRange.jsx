@@ -1,6 +1,7 @@
 import * as Slider from '@radix-ui/react-slider';
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { AppContext } from '@/contexts/StateProvider';
+import { secondsToHMS } from '@/lib/utils';
 
 const FilterRange = ({ filter, label, maxTime }) => {
   const { filters, setFilters } = useContext(AppContext);
@@ -8,16 +9,6 @@ const FilterRange = ({ filter, label, maxTime }) => {
 
   const onValueChange = (val) => {
     setFilters((prev) => ({ ...prev, [filter]: val }));
-  };
-
-  const secondsToHMS = (totalSeconds) => {
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    const pad = (num) => String(num).padStart(2, '0');
-
-    return `${hours ? `${pad(hours)}:` : ''}${pad(minutes)}:${pad(seconds)}`;
   };
 
   return (
