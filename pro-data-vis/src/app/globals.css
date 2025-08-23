@@ -39,3 +39,18 @@ html {
           after:transition-all after:duration-300 hover:after:w-full;
   }
 }
+
+.row-drop-animate {
+  animation: drop 0.5s forwards;
+}
+
+@keyframes drop {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: 20rem;
+    opacity: 1;
+  }
+}

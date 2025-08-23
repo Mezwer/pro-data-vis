@@ -1,4 +1,4 @@
-import Player from '@/components/Player/Player';
+import TabsController from '@/components/TabsController/TabsController';
 import { collectGraphData, collectPageData } from '@/app/actions';
 import { StateProvider } from '@/contexts/StateProvider';
 
@@ -17,16 +17,22 @@ export default async function ServerPage({ params }) {
   const [graphData, pageData] = await Promise.all([collectGraphData(playername), collectPageData()]);
 
   const end = performance.now();
-  // console.log(end - start);
+  console.log(end - start);
   const staticData = {
     champion: champions,
     bans: champions,
     ...pageData,
   };
 
+  const payload = {
+    graphData,
+    staticData,
+    playername,
+  };
+
   return (
     <StateProvider>
-      <Player playername={playername} graphData={graphData} staticData={staticData} />
+      <TabsController {...payload} />
     </StateProvider>
   );
 }

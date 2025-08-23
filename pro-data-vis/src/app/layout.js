@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-max`}>
         <Navbar />
         {children}
-        <Toaster />
+        <Toaster toastOptions={{ style: { background: '#111827', color: 'white', border: 'none' } }} />
       </body>
     </html>
   );

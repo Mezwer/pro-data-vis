@@ -1,29 +1,56 @@
 'use client';
 import { useState } from 'react';
 import { Search, X } from 'lucide-react';
+import { players } from '@/constants/players';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import Fuse from 'fuse.js';
 
 const NavbarSearch = () => {
+  const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
   const width = isFocused ? 'w-64' : 'w-12';
   const placeholder = isFocused ? 'Search...' : '';
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchValue.trim()) {
-      console.log('Searching for:', searchValue);
-      // Handle search logic here
-    }
-  };
+  // search stuff, make into component soon
+  const fuse = new Fuse(players, { threshold: 0.4 });
+  const fuseResult = fuse.search(searchValue, { limit: 8 });
+  const [focus, setFocus] = useState(-1);
 
   const clearSearch = () => {
     setSearchValue('');
   };
 
+  const searchPlayer = (name) => {
+    router.push(`/player/${name}`);
+    clearSearch();
+  };
+
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      handleSearch(e);
+      e.preventDefault();
+
+      if (focus !== -1) {
+        searchPlayer(fuseResult[focus].item);
+        return;
+      } else if (players.includes(searchValue.trim())) {
+        searchPlayer(searchValue.trim());
+        return;
+      }
+
+      toast.error('Invalid player name. Please try again or select a player from the dropdown.', {
+        style: { background: '#111827', color: 'white', border: 'none' },
+      });
+    }
+
+    if (e.key === 'ArrowDown' && focus < fuseResult.length - 1) {
+      setFocus(focus + 1);
+    }
+
+    if (e.key === 'ArrowUp' && focus >= 1) {
+      setFocus(focus - 1);
     }
   };
 
@@ -36,7 +63,10 @@ const NavbarSearch = () => {
         type="text"
         placeholder={placeholder}
         value={isFocused ? searchValue : ''}
-        onChange={(e) => setSearchValue(e.target.value)}
+        onChange={(e) => {
+          setSearchValue(e.target.value);
+          setFocus(-1);
+        }}
         onKeyUp={handleKeyPress}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
@@ -61,6 +91,24 @@ const NavbarSearch = () => {
         >
           <X className="h-3 w-3 text-gray-400" />
         </button>
+      )}
+
+      {isFocused && (
+        // should make this into component soon
+        <div
+          className={`${fuseResult.length > 0 ? 'max-h-96' : 'max-h-0'} absolute overflow-hidden transition-all duration-150 top-full left-0 translate-y-[20px] z-10 bg-neutral-100 w-full rounded-xl flex flex-col`}
+          onMouseDown={(e) => e.preventDefault()}
+        >
+          {fuseResult.map((player, index) => (
+            <span
+              className={`${focus === index ? 'bg-neutral-200' : ''} w-full h-full text-black text-center rounded-xl py-2`}
+              onMouseMove={() => setFocus(index)}
+              onClick={() => searchPlayer(player.item)}
+            >
+              {player.item}
+            </span>
+          ))}
+        </div>
       )}
     </div>
   );

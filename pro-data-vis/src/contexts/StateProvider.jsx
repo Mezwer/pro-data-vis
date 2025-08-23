@@ -21,6 +21,8 @@ export const StateProvider = ({ children }) => {
 
   const [filters, setFilters] = useState(Object.fromEntries(filterSelection.map((filter) => [filter, []])));
 
+  const [activeView, setActiveView] = useState(0);
+
   const value = {
     useAverages,
     layout,
@@ -29,6 +31,7 @@ export const StateProvider = ({ children }) => {
     filterType,
     filters,
     showGap,
+    activeView,
 
     setUseAverages,
     setLayout,
@@ -37,6 +40,7 @@ export const StateProvider = ({ children }) => {
     setFilterType,
     setFilters,
     setShowGap,
+    setActiveView,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

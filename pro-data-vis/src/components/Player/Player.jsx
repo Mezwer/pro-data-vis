@@ -1,13 +1,11 @@
 'use client';
-import React, { use } from 'react';
 import StatToolbar from '../StatToolbar/StatToolbar';
-import NamePlate from '../NamePlate/NamePlate';
 import FilterToolbar from '../FilterToolbar/FilterToolbar';
 import Spinner from '../Spinner/Spinner';
 import GraphIcon from './GraphIcon';
-import { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { fields, mapping, averages, chartConfigs } from '@/constants/fields.js';
-import { filterSelection, filterSelectionTemp } from '@/constants/filters.js';
+import { filterSelectionTemp } from '@/constants/filters.js';
 import { AppContext } from '@/contexts/StateProvider';
 import dynamic from 'next/dynamic';
 
@@ -30,7 +28,6 @@ const Player = ({ playername, graphData, staticData }) => {
       [mapping[field], index, ['kills', 'deaths', 'assists', 'result'].includes(field), field]
     )
   );
-  const [isClient, setIsClient] = useState(false);
 
   const [filteredData, setFilteredData] = useState({});
   const { layout, granularity, useAverages, filterType, filters } = useContext(AppContext);
@@ -41,10 +38,6 @@ const Player = ({ playername, graphData, staticData }) => {
   useEffect(() => {
     setFilteredData(filterData(graphData));
   }, [filters, filterType]);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   // change what graphs are shown using the index in the state
   const changeShow = (index) => {
@@ -66,7 +59,6 @@ const Player = ({ playername, graphData, staticData }) => {
       newData[year] = row;
     }
 
-    console.log(newData);
     return newData;
   };
 
@@ -165,18 +157,9 @@ const Player = ({ playername, graphData, staticData }) => {
   if (layout == 1) arrange = 'grid grid-cols-3';
   else if (layout == 2) arrange = 'grid grid-cols-5';
 
-  if (!isClient) {
-    return (
-      <div className="w-screen h-screen">
-        <Spinner />
-      </div>
-    );
-  }
-
   return (
     <div className="">
-      <NamePlate name={playername} />
-      <div className="bg-black/40 py-5 mx-6 my-5 rounded-md border border-white/10 border-2">
+      <div className="bg-black/40 py-5 mx-6 my-5 rounded-md border border-gray-800 border-1">
         <StatToolbar state={{ show: show, setShow: changeShow }} />
         <FilterToolbar data={staticData} games={getNumGames(filteredData)} totalGames={getNumGames(graphData)} />
       </div>

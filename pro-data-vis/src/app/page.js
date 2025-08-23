@@ -21,7 +21,6 @@ export default function Home() {
   const fuseResult = fuse.search(searchQuery, { limit: 8 });
 
   const searchPlayer = (player) => {
-    console.log('alo');
     setLoading(true);
     router.push(`/player/${player}`);
   };

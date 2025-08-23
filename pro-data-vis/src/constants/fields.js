@@ -398,3 +398,30 @@ export const descriptions = {
   'Deaths @ 25': { description: '', icon: '' },
   'Win Rate': { description: '', icon: Percent },
 };
+
+export const timeFields = {
+  golddiff: {
+    displayName: 'Gold Diff',
+    values: [10, 15, 20, 25],
+  },
+  xpdiff: {
+    displayName: 'XP Diff',
+    values: [10, 15, 20, 25],
+  },
+  csdiff: {
+    displayName: 'CS Diff',
+    values: [10, 15, 20, 25],
+  },
+  kills: {
+    displayName: 'Kills',
+    values: [10, 15, 20, 25],
+  },
+  assists: {
+    displayName: 'Assists',
+    values: [10, 15, 20, 25],
+  },
+  deaths: {
+    displayName: 'Deaths',
+    values: [10, 15, 20, 25],
+  },
+};
