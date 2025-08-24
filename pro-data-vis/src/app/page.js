@@ -4,7 +4,6 @@ import { Search, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { players } from '@/constants/players';
 import { toast } from 'sonner';
-import { KR } from 'country-flag-icons/react/3x2';
 import Spinner from '@/components/Spinner/Spinner';
 import Fuse from 'fuse.js';
 
@@ -17,7 +16,7 @@ export default function Home() {
   const [focus, setFocus] = useState(-1);
   const [error, setError] = useState(false);
 
-  const fuse = new Fuse(players, { threshold: 0.4 });
+  const fuse = new Fuse(players, { threshold: 0.4, keys: ['player'] });
   const fuseResult = fuse.search(searchQuery, { limit: 8 });
 
   const searchPlayer = (player) => {
@@ -117,18 +116,24 @@ export default function Home() {
             >
               {fuseResult.map((player, index) => (
                 <div
-                  className={`flex flex-row justify-between items-center font-semibold text-2xl w-full h-full rounded-xl border border-2 py-3 z-5 ${focus === index ? 'border-blue-600 bg-slate-900' : 'border-gray-800'}`}
+                  className={`relative flex flex-row justify-center items-center font-semibold text-2xl w-full h-full rounded-xl border border-2 py-3 z-5 ${focus === index ? 'border-blue-600 bg-slate-900' : 'border-gray-800'}`}
                   key={index}
                   onMouseMove={() => setFocus(index)}
                   onClick={() => {
-                    searchPlayer(player.item);
+                    searchPlayer(player.item.player);
                     setIsFocused(false);
                   }}
                 >
-                  <KR className="ml-2 w-8 h-8 rounded-lg" />
-                  {player.item}
-                  <span className="mr-2 bg-gray-900/70 px-3 py-1 rounded-full font-medium text-xs text-center">
-                    T1, Gen.G, C9
+                  <div className='absolute left-0 ml-2 flex flex-row gap-1'> 
+                    {player.item.leagues.includes('LCK') && <img src="/lck.svg" width={40} height={60} />}
+                    {player.item.leagues.includes('LPL') && <img src="/lpl.svg" width={40} height={60} />}
+                    {(player.item.leagues.includes('NA LCS') ||  player.item.leagues.includes('LCS')) && <img src="/lcs.svg" width={40} height={60} />}
+                    {(player.item.leagues.includes('EU LCS') ||  player.item.leagues.includes('LEC')) && <img src="/lec.svg" width={30} height={60} className='ml-1'/>}
+                  </div>
+                  {player.item.player}
+                  <span className="mr-2 bg-gray-900/70 px-3 py-1 rounded-full font-medium text-xs text-center absolute right-0">
+                    {player.item.teams.slice(0, 3).join(', ')}
+                    {player.item.teams.length > 3 ? ', ...' : ''}
                   </span>
                 </div>
               ))}
