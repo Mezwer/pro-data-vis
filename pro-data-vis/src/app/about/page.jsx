@@ -35,6 +35,9 @@ export default function InfoPage() {
           </li>
         </ul>
 
+        <p>
+          Not to do with the data itself, but the 2014-2015 data parsing seems to be off on my end, so I'll look into that soon.
+        </p>
         <br />
         <p>
           Despite all of that, I do largely trust the data, and I believe the inaccuracies will not lead anyone to
