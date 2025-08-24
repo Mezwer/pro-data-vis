@@ -27,7 +27,7 @@ export default function Home() {
   const handleSearch = (e) => {
     e.preventDefault();
     if (focus !== -1) {
-      searchPlayer(fuseResult[focus].item);
+      searchPlayer(fuseResult[focus].item.player);
       return;
     }
 

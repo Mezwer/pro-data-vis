@@ -33,7 +33,7 @@ const NavbarSearch = () => {
       e.preventDefault();
 
       if (focus !== -1) {
-        searchPlayer(fuseResult[focus].item);
+        searchPlayer(fuseResult[focus].item.player);
         return;
       } else if (players.includes(searchValue.trim())) {
         searchPlayer(searchValue.trim());
