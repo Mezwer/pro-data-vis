@@ -76,10 +76,11 @@ export default function InfoPage() {
           <br /> <br />
           Also yes, there is only a dark mode. I don't like light mode and I am so not interested in making one.
           <br /> <br />
-          For those interested, the tech stack is super simple. It's Next.js + Tailwind with a Neon (Postgres) backend.
+          For those interested, the tech stack is super simple. It's Next.js + Tailwind with a Neon (Postgres) DB with Java + SpringBoot.
           The reason I picked Next.js + Tailwind is mostly because I'm familiar with them and they have a lot of
           community resources. For Neon, it's because it was a simple serverless backend which kept the project really
-          easy to work with. Not only that, it had a decent free tier (I am broke).
+          easy to work with, and not only that, it had a decent free tier (I am broke). Java and SpringBoot were picked because again,
+          I'm familiar in Java and wanted to use SpringBoot.
         </p>
       </div>
     </div>
