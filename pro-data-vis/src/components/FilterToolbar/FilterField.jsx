@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { mapping } from '@/constants/fields';
+import { fieldsInfo } from '@/constants/fields';
 import { X } from 'lucide-react';
 import { filterTypeMap } from '@/constants/filters';
 import { AppContext } from '@/contexts/StateProvider';
@@ -14,7 +14,7 @@ const FilterField = ({ choices, filter }) => {
   const { filters, filterType, setFilterType, setFilters } = useContext(AppContext);
 
   const focusRef = useRef(null);
-  const id = mapping[filter].replace(/\s/g, '');
+  const id = fieldsInfo[filter].name.replace(/\s/g, '');
   const chips = filters[filter] ?? [];
 
   const fuse = new Fuse(choices, { threshold: 0.4 });
@@ -85,7 +85,7 @@ const FilterField = ({ choices, filter }) => {
           onChange={(e) => handleInputChange(e)}
           onKeyDown={handleKeyDown}
           className="outline-none bg-transparent flex-1 h-full w-full"
-          placeholder={chips.length === 0 ? `Enter a ${mapping[filter]}...` : ''}
+          placeholder={chips.length === 0 ? `Enter a ${fieldsInfo[filter].name}...` : ''}
           onBlur={() => {
             setShowDrop(false);
             setFocus(-1);

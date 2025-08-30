@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { ChevronDown, RefreshCcw } from 'lucide-react';
 import { filterToggle, filterField } from '@/constants/filters';
-import { mapping } from '@/constants/fields';
+import { fieldsInfo } from '@/constants/fields';
 import { Tooltip } from 'react-tooltip';
 import { AppContext } from '@/contexts/StateProvider.jsx';
 import FilterRange from './FilterRange';
@@ -89,7 +89,7 @@ const FilterToolbar = ({ data, games, totalGames }) => {
 
           <div className="flex-1 flex flex-row gap-3 items-end justify-end">
             {filterToggle.map((filter) => (
-              <FilterToggle label={mapping[filter] || filter} filter={filter} key={filter} />
+              <FilterToggle label={fieldsInfo[filter].name || filter} filter={filter} key={filter} />
             ))}
           </div>
         </div>

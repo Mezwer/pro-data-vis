@@ -1,10 +1,11 @@
 'use client';
 import StatToolbar from '../StatToolbar/StatToolbar';
 import FilterToolbar from '../FilterToolbar/FilterToolbar';
-import Spinner from '../Spinner/Spinner';
 import GraphIcon from './GraphIcon';
+import NullFieldAlert from './NullFieldAlert';
+import { players } from '@/constants/players';
 import React, { useState, useEffect, useContext } from 'react';
-import { fields, mapping, averages, chartConfigs } from '@/constants/fields.js';
+import { fields, averages, chartConfigs, fieldsInfo } from '@/constants/fields.js';
 import { filterSelectionTemp } from '@/constants/filters.js';
 import { AppContext } from '@/contexts/StateProvider';
 import dynamic from 'next/dynamic';
@@ -25,7 +26,7 @@ const Player = ({ playername, graphData, staticData }) => {
   const [show, setShow] = useState(
     fields.map((field, index) =>
       // maybe later make this an object to better readability
-      [mapping[field], index, ['kills', 'deaths', 'assists', 'result'].includes(field), field]
+      [field, index, ['kills', 'deaths', 'assists', 'result'].includes(field), field]
     )
   );
 
@@ -33,6 +34,7 @@ const Player = ({ playername, graphData, staticData }) => {
   const { layout, granularity, useAverages, filterType, filters } = useContext(AppContext);
 
   const chartConfigLen = chartConfigs.length;
+  const playerObj = players.find((item) => item.player === playername);
 
   // update filtered data whenever filters are updated
   useEffect(() => {
@@ -168,12 +170,15 @@ const Player = ({ playername, graphData, staticData }) => {
         {show.map((item, index) =>
           item[2] ? (
             <div
-              className={`w-[100%] mx-auto flex flex-col gap-6 items-center justify-center bg-black/40 backdrop-blur-lg rounded-lg mb-10 ${layout == 2 ? 'h-[20rem]' : 'h-[30rem]'}`}
+              className={`w-[100%] mx-auto flex flex-col gap-6 items-center justify-center bg-black/40 rounded-lg mb-10 ${layout == 2 ? 'h-[20rem]' : 'h-[30rem]'}`}
               key={item[0]}
             >
-              <span className="mt-3 mx-auto flex flex-row gap-2 items-center">
+              <span className="mt-3 mx-auto flex flex-row gap-2 items-center relative w-[94%] justify-center">
                 <GraphIcon name={item[0]} color={index % (chartConfigLen - 1)} />
-                {item[0]}
+                {fieldsInfo[item[0]].name}
+                {playerObj.leagues.includes('LPL') && fieldsInfo[item[0]].isNullField && (
+                  <NullFieldAlert field={item[0]} />
+                )}
               </span>
               <LineGraph
                 color={index % (chartConfigLen - 1)}

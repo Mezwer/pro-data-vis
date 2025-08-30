@@ -124,11 +124,15 @@ export default function Home() {
                     setIsFocused(false);
                   }}
                 >
-                  <div className='absolute left-0 ml-2 flex flex-row gap-1'> 
+                  <div className="absolute left-0 ml-2 flex flex-row gap-1">
                     {player.item.leagues.includes('LCK') && <img src="/lck.svg" width={40} height={60} />}
                     {player.item.leagues.includes('LPL') && <img src="/lpl.svg" width={40} height={60} />}
-                    {(player.item.leagues.includes('NA LCS') ||  player.item.leagues.includes('LCS')) && <img src="/lcs.svg" width={40} height={60} />}
-                    {(player.item.leagues.includes('EU LCS') ||  player.item.leagues.includes('LEC')) && <img src="/lec.svg" width={30} height={60} className='ml-1'/>}
+                    {(player.item.leagues.includes('NA LCS') || player.item.leagues.includes('LCS')) && (
+                      <img src="/lcs.svg" width={40} height={60} />
+                    )}
+                    {(player.item.leagues.includes('EU LCS') || player.item.leagues.includes('LEC')) && (
+                      <img src="/lec.svg" width={30} height={60} className="ml-1" />
+                    )}
                   </div>
                   {player.item.player}
                   <span className="mr-2 bg-gray-900/70 px-3 py-1 rounded-full font-medium text-xs text-center absolute right-0">

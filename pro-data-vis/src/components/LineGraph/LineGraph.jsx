@@ -79,8 +79,6 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
           </linearGradient>
         </defs>
 
-        <CartesianGrid strokeDasharray="3 3" stroke="#374151" strokeOpacity={0.3} />
-
         {split && (
           <Area
             dataKey={'series1'}
@@ -118,6 +116,7 @@ const LineGraph = ({ color, data, originalData, ydata }) => {
           {/* <Label value={yDataName} offset={12} position="insideLeft" angle={-90}/> */}
         </YAxis>
         <Tooltip content={<CustomTooltip data={ydata} mod={0} />} />
+        <CartesianGrid strokeDasharray="3 3" stroke="#374151" strokeOpacity={0.3} />
         <ReferenceLine y={0} strokeWidth={1} stroke="#626262" />
       </AreaChart>
     </ResponsiveContainer>

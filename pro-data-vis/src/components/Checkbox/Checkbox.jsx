@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tooltip } from 'react-tooltip';
-import { descriptions } from '@/constants/fields';
+import { fieldsInfo } from '@/constants/fields';
 
 const Checkbox = ({ label, state, setter, index }) => {
   const id = `checkbox${index}`;
@@ -38,12 +38,12 @@ const Checkbox = ({ label, state, setter, index }) => {
         data-tooltip-id={id}
         className="cursor-pointer ml-2 text-slate-300 text-sm truncate"
       >
-        {label}
+        {fieldsInfo[label].name}
       </label>
       <Tooltip
         id={id}
         place="bottom"
-        content={descriptions[label].description}
+        content={fieldsInfo[label].description}
         opacity={1}
         className="!bg-slate-900 !text-xs !rounded-md z-10"
       />

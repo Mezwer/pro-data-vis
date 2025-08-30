@@ -104,6 +104,7 @@ const NavbarSearch = () => {
               className={`${focus === index ? 'bg-neutral-200' : ''} w-full h-full text-black text-center rounded-xl py-2`}
               onMouseMove={() => setFocus(index)}
               onClick={() => searchPlayer(player.item.player)}
+              key={index}
             >
               {player.item.player}
             </span>

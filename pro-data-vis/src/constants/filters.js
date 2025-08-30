@@ -1,5 +1,4 @@
 import { ListChecks, SquaresExclude } from 'lucide-react';
-import { descriptions } from './fields';
 // fields that are for filtering
 
 // everything not in select basically

@@ -33,10 +33,15 @@ export default function InfoPage() {
             Team rebrandings are handled a bit arbitrarily in my experience. For example, all instances of Damwon Gaming
             were replaced with Dplus KIA, but SK Telecom T1 was not replaced with T1.
           </li>
+          <li>
+            Some data, namely data from the LPL, is not filled in, so stuff like Gold Diff @ X will be
+            missing/inaccurate for a lot of LPL players.
+          </li>
         </ul>
 
         <p>
-          Not to do with the data itself, but the 2014-2015 data parsing seems to be off on my end, so I'll look into that soon.
+          Not to do with the data itself, but the 2014-2015 data parsing seems to be off on my end, so I'll look into
+          that soon.
         </p>
         <br />
         <p>
@@ -76,11 +81,11 @@ export default function InfoPage() {
           <br /> <br />
           Also yes, there is only a dark mode. I don't like light mode and I am so not interested in making one.
           <br /> <br />
-          For those interested, the tech stack is super simple. It's Next.js + Tailwind with a Neon (Postgres) DB with Java + SpringBoot.
-          The reason I picked Next.js + Tailwind is mostly because I'm familiar with them and they have a lot of
-          community resources. For Neon, it's because it was a simple serverless backend which kept the project really
-          easy to work with, and not only that, it had a decent free tier (I am broke). Java and SpringBoot were picked because again,
-          I'm familiar in Java and wanted to use SpringBoot.
+          For those interested, the tech stack is super simple. It's Next.js + Tailwind with a Neon (Postgres) DB with
+          Java + SpringBoot. The reason I picked Next.js + Tailwind is mostly because I'm familiar with them and they
+          have a lot of community resources. For Neon, it's because it was a simple serverless backend which kept the
+          project really easy to work with, and not only that, it had a decent free tier (I am broke). Java and
+          SpringBoot were picked because again, I'm familiar in Java and wanted to use SpringBoot.
         </p>
       </div>
     </div>

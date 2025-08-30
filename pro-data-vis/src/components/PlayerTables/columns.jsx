@@ -22,7 +22,7 @@ export const columns = [
     header: () => 'KDA',
     cell: (info) => {
       const row = info.row.original;
-      return `${row.Kills}/${row.Deaths}/${row.Assists}`;
+      return `${row.kills}/${row.deaths}/${row.assists}`;
     },
   }),
   columnHelper.display({

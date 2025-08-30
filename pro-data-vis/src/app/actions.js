@@ -1,6 +1,6 @@
 'use server';
 import { neon } from '@neondatabase/serverless';
-import { fields, years, mapping } from '@/constants/fields.js';
+import { fields, years } from '@/constants/fields.js';
 import { filterSelection, filterBans, filterPicks, filterNumeric } from '@/constants/filters';
 
 const sql = neon(process.env.DATABASE_URL);
@@ -8,7 +8,7 @@ const sql = neon(process.env.DATABASE_URL);
 export async function collectGraphData(player) {
   const start = performance.now();
   const selectFields = [
-    ...fields.map((field) => `${field}::DOUBLE PRECISION AS "${mapping[field]}"`),
+    ...fields.map((field) => `${field}::DOUBLE PRECISION`),
     ...filterSelection,
     ...filterNumeric.map((field) => `${field}::DOUBLE PRECISION`),
     `ARRAY[${filterPicks.join(',')}] as Picks`,
@@ -18,6 +18,7 @@ export async function collectGraphData(player) {
   const yearQueries = years.map(async (year) => {
     const tablename = `data_${year}_new`;
     const query = `SELECT ${selectFields}, '${year % 100}' as "Year" FROM ${tablename} WHERE playername = $1 ORDER BY date, game`;
+    // console.log(query);
 
     try {
       const result = await sql(query, [player]);

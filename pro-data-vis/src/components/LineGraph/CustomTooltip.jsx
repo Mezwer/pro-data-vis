@@ -1,13 +1,15 @@
 import React from 'react';
+import { fieldsInfo } from '@/constants/fields';
 
 // mod is a modifier for the year ('24 -> 2024)
 const CustomTooltip = ({ active, payload, data, mod }) => {
   if (!active || !payload || !payload.length) return;
 
+  const name = fieldsInfo[data].name;
   let val = payload[0].payload.Year ?? payload[0].payload.split;
-  // if (mod == 0) {
-  //   val = `20${val}`;
-  // }
+  if (mod == 0) {
+    val = `20${val}`;
+  }
 
   return (
     <div className="p-4 bg-slate-950 flex flex-col gap-2 rounded-md">
@@ -15,14 +17,14 @@ const CustomTooltip = ({ active, payload, data, mod }) => {
       <p className="text-sm flex flex-col gap-1">
         {payload.length > 1 ? (
           <>
-            {data}: {payload[1].value} ({payload[1].payload.gamesFiltered} games)
+            {name}: {payload[1].value} ({payload[1].payload.gamesFiltered} games)
             <span>
-              {data} (Unfiltered): {payload[0].value} ({payload[0].payload.games} games)
+              {name} (Unfiltered): {payload[0].value} ({payload[0].payload.games} games)
             </span>
           </>
         ) : (
           <>
-            {data}: {payload[0].value} ({payload[0].payload.gamesFiltered} games)
+            {name}: {payload[0].value} ({payload[0].payload.gamesFiltered} games)
           </>
         )}
       </p>
